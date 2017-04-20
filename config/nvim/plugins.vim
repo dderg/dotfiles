@@ -23,11 +23,11 @@ Plug 'chriskempson/base16-vim'
 " utilities
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] } | Plug 'Xuyuanp/nerdtree-git-plugin' | Plug 'ryanoasis/vim-devicons' " file drawer
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' " fuzzy file finder and so much more
-Plug 'mileszs/ack.vim' " search inside files using ack. Same as command line ack utility, but use :Ack
+Plug 'rking/ag.vim' " search inside files using ag, same as ag utility, but use :Ag
 Plug 'Raimondi/delimitMate' " automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'tpope/vim-commentary' " comment stuff out
-Plug 'tpope/vim-unimpaired' " mappings which are simply short normal mode aliases for commonly used ex commands
-Plug 'tpope/vim-endwise' " automatically add end in ruby
+" Plug 'tpope/vim-unimpaired' " mappings which are simply short normal mode aliases for commonly used ex commands
+" Plug 'tpope/vim-endwise' " automatically add end in ruby
 Plug 'tpope/vim-ragtag' " endings for html, xml, etc. - ehances surround
 Plug 'tpope/vim-surround' " mappings to easily delete, change and add such surroundings in pairs, such as quotes, parens, etc.
 Plug 'benmills/vimux' " tmux integration for vim
@@ -49,6 +49,9 @@ Plug 'AndrewRadev/splitjoin.vim' " single/multi line code handler: gS - split on
 Plug 'vim-scripts/matchit.zip' " extended % matching
 Plug 'tpope/vim-sleuth' " detect indent style (tabs vs. spaces)
 Plug 'sickill/vim-pasta' " context-aware pasting
+Plug 'easymotion/vim-easymotion' " movement plugin
+Plug 'Valloric/YouCompleteMe' " code completion @TODO do install.py --tern-completer --go-completer
+Plug 'vimprj' " local vim config
 
 " html / templates
 Plug 'mattn/emmet-vim', { 'for': 'html' } " emmet support for vim - easily create markdup wth CSS-like syntax
@@ -69,17 +72,17 @@ Plug 'jason0x43/vim-tss', { 'for': 'typescript', 'do': 'npm install' }
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' } " typescript support
 
 " Elm
-Plug 'lambdatoast/elm.vim', { 'for': 'elm' }
+" Plug 'lambdatoast/elm.vim', { 'for': 'elm' }
 
 " CoffeeScript
-Plug 'kchmck/vim-coffee-script'
+" Plug 'kchmck/vim-coffee-script'
 
 " styles
 Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] } " markdown support
-Plug 'groenewege/vim-less', { 'for': 'less' } " less support
+" Plug 'groenewege/vim-less', { 'for': 'less' } " less support
 Plug 'ap/vim-css-color', { 'for': ['css','stylus','scss'] } " set the background of hex color values to the color
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' } " CSS3 syntax support
-Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' } " sass scss syntax support
+" Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' } " sass scss syntax support
 
 " markdown
 Plug 'itspriddle/vim-marked', { 'for': 'markdown', 'on': 'MarkedOpen' } " Open markdown files in Marked.app - mapped to <leader>m
