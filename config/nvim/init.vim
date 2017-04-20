@@ -44,6 +44,8 @@ if (has('mac') && empty($TMUX) && has("termguicolors"))
     set termguicolors
 endif
 
+let delimitMate_expand_cr = 1
+
 let g:onedark_termcolors=16
 let g:onedark_terminal_italics=1
 
@@ -162,7 +164,7 @@ set pastetoggle=<leader>v
 nnoremap <leader>ev :vsp $MYVIMRC<cr>
 " edit gitconfig
 nnoremap <leader>ez :vsp ~/.zshrc<cr>
-nnoremap <leader>ez :source $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
 
 nnoremap <leader>s :mksession!<cr>
 
@@ -290,10 +292,10 @@ let g:gitgutter_eager = 1
 
 if isdirectory(".git")
     " if in a git project, use :GFiles
-    nmap <silent> <leader>t :GFiles<cr>
+    nmap <silent> <C-p> :GFiles<cr>
 else
     " otherwise, use :FZF
-    nmap <silent> <leader>t :FZF<cr>
+    nmap <silent> <C-p> :FZF<cr>
 endif
 
 nmap <silent> <leader>r :Buffers<cr>

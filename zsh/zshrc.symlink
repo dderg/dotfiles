@@ -24,17 +24,35 @@ if [[ -a ~/.localrc ]]; then
     source ~/.localrc
 fi
 
-
 # initialize autocomplete
 autoload -U compinit add-zsh-hook
 compinit
 
 for config ($ZSH/**/*completion.sh) source $config
 
+export NVM_DIR="/Users/daniladergachev/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 export EDITOR='nvim'
 export GIT_EDITOR='nvim'
 
+export GOPATH=$HOME/gocode
+
+export PATH=$GOPATH/bin:$PATH
+
 export PATH=/usr/local/bin:$PATH
+
+fancy-ctrl-z () {
+    if [[ $#BUFFER -eq 0 ]]; then
+        BUFFER="fg"
+        zle accept-line
+    else
+        zle push-input
+        zle clear-screen
+    fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
 
 # add /usr/local/sbin
 if [[ -d /usr/local/sbin ]]; then
