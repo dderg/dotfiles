@@ -19,12 +19,16 @@ call plug#begin('~/.config/nvim/plugged')
 " colorschemes
 Plug 'joshdick/onedark.vim'
 Plug 'chriskempson/base16-vim'
+Plug 'sjl/badwolf'
+Plug 'altercation/vim-colors-solarized'
+Plug 'w0ng/vim-hybrid'
+Plug 'mhartington/oceanic-next'
 
 " utilities
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] } | Plug 'Xuyuanp/nerdtree-git-plugin' | Plug 'ryanoasis/vim-devicons' " file drawer
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' " fuzzy file finder and so much more
 Plug 'rking/ag.vim' " search inside files using ag, same as ag utility, but use :Ag
-Plug 'Raimondi/delimitMate' " automatic closing of quotes, parenthesis, brackets, etc.
+" Plug 'Raimondi/delimitMate' " automatic closing of quotes, parenthesis, brackets, etc. @TODO check if needed
 Plug 'tpope/vim-commentary' " comment stuff out
 " Plug 'tpope/vim-unimpaired' " mappings which are simply short normal mode aliases for commonly used ex commands
 " Plug 'tpope/vim-endwise' " automatically add end in ruby
@@ -50,7 +54,8 @@ Plug 'vim-scripts/matchit.zip' " extended % matching
 Plug 'tpope/vim-sleuth' " detect indent style (tabs vs. spaces)
 Plug 'sickill/vim-pasta' " context-aware pasting
 Plug 'easymotion/vim-easymotion' " movement plugin
-Plug 'Valloric/YouCompleteMe' " code completion @TODO do install.py --tern-completer --go-completer
+" Plug 'Valloric/YouCompleteMe' " code completion @TODO do install.py --tern-completer --go-completer
+Plug 'DfrankUtil' " needed for vimprj
 Plug 'vimprj' " local vim config
 
 " html / templates

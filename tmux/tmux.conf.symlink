@@ -1,10 +1,10 @@
 set -g default-command "login-shell"
 
 # tmux display things in 256 colors
-set -g default-terminal "tmux-256color-italic"
+set -g default-terminal "screen-256color"
 
 #  enable terminal compability
-set-option -ga terminal-overrides ",tmux-256color-italic:Tc"
+set-option -ga terminal-overrides ",screen-256color:Tc"
 
 set -g history-limit 20000
 
@@ -12,9 +12,9 @@ set -g history-limit 20000
 set -g renumber-windows on
 
 # unbind default prefix and set it to Ctrl+a
-unbind C-b
-set -g prefix C-a
-bind C-a send-prefix
+# unbind C-b
+# set -g prefix C-a
+# bind C-a send-prefix
 
 # for nested tmux sessions
 bind-key a send-prefix

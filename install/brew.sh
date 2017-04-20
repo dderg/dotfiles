@@ -10,8 +10,6 @@ echo "=============================="
 
 formulas=(
     # flags should pass through the the `brew list check`
-    'macvim --with-override-system-vim'
-    ack
     diff-so-fancy
     dnsmasq
     fzf

@@ -1,5 +1,6 @@
 source ~/.config/nvim/plugins.vim
 
+
 " Section General {{{
 
 " Abbreviations
@@ -47,8 +48,8 @@ let g:onedark_termcolors=16
 let g:onedark_terminal_italics=1
 
 syntax on
-" set t_Co=256                " Explicitly tell vim that the terminal supports 256 colors"
-colorscheme onedark         " Set the colorscheme
+" set t_Co=256                " Explicitly tell vim that the terminal supports 256 colors
+colorscheme OceanicNext       " Set the colorscheme
 
 " make the highlighting of tabs and other non-text less annoying
 highlight SpecialKey ctermbg=none ctermfg=8
@@ -81,7 +82,7 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 set backspace=indent,eol,start
 
 " Tab control
-set noexpandtab             " insert tabs rather than spaces for <Tab>
+set expandtab               " insert tabs rather than spaces for <Tab>
 set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
 set tabstop=4               " the visible width of tabs
 set softtabstop=4           " edit as if the tabs are 4 characters wide
@@ -114,7 +115,7 @@ set title                   " set terminal title
 " Searching
 set ignorecase              " case insensitive searching
 set smartcase               " case-sensitive if expresson contains a capital letter
-set hlsearch                " highlight search results
+set hlsearch!               " highlight search results
 set incsearch               " set incremental search, like modern browsers
 set nolazyredraw            " don't redraw while executing macros
 
@@ -143,12 +144,13 @@ let mapleader = ','
 
 " remap esc
 inoremap jk <esc>
+inoremap eu <esc>
 
 " wipout buffer
 nmap <silent> <leader>b :bw<cr>
 
 " shortcut to save
-nmap <leader>, :w<cr>
+nmap <leader>w :w<cr>
 
 " set paste toggle
 set pastetoggle=<leader>v
@@ -157,9 +159,12 @@ set pastetoggle=<leader>v
 " map <leader>v :set paste!<cr>
 
 " edit ~/.config/nvim/init.vim
-map <leader>ev :e! ~/.config/nvim/init.vim<cr>
+nnoremap <leader>ev :vsp $MYVIMRC<cr>
 " edit gitconfig
-map <leader>eg :e! ~/.gitconfig<cr>
+nnoremap <leader>ez :vsp ~/.zshrc<cr>
+nnoremap <leader>ez :source $MYVIMRC<cr>
+
+nnoremap <leader>s :mksession!<cr>
 
 " clear highlighted search
 noremap <space> :set hlsearch! hlsearch?<cr>
@@ -258,9 +263,18 @@ augroup END
 
 " FZF
 """""""""""""""""""""""""""""""""""""
+map <leader>td :TernDef<CR>
+map <leader>tt :TernType<CR>
+map <leader>tr :TernRename<CR>
+
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
 
 " Toggle NERDTree
-nmap <silent> <leader>k :NERDTreeToggle<cr>
+map <silent> <C-\> :NERDTreeToggle<CR>
 " expand to the path of the file in the current buffer
 nmap <silent> <leader>y :NERDTreeFind<cr>
 
@@ -269,6 +283,10 @@ let NERDTreeDirArrowExpandable = '▷'
 let NERDTreeDirArrowCollapsible = '▼'
 
 let g:fzf_layout = { 'down': '~25%' }
+
+let g:EasyMotion_smartcase = 1
+let g:gitgutter_realtime = 1
+let g:gitgutter_eager = 1
 
 if isdirectory(".git")
     " if in a git project, use :GFiles
@@ -338,9 +356,9 @@ let g:neomake_typescript_tsc_maker = {
 
 " airline options
 let g:airline_powerline_fonts=1
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-let g:airline_theme='onedark'
+" let g:airline_left_sep=''
+" let g:airline_right_sep=''
+" let g:airline_theme='onedark'
 let g:airline#extensions#tabline#enabled = 1 " enable airline tabline
 let g:airline#extensions#tabline#tab_min_count = 2 " only show tabline if tabs are being used (more than 1 tab open)
 let g:airline#extensions#tabline#show_buffers = 0 " do not show open buffers in tabline
