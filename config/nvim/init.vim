@@ -8,6 +8,7 @@ abbr funciton function
 abbr teh the
 abbr tempalte template
 abbr fitler filter
+ca Ag Ag!
 
 set nocompatible            " not compatible with vi
 set autoread                " detect when a file is changed
@@ -44,7 +45,6 @@ if (has('mac') && empty($TMUX) && has("termguicolors"))
     set termguicolors
 endif
 
-let delimitMate_expand_cr = 1
 
 let g:onedark_termcolors=16
 let g:onedark_terminal_italics=1
@@ -62,12 +62,12 @@ highlight Comment cterm=italic
 highlight htmlArg cterm=italic
 
 set number                  " show line numbers
-" set relativenumber          " show relative line numbers
+set relativenumber          " show relative line numbers
 
-set wrap                    " turn on line wrapping
-set wrapmargin=8            " wrap lines when coming within n characters from side
-set linebreak               " set soft wrapping
-set showbreak=…             " show ellipsis at breaking
+set nowrap                  " now rap
+" set wrapmargin=8          " wrap lines when coming within n characters from side
+" set linebreak             " set soft wrapping
+" set showbreak=…           " show ellipsis at breaking
 
 set autoindent              " automatically set indent of new line
 set smartindent
@@ -126,6 +126,8 @@ set magic                   " Set magic on, for regex
 set showmatch               " show matching braces
 set mat=2                   " how many tenths of a second to blink
 
+set cursorline              " highlight cursor line
+
 " error bells
 set noerrorbells
 set visualbell
@@ -155,21 +157,21 @@ nmap <silent> <leader>b :bw<cr>
 nmap <leader>w :w<cr>
 
 " set paste toggle
-set pastetoggle=<leader>v
+" set pastetoggle=<leader>v
 
 " toggle paste mode
 " map <leader>v :set paste!<cr>
 
 " edit ~/.config/nvim/init.vim
 nnoremap <leader>ev :vsp $MYVIMRC<cr>
-" edit gitconfig
+" edit zsh convig
 nnoremap <leader>ez :vsp ~/.zshrc<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
 
+" save current session
 nnoremap <leader>s :mksession!<cr>
 
 " clear highlighted search
-noremap <space> :set hlsearch! hlsearch?<cr>
+" noremap <space> :set hlsearch! hlsearch?<cr>
 
 " activate spell-checking alternatives
 nmap ;s :set invspell spelllang=en<cr>
@@ -281,8 +283,8 @@ map <silent> <C-\> :NERDTreeToggle<CR>
 nmap <silent> <leader>y :NERDTreeFind<cr>
 
 let NERDTreeShowHidden=1
-let NERDTreeDirArrowExpandable = '▷'
-let NERDTreeDirArrowCollapsible = '▼'
+" let NERDTreeDirArrowExpandable = '▷'
+" let NERDTreeDirArrowCollapsible = '▼'
 
 let g:fzf_layout = { 'down': '~25%' }
 
@@ -339,7 +341,7 @@ nmap <silent><leader>gb :Gblame<cr>
 
 nmap <leader>m :MarkedOpen!<cr>
 nmap <leader>mq :MarkedQuit<cr>
-nmap <leader>* *<c-o>:%s///gn<cr>
+" nmap <leader>* *<c-o>:%s///gn<cr>
 
 let g:neomake_javascript_jshint_maker = {
     \ 'args': ['--verbose'],
@@ -354,6 +356,12 @@ let g:neomake_typescript_tsc_maker = {
         \ '%E%f %#(%l\,%c): %m,' .
         \ '%Eerror %m,' .
         \ '%C%\s%\+%m'
+\ }
+
+let g:user_emmet_settings = {
+\   'javascript.jsx': {
+\       'extends': 'jsx',
+\   },
 \ }
 
 " airline options
@@ -371,6 +379,13 @@ let g:vim_json_syntax_conceal = 0
 
 let g:SuperTabCrMapping = 0
 
+" delimitmMate
+let delimitMate_expand_cr = 1
+
+" indentLine
+let g:indentLine_color_term = 239
+let g:indentLine_char = "→"
+let g:indentLine_concealcursor=0
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0

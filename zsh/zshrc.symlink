@@ -1,5 +1,8 @@
 export DOTFILES=$HOME/.dotfiles
-export ZSH=$DOTFILES/zsh
+# export ZSH=$DOTFILES/zsh
+
+export ZSH=~/.oh-my-zsh
+ZSH_THEME="clean"
 
 command_exists() {
     type "$1" > /dev/null 2>&1
@@ -13,12 +16,16 @@ export REPORTTIME=10
 
 # define the code directory
 # This is where my code exists and where I want the `c` autocomplete to work from exclusively
-if [[ -d ~/code ]]; then
-    export CODE_DIR=~/code
+if [[ -d ~/projects ]]; then
+    export CODE_DIR=~/projects
 fi
 
+plugins=(git compleat docker npm tmux vi-mode)
+source $ZSH/oh-my-zsh.sh
+export ZSH_TMUX_AUTOSTART="true"
+
 # source all .zsh files inside of the zsh/ directory
-for config ($ZSH/**/*.zsh) source $config
+# for config ($ZSH/**/*.zsh) source $config
 
 if [[ -a ~/.localrc ]]; then
     source ~/.localrc
@@ -28,7 +35,7 @@ fi
 autoload -U compinit add-zsh-hook
 compinit
 
-for config ($ZSH/**/*completion.sh) source $config
+# for config ($ZSH/**/*completion.sh) source $config
 
 export NVM_DIR="/Users/daniladergachev/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -67,7 +74,7 @@ if [[ -d ~/bin ]]; then
     export PATH=~/bin:$PATH
 fi
 
-[ -z "$TMUX" ] && export TERM=xterm-256color
+# [ -z "$TMUX" ] && export TERM=xterm-256color
 
 # install rbenv
 if command_exists rbenv; then
@@ -86,3 +93,6 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='ag -g ""'
+
+alias vi="nvim"
+alias vim="nvim"

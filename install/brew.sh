@@ -27,6 +27,7 @@ formulas=(
     wget
     z
     zsh
+    zsh-completions
     ripgrep
     git-standup
 )
