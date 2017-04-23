@@ -1,6 +1,5 @@
 source ~/.config/nvim/plugins.vim
 
-
 " Section General {{{
 
 " Abbreviations
@@ -235,6 +234,21 @@ nnoremap <silent> <leader>u :call functions#HtmlUnEscape()<cr>
 
 " }}}
 
+
+" Section Functions {{{
+function! <SID>StripTrailingWhitespaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+" }}}
+
 " Section AutoGroups {{{
 " file type specific settings
 augroup configgroup
@@ -251,6 +265,9 @@ augroup configgroup
     " when there are multiple windows open
     autocmd FileType qf wincmd J
 
+    " strip trailing whitespaces only for js
+    autocmd BufWritePre *.js :call <SID>StripTrailingWhitespaces()
+
     autocmd BufNewFile,BufReadPost *.md set filetype=markdown
     let g:markdown_fenced_languages = ['css', 'javascript', 'js=javascript', 'json=javascript', 'stylus', 'html']
 
@@ -264,7 +281,6 @@ augroup END
 " }}}
 
 " Section Plugins {{{
-
 " FZF
 """""""""""""""""""""""""""""""""""""
 map <leader>td :TernDef<CR>
