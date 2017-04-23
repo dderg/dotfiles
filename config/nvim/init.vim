@@ -234,7 +234,6 @@ nnoremap <silent> <leader>u :call functions#HtmlUnEscape()<cr>
 
 " }}}
 
-
 " Section Functions {{{
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
@@ -256,8 +255,6 @@ augroup configgroup
 
     " automatically resize panes on resize
     autocmd VimResized * exe 'normal! \<c-w>='
-    autocmd BufWritePost .vimrc,.vimrc.local,init.vim source %
-    autocmd BufWritePost .vimrc.local source %
     " save all files on focus lost, ignoring warnings about untitled buffers
     autocmd FocusLost * silent! wa
 
