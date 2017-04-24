@@ -384,6 +384,7 @@ let g:user_emmet_settings = {
 
 " airline options
 let g:airline_powerline_fonts=1
+let g:airline_detect_spell=0
 " let g:airline_left_sep=''
 " let g:airline_right_sep=''
 " let g:airline_theme='onedark'
@@ -404,6 +405,15 @@ let delimitMate_expand_cr = 1
 let g:indentLine_color_term = 239
 let g:indentLine_char = "→"
 let g:indentLine_concealcursor=0
+
+" vim-test
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+
+let test#strategy = "neovim"
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0

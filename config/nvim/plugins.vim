@@ -58,6 +58,7 @@ Plug 'easymotion/vim-easymotion' " movement plugin
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --gocode-completer' } " code completion
 Plug 'DfrankUtil' " needed for vimprj
 Plug 'vimprj' " local vim config
+Plug 'janko-m/vim-test' " testing utility
 
 " html / templates
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascript.jsx', 'stylus'] } " emmet support for vim - easily create markdup wth CSS-like syntax
