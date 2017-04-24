@@ -82,6 +82,9 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " make backspace behave in a sane manner
 set backspace=indent,eol,start
 
+" Spell check
+set spell
+
 " Tab control
 set expandtab               " insert tabs rather than spaces for <Tab>
 set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
