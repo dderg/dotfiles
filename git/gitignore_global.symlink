@@ -15,6 +15,7 @@ Icon
 
 # project-specific vim configurations
 .vimrc.local
+Session.vim
 
 # typescript command garbage
 tscommand*.txt
