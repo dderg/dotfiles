@@ -188,11 +188,8 @@ nmap <leader><space><space> :%s/\n\{2,}/\r\r/g<cr>
 
 nmap <leader>l :set list!<cr>
 
-" Textmate style indentation
-vmap <leader>[ <gv
-vmap <leader>] >gv
-nmap <leader>[ <<
-nmap <leader>] >>
+" json format
+nmap <leader>jf :call JsonFormat()<cr>
 
 " switch between current and last buffer
 nmap <leader>. <c-^>
@@ -248,6 +245,11 @@ function! <SID>StripTrailingWhitespaces()
     " Clean up: restore previous search history, and cursor position
     let @/=_s
     call cursor(l, c)
+endfunction
+
+function! JsonFormat()
+    %!python -m json.tool
+    set syntax=json
 endfunction
 " }}}
 
