@@ -189,7 +189,7 @@ nmap <leader><space><space> :%s/\n\{2,}/\r\r/g<cr>
 nmap <leader>l :set list!<cr>
 
 " json format
-nmap <leader>jf :call JsonFormat()<cr>
+nmap <leader>jf :call functions#JsonFormat()<cr>
 
 " switch between current and last buffer
 nmap <leader>. <c-^>
@@ -197,10 +197,10 @@ nmap <leader>. <c-^>
 " enable . command in visual mode
 vnoremap . :normal .<cr>
 
-map <silent> <C-h> :call functions#WinMove('h')<cr>
-map <silent> <C-j> :call functions#WinMove('j')<cr>
-map <silent> <C-k> :call functions#WinMove('k')<cr>
-map <silent> <C-l> :call functions#WinMove('l')<cr>
+map <silent> <C-h> :wincmd h<cr>
+map <silent> <C-j> :wincmd j<cr>
+map <silent> <C-k> :wincmd k<cr>
+map <silent> <C-l> :wincmd l<cr>
 
 map <leader>wc :wincmd q<cr>
 
@@ -234,25 +234,6 @@ nnoremap <silent> <leader>u :call functions#HtmlUnEscape()<cr>
 
 " }}}
 
-" Section Functions {{{
-function! <SID>StripTrailingWhitespaces()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " Do the business:
-    %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
-endfunction
-
-function! JsonFormat()
-    %!python -m json.tool
-    set syntax=json
-endfunction
-" }}}
-
 " Section AutoGroups {{{
 " file type specific settings
 augroup configgroup
@@ -268,7 +249,7 @@ augroup configgroup
     autocmd FileType qf wincmd J
 
     " strip trailing whitespaces only for js
-    autocmd BufWritePre *.js :call <SID>StripTrailingWhitespaces()
+    autocmd BufWritePre *.js :call functions#StripTrailingWhitespaces()
 
     autocmd BufNewFile,BufReadPost *.md set filetype=markdown
     let g:markdown_fenced_languages = ['css', 'javascript', 'js=javascript', 'json=javascript', 'stylus', 'html']
@@ -413,7 +394,7 @@ nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 
-let test#strategy = "neovim"
+let test#strategy = "vimux"
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
