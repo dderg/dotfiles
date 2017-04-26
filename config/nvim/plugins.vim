@@ -56,8 +56,7 @@ Plug 'tpope/vim-sleuth' " detect indent style (tabs vs. spaces)
 Plug 'sickill/vim-pasta' " context-aware pasting
 Plug 'easymotion/vim-easymotion' " movement plugin
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --gocode-completer' } " code completion
-Plug 'DfrankUtil' " needed for vimprj
-Plug 'vimprj' " local vim config
+Plug 'embear/vim-localvimrc' " local vim config
 Plug 'janko-m/vim-test' " testing utility
 
 " html / templates

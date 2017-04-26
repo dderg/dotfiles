@@ -264,8 +264,6 @@ augroup END
 " }}}
 
 " Section Plugins {{{
-" FZF
-"""""""""""""""""""""""""""""""""""""
 map <leader>td :TernDef<CR>
 map <leader>tt :TernType<CR>
 map <leader>tr :TernRename<CR>
@@ -285,11 +283,14 @@ let NERDTreeShowHidden=1
 " let NERDTreeDirArrowExpandable = '▷'
 " let NERDTreeDirArrowCollapsible = '▼'
 
-let g:fzf_layout = { 'down': '~25%' }
-
 let g:EasyMotion_smartcase = 1
 let g:gitgutter_realtime = 1
 let g:gitgutter_eager = 1
+
+" FZF
+"""""""""""""""""""""""""""""""""""""
+let g:fzf_layout = { 'down': '~25%' }
+
 
 if isdirectory(".git")
     " if in a git project, use :GFiles
