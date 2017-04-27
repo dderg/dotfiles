@@ -263,6 +263,7 @@ augroup END
 
 " Section Plugins {{{
 let g:localvimrc_ask = 0
+let g:localvimrc_sandbox = 0
 
 map <leader>td :TernDef<CR>
 map <leader>tt :TernType<CR>

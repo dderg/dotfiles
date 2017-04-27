@@ -30,8 +30,6 @@ Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' " fuzzy file finder and so m
 Plug 'rking/ag.vim' " search inside files using ag, same as ag utility, but use :Ag
 Plug 'Raimondi/delimitMate' " automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'tpope/vim-commentary' " comment stuff out
-" Plug 'tpope/vim-unimpaired' " mappings which are simply short normal mode aliases for commonly used ex commands
-" Plug 'tpope/vim-endwise' " automatically add end in ruby
 Plug 'Yggdroot/indentLine' " intentation lines for files with spases indentation
 Plug 'tpope/vim-ragtag' " endings for html, xml, etc. - ehances surround
 Plug 'tpope/vim-surround' " mappings to easily delete, change and add such surroundings in pairs, such as quotes, parens, etc.
