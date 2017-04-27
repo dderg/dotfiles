@@ -257,13 +257,13 @@ augroup configgroup
     " autocmd! BufEnter * call functions#ApplyLocalSettings(expand('<afile>:p:h'))
 
     autocmd BufNewFile,BufRead,BufWrite *.md syntax match Comment /\%^---\_.\{-}---$/
-
-    autocmd! BufWritePost * Neomake
 augroup END
 
 " }}}
 
 " Section Plugins {{{
+let g:localvimrc_ask = 0
+
 map <leader>td :TernDef<CR>
 map <leader>tt :TernType<CR>
 map <leader>tr :TernRename<CR>
@@ -279,7 +279,7 @@ map <silent> <C-\> :NERDTreeToggle<CR>
 " expand to the path of the file in the current buffer
 nmap <silent> <leader>y :NERDTreeFind<cr>
 
-let NERDTreeShowHidden=1
+let NERDTreeShowHidden = 1
 " let NERDTreeDirArrowExpandable = '▷'
 " let NERDTreeDirArrowCollapsible = '▼'
 
@@ -343,20 +343,6 @@ nmap <leader>m :MarkedOpen!<cr>
 nmap <leader>mq :MarkedQuit<cr>
 " nmap <leader>* *<c-o>:%s///gn<cr>
 
-let g:neomake_javascript_jshint_maker = {
-    \ 'args': ['--verbose'],
-    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-\ }
-
-let g:neomake_typescript_tsc_maker = {
-    \ 'args': ['-m', 'commonjs', '--noEmit' ],
-    \ 'append_file': 0,
-    \ 'errorformat':
-        \ '%E%f %#(%l\,%c): error %m,' .
-        \ '%E%f %#(%l\,%c): %m,' .
-        \ '%Eerror %m,' .
-        \ '%C%\s%\+%m'
-\ }
 
 let g:user_emmet_settings = {
 \   'javascript.jsx': {
