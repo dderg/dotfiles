@@ -20,7 +20,7 @@ if [[ -d ~/projects ]]; then
     export CODE_DIR=~/projects
 fi
 
-plugins=(git compleat docker npm tmux)
+plugins=(git compleat docker npm tmux vi-mode)
 source $ZSH/oh-my-zsh.sh
 export ZSH_TMUX_AUTOSTART="true"
 
