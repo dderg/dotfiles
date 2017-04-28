@@ -34,31 +34,19 @@ endif
 " switch cursor to line when in insert mode, and block when not
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
-if &term =~ '256color'
-    " disable background color erase
-    set t_ut=
-endif
-
 " enable 24 bit color support if supported
-if (has('mac') && empty($TMUX) && has("termguicolors"))
+if (has('mac') && has("termguicolors"))
     set termguicolors
 endif
 
-
-let g:onedark_termcolors=16
-let g:onedark_terminal_italics=1
+" set Vim-specific sequences for RGB colors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 syntax on
-" set t_Co=256                " Explicitly tell vim that the terminal supports 256 colors
-colorscheme OceanicNext       " Set the colorscheme
-
-" make the highlighting of tabs and other non-text less annoying
-highlight SpecialKey ctermbg=none ctermfg=8
-highlight NonText ctermbg=none ctermfg=8
-
-" make comments and HTML attributes italic
-highlight Comment cterm=italic
-highlight htmlArg cterm=italic
+" set t_Co=256              " Explicitly tell vim that the terminal supports 256 colors
+set background=dark
+colorscheme OceanicNext     " Set the colorscheme
 
 set number                  " show line numbers
 set relativenumber          " show relative line numbers

@@ -11,12 +11,9 @@ echo "=============================="
 formulas=(
     # flags should pass through the the `brew list check`
     diff-so-fancy
-    dnsmasq
     fzf
     git
     'grep --with-default-names'
-    highlight
-    hub
     markdown
     neovim/neovim/neovim
     nginx
