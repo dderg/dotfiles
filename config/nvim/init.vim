@@ -71,7 +71,7 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 set backspace=indent,eol,start
 
 " Spell check
-set spell
+" set spell
 
 " Tab control
 set expandtab               " insert tabs rather than spaces for <Tab>
@@ -262,6 +262,10 @@ omap / <Plug>(easymotion-tn)
 
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\ }
 
 " Toggle NERDTree
 map <silent> <C-\> :NERDTreeToggle<CR>

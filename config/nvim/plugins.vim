@@ -30,28 +30,27 @@ Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim' " fuzzy file finder and so m
 Plug 'rking/ag.vim' " search inside files using ag, same as ag utility, but use :Ag
 Plug 'Raimondi/delimitMate' " automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'tpope/vim-commentary' " comment stuff out
-Plug 'Yggdroot/indentLine' " intentation lines for files with spases indentation
-Plug 'tpope/vim-ragtag' " endings for html, xml, etc. - ehances surround
+Plug 'tpope/vim-ragtag' " endings for html, xml, etc. - enhances surround
 Plug 'tpope/vim-surround' " mappings to easily delete, change and add such surroundings in pairs, such as quotes, parens, etc.
 Plug 'benmills/vimux' " tmux integration for vim
 Plug 'vim-airline/vim-airline' " fancy statusline
 Plug 'vim-airline/vim-airline-themes' " themes for vim-airline
 Plug 'w0rp/ale' " asynchronous lint engine
 Plug 'tpope/vim-fugitive' " amazing git wrapper for vim
-Plug 'tpope/vim-rhubarb' " hub extension for fugitive
+" Plug 'tpope/vim-rhubarb' " hub extension for fugitive
 Plug 'tpope/vim-repeat' " enables repeating other supported plugins with the . command
-Plug 'garbas/vim-snipmate' " snippet manager
+" Plug 'garbas/vim-snipmate' " snippet manager
 Plug 'editorconfig/editorconfig-vim' " .editorconfig support
-Plug 'MarcWeber/vim-addon-mw-utils' " interpret a file by function and cache file automatically
-Plug 'tomtom/tlib_vim' " utility functions for vim
-Plug 'sotte/presenting.vim', { 'for': 'markdown' } " a simple tool for presenting slides in vim based on text files
-Plug 'ervandew/supertab' " Perform all your vim insert mode completions with Tab
-Plug 'tpope/vim-dispatch' " asynchronous build and test dispatcher
-Plug 'tpope/vim-vinegar' " netrw helper
-Plug 'AndrewRadev/splitjoin.vim' " single/multi line code handler: gS - split one line into multiple, gJ - combine multiple lines into one
+" Plug 'MarcWeber/vim-addon-mw-utils' " interpret a file by function and cache file automatically
+" Plug 'tomtom/tlib_vim' " utility functions for vim
+" Plug 'sotte/presenting.vim', { 'for': 'markdown' } " a simple tool for presenting slides in vim based on text files
+" Plug 'ervandew/supertab' " Perform all your vim insert mode completions with Tab
+" Plug 'tpope/vim-dispatch' " asynchronous build and test dispatcher
+" Plug 'tpope/vim-vinegar' " netrw helper
+" Plug 'AndrewRadev/splitjoin.vim' " single/multi line code handler: gS - split one line into multiple, gJ - combine multiple lines into one
 Plug 'vim-scripts/matchit.zip' " extended % matching
 Plug 'tpope/vim-sleuth' " detect indent style (tabs vs. spaces)
-Plug 'sickill/vim-pasta' " context-aware pasting
+" Plug 'sickill/vim-pasta' " context-aware pasting
 Plug 'easymotion/vim-easymotion' " movement plugin
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --gocode-completer' } " code completion
 Plug 'embear/vim-localvimrc' " local vim config
@@ -68,18 +67,7 @@ Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] } " pug / jade support
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx', 'html'] }
 Plug 'moll/vim-node', { 'for': 'javascript' } " node support
 Plug 'mxw/vim-jsx', { 'for': ['javascript.jsx', 'javascript'] } " JSX support
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
-
-" TypeScript
-Plug 'jason0x43/vim-tss', { 'for': 'typescript', 'do': 'npm install' }
-" Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'npm install' } " extended typescript support - works as a client for TSServer
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' } " typescript support
-
-" Elm
-" Plug 'lambdatoast/elm.vim', { 'for': 'elm' }
-
-" CoffeeScript
-" Plug 'kchmck/vim-coffee-script'
+" Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
 
 " styles
 Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] } " markdown support
