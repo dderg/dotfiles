@@ -7,6 +7,7 @@ abbr funciton function
 abbr teh the
 abbr tempalte template
 abbr fitler filter
+abbr cosnt const
 ca Ag Ag!
 
 set nocompatible            " not compatible with vi
@@ -32,7 +33,14 @@ endif
 " Section User Interface {{{
 
 " switch cursor to line when in insert mode, and block when not
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+  \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+  \,sm:block-blinkwait175-blinkoff150-blinkon175
+
+if &term =~ '256color'
+    " disable background color erase
+    set t_ut=
+endif
 
 " enable 24 bit color support if supported
 if (has('mac') && has("termguicolors"))
@@ -235,6 +243,7 @@ augroup configgroup
     " make quickfix windows take all the lower section of the screen
     " when there are multiple windows open
     autocmd FileType qf wincmd J
+    autocmd FileType qf nmap q :q<cr>
 
     " strip trailing whitespaces only for js
     autocmd BufWritePre *.js :call functions#StripTrailingWhitespaces()
