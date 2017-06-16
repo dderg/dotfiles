@@ -186,6 +186,7 @@ nmap <leader>l :set list!<cr>
 
 " json format
 nmap <leader>jf :call functions#JsonFormat()<cr>
+nmap <leader>xf :call functions#XmlFormat()<cr>
 
 " switch between current and last buffer
 nmap <leader>. <c-^>

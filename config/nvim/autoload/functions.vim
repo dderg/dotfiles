@@ -17,6 +17,11 @@ function! functions#JsonFormat()
     set syntax=json
 endfunction
 
+function! functions#XmlFormat()
+    %!xmllint --format -
+    set syntax=xml
+endfunction
+
 " smart tab completion
 function! functions#Smart_TabComplete()
     let line = getline('.')                         " current line
