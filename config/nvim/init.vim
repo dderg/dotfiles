@@ -241,11 +241,6 @@ augroup configgroup
     " save all files on focus lost, ignoring warnings about untitled buffers
     autocmd FocusLost * silent! wa
 
-    " make quickfix windows take all the lower section of the screen
-    " when there are multiple windows open
-    autocmd FileType qf wincmd J
-    autocmd FileType qf nmap q :q<cr>
-
     " strip trailing whitespaces only for js
     autocmd BufWritePre *.js :call functions#StripTrailingWhitespaces()
 
