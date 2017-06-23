@@ -54,7 +54,7 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 syntax on
 " set t_Co=256              " Explicitly tell vim that the terminal supports 256 colors
 set background=dark
-colorscheme gruvbox         " Set the colorscheme
+colorscheme OceanicNext     " Set the colorscheme
 
 set number                  " show line numbers
 set relativenumber          " show relative line numbers
