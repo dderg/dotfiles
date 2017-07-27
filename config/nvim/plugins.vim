@@ -17,13 +17,13 @@ endif
 call plug#begin('~/.config/nvim/plugged')
 
 " colorschemes
-Plug 'joshdick/onedark.vim'
-Plug 'chriskempson/base16-vim'
-Plug 'sjl/badwolf'
-Plug 'altercation/vim-colors-solarized'
-Plug 'w0ng/vim-hybrid'
+" Plug 'joshdick/onedark.vim'
+" Plug 'chriskempson/base16-vim'
+" Plug 'sjl/badwolf'
+" Plug 'altercation/vim-colors-solarized'
+" Plug 'w0ng/vim-hybrid'
 Plug 'mhartington/oceanic-next'
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
 
 " utilities
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] } | Plug 'Xuyuanp/nerdtree-git-plugin' " file drawer
