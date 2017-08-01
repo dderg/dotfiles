@@ -240,11 +240,6 @@ augroup configgroup
     " save all files on focus lost, ignoring warnings about untitled buffers
     autocmd FocusLost * silent! wa
 
-    " make quickfix windows take all the lower section of the screen
-    " when there are multiple windows open
-    autocmd FileType qf wincmd J
-    autocmd FileType qf nmap q :q<cr>
-
     " strip trailing whitespaces only for js
     autocmd BufWritePre *.js :call functions#StripTrailingWhitespaces()
 
@@ -275,6 +270,12 @@ map  N <Plug>(easymotion-prev)
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \ }
+
+let g:ale_fixers = {
+\   'javascript': [
+\       'eslint',
+\   ],
+\}
 
 " Toggle NERDTree
 map <silent> <C-\> :NERDTreeToggle<CR>
@@ -357,7 +358,7 @@ let g:airline_powerline_fonts=1
 let g:airline_detect_spell=0
 " let g:airline_left_sep=''
 " let g:airline_right_sep=''
-" let g:airline_theme='onedark'
+" let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#enabled = 1 " enable airline tabline
 let g:airline#extensions#tabline#tab_min_count = 2 " only show tabline if tabs are being used (more than 1 tab open)
 let g:airline#extensions#tabline#show_buffers = 0 " do not show open buffers in tabline
