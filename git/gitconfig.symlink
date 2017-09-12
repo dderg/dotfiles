@@ -1,9 +1,9 @@
 # gitconfig
 [user]
-    name = Danila Dergachev
-    email = gnomdan@yandex.ru
+	name = Danila Dergachev
+	email = gnomdan@yandex.ru
 [github]
-    user = prog666
+	user = prog666
 [init]
     templatedir = ~/.dotfiles/git/templates
 [alias]
