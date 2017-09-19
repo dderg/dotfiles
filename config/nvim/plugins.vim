@@ -70,6 +70,7 @@ Plug 'moll/vim-node', { 'for': 'javascript' } " node support
 Plug 'mxw/vim-jsx', { 'for': ['javascript.jsx', 'javascript'] } " JSX support
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] } " TypeScript support
 " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
+" Plug 'jason0x43/vim-tss', { 'for': ['typescript', 'javascript', 'javascript.jsx'], 'do': 'npm install' }
 
 " styles
 Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] } " markdown support
