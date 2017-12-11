@@ -288,6 +288,7 @@ nmap <silent> <leader>y :NERDTreeFind<cr>
 let NERDTreeShowHidden = 1
 " let NERDTreeDirArrowExpandable = '▷'
 " let NERDTreeDirArrowCollapsible = '▼'
+let g:NERDTreeGlyphReadOnly = "RO"
 
 let g:EasyMotion_smartcase = 1
 let g:gitgutter_realtime = 1
@@ -374,6 +375,9 @@ let g:SuperTabCrMapping = 0
 
 " delimitmMate
 let delimitMate_expand_cr = 1
+let delimitMate_expand_space = 1
+let delimitMate_backspace = 1
+let delimitMate_balance_matchpairs = 1
 
 " indentLine
 let g:indentLine_color_term = 239
@@ -386,6 +390,15 @@ nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
+
+let g:test#javascript#mocha#file_pattern = '\vtests?/.*\.(js|jsx|coffee|ts|tsx)$'
+
+function MochaTransform(cmd) abort
+  return a:cmd.' --require ts-node/register'
+endfunction
+
+let g:test#custom_transformations = {'mocha': function('MochaTransform')}
+let g:test#transformation = 'mocha'
 
 let test#strategy = "vimux"
 " }}}
