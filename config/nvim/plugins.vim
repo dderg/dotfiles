@@ -18,11 +18,11 @@ call plug#begin('~/.config/nvim/plugged')
 
 " colorschemes
 " Plug 'joshdick/onedark.vim'
-" Plug 'chriskempson/base16-vim'
+Plug 'chriskempson/base16-vim'
 " Plug 'sjl/badwolf'
 " Plug 'altercation/vim-colors-solarized'
 " Plug 'w0ng/vim-hybrid'
-Plug 'mhartington/oceanic-next'
+" Plug 'mhartington/oceanic-next'
 " Plug 'morhetz/gruvbox'
 
 " utilities
@@ -47,16 +47,17 @@ Plug 'editorconfig/editorconfig-vim' " .editorconfig support
 " Plug 'tomtom/tlib_vim' " utility functions for vim
 " Plug 'sotte/presenting.vim', { 'for': 'markdown' } " a simple tool for presenting slides in vim based on text files
 " Plug 'ervandew/supertab' " Perform all your vim insert mode completions with Tab
-" Plug 'tpope/vim-dispatch' " asynchronous build and test dispatcher
-" Plug 'tpope/vim-vinegar' " netrw helper
 " Plug 'AndrewRadev/splitjoin.vim' " single/multi line code handler: gS - split one line into multiple, gJ - combine multiple lines into one
 Plug 'vim-scripts/matchit.zip' " extended % matching
 Plug 'tpope/vim-sleuth' " detect indent style (tabs vs. spaces)
 " Plug 'sickill/vim-pasta' " context-aware pasting
 Plug 'easymotion/vim-easymotion' " movement plugin
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --gocode-completer' } " code completion
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --gocode-completer' } " code completion
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " completion
+Plug 'zchee/deoplete-go', { 'do': 'make'} " gocode
 Plug 'embear/vim-localvimrc' " local vim config
 Plug 'janko-m/vim-test' " testing utility
+Plug 'christoomey/vim-tmux-navigator' " C-movement actions in tmux + vim
 
 " html / templates
 Plug 'mattn/emmet-vim', { 'for': ['html', 'javascript.jsx', 'stylus'] } " emmet support for vim - easily create markdup wth CSS-like syntax
@@ -68,8 +69,15 @@ Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] } " pug / jade support
 " JavaScript
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx', 'html'] }
 Plug 'moll/vim-node', { 'for': 'javascript' } " node support
-Plug 'mxw/vim-jsx', { 'for': ['javascript.jsx', 'javascript'] } " JSX support
-Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] } " TypeScript support
+" Plug 'mxw/vim-jsx', { 'for': ['javascript.jsx', 'javascript'] } " JSX support
+" Plug 'ianks/vim-tsx', { 'for': ['typescript.jsx'] } " TSX support
+Plug 'mhartington/nvim-typescript', { 'for': ['typescript', 'typescript.tsx'] } " TypeScript completion
+" Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] } " Extended TypeScript support
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] } " TypeScript support
+Plug 'peitalin/vim-jsx-typescript', { 'for': ['typescript.tsx'] } " Tsx support
+Plug 'Quramy/tsuquyomi', { 'for': ['typescript', 'typescript.tsx'] } " Typescript go to definition
+" Plug 'Quramy/tsuquyomi-vue', { 'for': ['vue'] } " Typescript vue support
+Plug 'posva/vim-vue', { 'for': ['vue'] } " vue support
 " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
 " Plug 'jason0x43/vim-tss', { 'for': ['typescript', 'javascript', 'javascript.jsx'], 'do': 'npm install' }
 

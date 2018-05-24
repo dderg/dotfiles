@@ -10,7 +10,6 @@ abbr fitler filter
 abbr cosnt const
 ca Ag Ag!
 
-set nocompatible            " not compatible with vi
 set autoread                " detect when a file is changed
 
 set history=1000            " change history to 1000
@@ -22,11 +21,7 @@ set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 let g:python_host_prog = '/usr/local/bin/python2'
 let g:python3_host_prog = '/usr/local/bin/python3'
 
-if (has('nvim'))
-	" show results of substition as they're happening
-	" but don't open a split
-	set inccommand=nosplit
-endif
+" set inccommand=nosplit
 
 " }}}
 
@@ -37,32 +32,19 @@ set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
   \,sm:block-blinkwait175-blinkoff150-blinkon175
 
-if &term =~ '256color'
-    " disable background color erase
-    set t_ut=
-endif
-
 " enable 24 bit color support if supported
 if (has('mac') && has("termguicolors"))
     set termguicolors
 endif
 
-" set Vim-specific sequences for RGB colors
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-
 syntax on
-" set t_Co=256              " Explicitly tell vim that the terminal supports 256 colors
 set background=dark
-colorscheme OceanicNext     " Set the colorscheme
+colorscheme base16-oceanicnext " Set the colorscheme
 
 set number                  " show line numbers
 set relativenumber          " show relative line numbers
 
 set nowrap                  " now rap
-" set wrapmargin=8          " wrap lines when coming within n characters from side
-" set linebreak             " set soft wrapping
-" set showbreak=…           " show ellipsis at breaking
 
 set autoindent              " automatically set indent of new line
 set smartindent
@@ -193,10 +175,15 @@ nmap <leader>. <c-^>
 " enable . command in visual mode
 vnoremap . :normal .<cr>
 
-map <silent> <C-h> :wincmd h<cr>
-map <silent> <C-j> :wincmd j<cr>
-map <silent> <C-k> :wincmd k<cr>
-map <silent> <C-l> :wincmd l<cr>
+" map <silent> <C-h> :wincmd h<cr>
+" map <silent> <C-j> :wincmd j<cr>
+" map <silent> <C-k> :wincmd k<cr>
+" map <silent> <C-l> :wincmd l<cr>
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
 
 map <leader>wc :wincmd q<cr>
 
@@ -249,6 +236,9 @@ augroup configgroup
     " autocmd! BufEnter * call functions#ApplyLocalSettings(expand('<afile>:p:h'))
 
     autocmd BufNewFile,BufRead,BufWrite *.md syntax match Comment /\%^---\_.\{-}---$/
+
+    " set filetypes as typescript.jsx
+    autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 augroup END
 
 " }}}
@@ -269,12 +259,16 @@ map  N <Plug>(easymotion-prev)
 
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'typescript': ['tslint', 'tsserver']
+\   'typescript': ['tslint', 'tsserver'],
+\   'vue': []
 \ }
 
 let g:ale_fixers = {
 \   'javascript': [
 \       'eslint',
+\   ],
+\   'typescript': [
+\        'tslint',
 \   ],
 \}
 
@@ -367,6 +361,8 @@ let g:airline#extensions#tabline#enabled = 1 " enable airline tabline
 let g:airline#extensions#tabline#tab_min_count = 2 " only show tabline if tabs are being used (more than 1 tab open)
 let g:airline#extensions#tabline#show_buffers = 0 " do not show open buffers in tabline
 let g:airline#extensions#tabline#show_splits = 0
+let g:airline_section_y = ''
+let g:airline_section_z = ''
 
 " don't hide quotes in json files
 let g:vim_json_syntax_conceal = 0
@@ -401,6 +397,8 @@ let g:test#custom_transformations = {'mocha': function('MochaTransform')}
 let g:test#transformation = 'mocha'
 
 let test#strategy = "vimux"
+
+let g:deoplete#enable_at_startup = 1
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0

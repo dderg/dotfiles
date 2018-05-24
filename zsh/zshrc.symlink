@@ -20,9 +20,9 @@ if [[ -d ~/projects ]]; then
     export CODE_DIR=~/projects
 fi
 
-plugins=(git compleat docker npm tmux vi-mode)
+plugins=(git compleat docker npm tmux vi-mode zsh-completions)
 source $ZSH/oh-my-zsh.sh
-export ZSH_TMUX_AUTOSTART="true"
+# export ZSH_TMUX_AUTOSTART="true"
 
 # source all .zsh files inside of the zsh/ directory
 # for config ($ZSH/**/*.zsh) source $config
@@ -32,8 +32,7 @@ if [[ -a ~/.localrc ]]; then
 fi
 
 # initialize autocomplete
-autoload -U compinit add-zsh-hook
-compinit
+autoload -U compinit add-zsh-hook && compinit
 
 # for config ($ZSH/**/*completion.sh) source $config
 
@@ -89,3 +88,5 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 alias vi="nvim"
 alias vim="nvim"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export LANG=en_GB.UTF-8
