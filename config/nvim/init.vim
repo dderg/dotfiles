@@ -376,9 +376,9 @@ let delimitMate_backspace = 1
 let delimitMate_balance_matchpairs = 1
 
 " indentLine
-let g:indentLine_color_term = 239
-let g:indentLine_char = "→"
-let g:indentLine_concealcursor=0
+" let g:indentLine_color_term = 239
+" let g:indentLine_char = "→"
+" let g:indentLine_concealcursor=0
 
 " vim-test
 nmap <silent> <leader>t :TestNearest<CR>
@@ -389,12 +389,12 @@ nmap <silent> <leader>g :TestVisit<CR>
 
 let g:test#javascript#mocha#file_pattern = '\vtests?/.*\.(js|jsx|coffee|ts|tsx)$'
 
-function MochaTransform(cmd) abort
-  return a:cmd.' --require ts-node/register'
-endfunction
+" function MochaTransform(cmd) abort
+"   return a:cmd.' --require ts-node/register'
+" endfunction
 
-let g:test#custom_transformations = {'mocha': function('MochaTransform')}
-let g:test#transformation = 'mocha'
+" let g:test#custom_transformations = {'mocha': function('MochaTransform')}
+" let g:test#transformation = 'mocha'
 
 let test#strategy = "vimux"
 

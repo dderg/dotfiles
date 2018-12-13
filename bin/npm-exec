@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 NPM_SCRIPT="$1"
 shift
