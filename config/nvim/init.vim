@@ -54,6 +54,8 @@ set list
 set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
 set showbreak=↪
 
+let g:tsuquyomi_disable_quickfix = 1
+
 " highlight conflicts
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
@@ -227,8 +229,9 @@ augroup configgroup
     " save all files on focus lost, ignoring warnings about untitled buffers
     autocmd FocusLost * silent! wa
 
-    " strip trailing whitespaces only for js
+    " strip trailing whitespaces only for js and ts
     autocmd BufWritePre *.js :call functions#StripTrailingWhitespaces()
+    " autocmd BufWritePre *.ts :call functions#StripTrailingWhitespaces()
 
     autocmd BufNewFile,BufReadPost *.md set filetype=markdown
     let g:markdown_fenced_languages = ['css', 'javascript', 'js=javascript', 'json=javascript', 'stylus', 'html']
@@ -239,6 +242,7 @@ augroup configgroup
 
     " set filetypes as typescript.jsx
     autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
+    " autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 augroup END
 
 " }}}
@@ -259,18 +263,21 @@ map  N <Plug>(easymotion-prev)
 
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'typescript': ['tslint', 'tsserver'],
-\   'vue': []
+\   'typescript': ['eslint', 'tsserver']
 \ }
 
 let g:ale_fixers = {
 \   'javascript': [
 \       'eslint',
+\       'prettier',
 \   ],
 \   'typescript': [
-\        'tslint',
+\       'eslint',
+\       'prettier',
 \   ],
 \}
+
+let g:ale_fix_on_save = 1
 
 " let g:ale_completion_enabled = 1;
 

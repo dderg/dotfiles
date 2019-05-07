@@ -74,9 +74,10 @@ Plug 'mhartington/nvim-typescript', { 'for': ['typescript', 'typescript.tsx'] } 
 " Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] } " Extended TypeScript support
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] } " TypeScript support
 Plug 'peitalin/vim-jsx-typescript', { 'for': ['typescript.tsx'] } " Tsx support
+Plug 'Shougo/vimproc.vim', { 'do': 'make' } " interactive command execution in vim
 Plug 'Quramy/tsuquyomi', { 'for': ['typescript', 'typescript.tsx'] } " Typescript go to definition
 " Plug 'Quramy/tsuquyomi-vue', { 'for': ['vue'] } " Typescript vue support
-Plug 'posva/vim-vue', { 'for': ['vue'] } " vue support
+" Plug 'posva/vim-vue', { 'for': ['vue'] } " vue support
 " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
 " Plug 'jason0x43/vim-tss', { 'for': ['typescript', 'javascript', 'javascript.jsx'], 'do': 'npm install' }
 
@@ -93,7 +94,6 @@ Plug 'tpope/vim-markdown', { 'for': 'markdown' } " markdown support
 
 " language-specific plugins
 Plug 'elzr/vim-json', { 'for': 'json' } " JSON support
-Plug 'Shougo/vimproc.vim', { 'do': 'make' } " interactive command execution in vim
 Plug 'fatih/vim-go', { 'for': 'go' } " go support
 Plug 'timcharper/textile.vim', { 'for': 'textile' } " textile support
 
