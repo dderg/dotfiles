@@ -70,7 +70,7 @@ Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx', 'html'
 Plug 'moll/vim-node', { 'for': 'javascript' } " node support
 " Plug 'mxw/vim-jsx', { 'for': ['javascript.jsx', 'javascript'] } " JSX support
 " Plug 'ianks/vim-tsx', { 'for': ['typescript.jsx'] } " TSX support
-Plug 'mhartington/nvim-typescript', { 'for': ['typescript', 'typescript.tsx'] } " TypeScript completion
+Plug 'mhartington/nvim-typescript', { 'for': ['typescript', 'typescript.tsx'], 'do': ':!install.sh \| UpdateRemotePlugins' } " TypeScript completion
 " Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] } " Extended TypeScript support
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] } " TypeScript support
 Plug 'peitalin/vim-jsx-typescript', { 'for': ['typescript.tsx'] } " Tsx support

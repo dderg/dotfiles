@@ -251,9 +251,12 @@ augroup END
 let g:localvimrc_ask = 0
 let g:localvimrc_sandbox = 0
 
-map <leader>td :TernDef<CR>
-map <leader>tt :TernType<CR>
-map <leader>tr :TernRename<CR>
+" map <leader>td :TernDef<CR>
+" map <leader>tt :TernType<CR>
+" map <leader>tr :TernRename<CR>
+map <leader>td :TSDefs<CR>
+map <leader>tt :TSType<CR>
+map <leader>tr :TSRename<CR>
 
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
@@ -394,14 +397,14 @@ nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 
-let g:test#javascript#mocha#file_pattern = '\vtests?/.*\.(js|jsx|coffee|ts|tsx)$'
+let g:test#javascript#jest#file_pattern = '\vtest\.(js|jsx|coffee|ts|tsx)$'
 
-" function MochaTransform(cmd) abort
-"   return a:cmd.' --require ts-node/register'
-" endfunction
+function JestTransform(cmd) abort
+  return a:cmd.' --require ts-node/register'
+endfunction
 
-" let g:test#custom_transformations = {'mocha': function('MochaTransform')}
-" let g:test#transformation = 'mocha'
+let g:test#custom_transformations = {'jest': function('JestTransform')}
+let g:test#transformation = 'jest'
 
 let test#strategy = "vimux"
 
