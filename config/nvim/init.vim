@@ -54,7 +54,7 @@ set list
 set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
 set showbreak=↪
 
-let g:tsuquyomi_disable_quickfix = 1
+" let g:tsuquyomi_disable_quickfix = 1
 
 " highlight conflicts
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -251,12 +251,15 @@ augroup END
 let g:localvimrc_ask = 0
 let g:localvimrc_sandbox = 0
 
-" map <leader>td :TernDef<CR>
-" map <leader>tt :TernType<CR>
-" map <leader>tr :TernRename<CR>
-map <leader>td :TSDefs<CR>
-map <leader>tt :TSType<CR>
-map <leader>tr :TSRename<CR>
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
@@ -408,7 +411,9 @@ let g:test#transformation = 'jest'
 
 let test#strategy = "vimux"
 
-let g:deoplete#enable_at_startup = 1
+" CoC extensions
+let g:coc_global_extensions = ['coc-tsserver']
+
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
