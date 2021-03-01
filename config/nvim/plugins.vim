@@ -70,7 +70,7 @@ Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx', 'html'
 Plug 'moll/vim-node', { 'for': 'javascript' } " node support
 " Plug 'mxw/vim-jsx', { 'for': ['javascript.jsx', 'javascript'] } " JSX support
 " Plug 'ianks/vim-tsx', { 'for': ['typescript.jsx'] } " TSX support
-Plug 'mhartington/nvim-typescript', { 'for': ['typescript', 'typescript.tsx'], 'do': ':!install.sh \| UpdateRemotePlugins' } " TypeScript completion
+" Plug 'mhartington/nvim-typescript', { 'for': ['typescript', 'typescript.tsx'], 'do': ':!install.sh \| UpdateRemotePlugins' } " TypeScript completion
 " Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] } " Extended TypeScript support
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] } " TypeScript support
 Plug 'peitalin/vim-jsx-typescript', { 'for': ['typescript.tsx'] } " Tsx support
@@ -91,6 +91,7 @@ Plug 'hail2u/vim-css3-syntax', { 'for': 'css' } " CSS3 syntax support
 " markdown
 Plug 'itspriddle/vim-marked', { 'for': 'markdown', 'on': 'MarkedOpen' } " Open markdown files in Marked.app - mapped to <leader>m
 Plug 'tpope/vim-markdown', { 'for': 'markdown' } " markdown support
+Plug 'jxnblk/vim-mdx-js', { 'for': 'markdown.mdx' } " mdx support
 
 " language-specific plugins
 Plug 'elzr/vim-json', { 'for': 'json' } " JSON support

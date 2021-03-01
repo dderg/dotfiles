@@ -4,7 +4,6 @@ Thumbs.db
 *.swp
 .AppleDouble
 .LSOverride
-Icon
 
 # Thumbnails
 ._*
@@ -19,9 +18,6 @@ Session.vim
 
 # typescript command garbage
 tscommand*.txt
-
-# nvm - the Node Version Manager
-.nvmrc
 
 # npm things
 npm-debug.log

@@ -20,7 +20,7 @@ if [[ -d ~/projects ]]; then
     export CODE_DIR=~/projects
 fi
 
-plugins=(git compleat docker npm tmux vi-mode zsh-completions)
+plugins=(git compleat docker npm tmux vi-mode)
 # initialize autocomplete
 autoload -U compinit add-zsh-hook && compinit
 source $ZSH/oh-my-zsh.sh
@@ -38,6 +38,18 @@ fi
 export NVM_DIR=$HOME/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
+autoload -U add-zsh-hook
+load-nvmrc() {
+  if [[ -f .nvmrc && -r .nvmrc ]]; then
+    nvm use
+  elif [[ $(nvm version) != $(nvm version default)  ]]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
 export EDITOR='nvim'
 export GIT_EDITOR='nvim'
 
@@ -46,6 +58,7 @@ export GOPATH=$HOME/gocode
 export PATH=$GOPATH/bin:$PATH
 
 export PATH=/usr/local/bin:$PATH
+
 
 fancy-ctrl-z () {
     if [[ $#BUFFER -eq 0 ]]; then
@@ -89,3 +102,7 @@ alias vim="nvim"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export LANG=en_GB.UTF-8
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_74.jdk/Contents/Home
+
+export PATH=$JAVA_HOME/include:$PATH

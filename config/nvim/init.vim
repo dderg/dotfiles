@@ -18,8 +18,8 @@ set textwidth=120
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 
-let g:python_host_prog = '/usr/local/bin/python2'
-let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
 
 " set inccommand=nosplit
 
@@ -266,7 +266,8 @@ map  N <Plug>(easymotion-prev)
 
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'typescript': ['eslint', 'tsserver']
+\   'typescript': ['eslint', 'tsserver'],
+\   'markdown.mdx': ['eslint', 'tsserver']
 \ }
 
 let g:ale_fixers = {
@@ -402,6 +403,12 @@ let g:test#javascript#jest#file_pattern = '\vtest\.(js|jsx|coffee|ts|tsx)$'
 function JestTransform(cmd) abort
   return a:cmd.' --require ts-node/register'
 endfunction
+
+function! Formatonsave()
+  let l:formatdiff = 1
+  pyf ~/llvm/tools/clang/tools/clang-format/clang-format.py
+endfunction
+autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
 
 let g:test#custom_transformations = {'jest': function('JestTransform')}
 let g:test#transformation = 'jest'
