@@ -261,32 +261,23 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" Use <leader>gt to show documentation in preview window
+nnoremap <silent> <leader>gt :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
 
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'typescript': ['eslint', 'tsserver'],
-\   'markdown.mdx': ['eslint', 'tsserver']
-\ }
-
-let g:ale_fixers = {
-\   'javascript': [
-\       'prettier',
-\       'eslint',
-\   ],
-\   'typescript': [
-\       'prettier',
-\       'eslint',
-\   ],
-\}
-
-let g:ale_fix_on_save = 1
-
-" let g:ale_completion_enabled = 1;
 
 " Toggle NERDTree
 map <silent> <C-\> :NERDTreeToggle<CR>
@@ -358,6 +349,7 @@ nmap <leader>m :MarkedOpen!<cr>
 nmap <leader>mq :MarkedQuit<cr>
 " nmap <leader>* *<c-o>:%s///gn<cr>
 
+nmap <leader>inc <C-a>
 
 let g:user_emmet_settings = {
 \   'javascript.jsx': {
