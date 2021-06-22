@@ -2,6 +2,11 @@ source ~/.config/nvim/plugins.vim
 
 " Section General {{{
 
+" LSP
+lua << EOF
+require'lspconfig'.tsserver.setup{}
+EOF
+
 " Abbreviations
 abbr funciton function
 abbr teh the
@@ -251,15 +256,28 @@ augroup END
 let g:localvimrc_ask = 0
 let g:localvimrc_sandbox = 0
 
+
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> g,    <cmd>lua vim.lsp.buf.formatting(nil, 1000)<CR>
+vnoremap <silent> g,    <cmd>lua vim.lsp.buf.range_formatting()<CR>
+nnoremap <silent> <leader>ac    <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> gR    <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> gi    <cmd>lua print(require'custom_functions'.get_current_diagnostics())<CR>
+
 " Remap keys for applying codeAction to the current line.
-nmap <leader>ac  <Plug>(coc-codeaction)
+" nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+" nmap <leader>qf  <Plug>(coc-fix-current)
 " GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
 
 " Use <leader>gt to show documentation in preview window
 nnoremap <silent> <leader>gt :call <SID>show_documentation()<CR>
@@ -387,11 +405,11 @@ let delimitMate_balance_matchpairs = 1
 " let g:indentLine_concealcursor=0
 
 " vim-test
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
+" nmap <silent> <leader>t :TestNearest<CR>
+" nmap <silent> <leader>T :TestFile<CR>
+" nmap <silent> <leader>a :TestSuite<CR>
+" nmap <silent> <leader>l :TestLast<CR>
+" nmap <silent> <leader>g :TestVisit<CR>
 
 let g:test#javascript#jest#file_pattern = '\vtest\.(js|jsx|coffee|ts|tsx)$'
 
