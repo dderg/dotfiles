@@ -182,10 +182,16 @@ vnoremap . :normal .<cr>
 " map <silent> <C-k> :wincmd k<cr>
 " map <silent> <C-l> :wincmd l<cr>
 let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
+
+lua << EOL
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+map('n', "<C-h>", "<CMD>lua require('Navigator').left()<CR>", opts)
+map('n', "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opts)
+map('n', "<C-l>", "<CMD>lua require('Navigator').right()<CR>", opts)
+map('n', "<C-j>", "<CMD>lua require('Navigator').down()<CR>", opts)
+EOL
 
 map <leader>wc :wincmd q<cr>
 
@@ -226,19 +232,13 @@ augroup configgroup
 
     " automatically resize panes on resize
     autocmd VimResized * exe 'normal! \<c-w>='
-    " save all files on focus lost, ignoring warnings about untitled buffers
-    autocmd FocusLost * silent! wa
 
-    " strip trailing whitespaces only for js and ts
-    autocmd BufWritePre *.js :call functions#StripTrailingWhitespaces()
-    " autocmd BufWritePre *.ts :call functions#StripTrailingWhitespaces()
-
-    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-    let g:markdown_fenced_languages = ['css', 'javascript', 'js=javascript', 'json=javascript', 'stylus', 'html']
+    " autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+    " let g:markdown_fenced_languages = ['css', 'javascript', 'js=javascript', 'json=javascript', 'stylus', 'html']
 
     " autocmd! BufEnter * call functions#ApplyLocalSettings(expand('<afile>:p:h'))
 
-    autocmd BufNewFile,BufRead,BufWrite *.md syntax match Comment /\%^---\_.\{-}---$/
+    " autocmd BufNewFile,BufRead,BufWrite *.md syntax match Comment /\%^---\_.\{-}---$/
 
     " set filetypes as typescript.jsx
     autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
@@ -308,46 +308,14 @@ endif
 
 nmap <silent> <leader>r :Buffers<cr>
 nmap <silent> <leader>e :FZF<cr>
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
-" Insert mode completion
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
-nnoremap <silent> <Leader>C :call fzf#run({
-\   'source':
-\     map(split(globpath(&rtp, "colors/*.vim"), "\n"),
-\         "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
-\   'sink':    'colo',
-\   'options': '+m',
-\   'left':    30
-\ })<CR>
-
-command! FZFMru call fzf#run({
-\  'source':  v:oldfiles,
-\  'sink':    'e',
-\  'options': '-m -x +s',
-\  'down':    '40%'})
-
-command! -bang -nargs=* Find call fzf#vim#grep(
-	\ 'rg --column --line-number --no-heading --follow --color=always '.<q-args>, 1,
-	\ <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'), <bang>0)
 
 
 " Fugitive Shortcuts
 """""""""""""""""""""""""""""""""""""
-nmap <silent> <leader>gs :Gstatus<cr>
-nmap <leader>ge :Gedit<cr>
-nmap <silent><leader>gr :Gread<cr>
-nmap <silent><leader>gb :Gblame<cr>
-
-nmap <leader>m :MarkedOpen!<cr>
-nmap <leader>mq :MarkedQuit<cr>
-" nmap <leader>* *<c-o>:%s///gn<cr>
+nmap <silent> <leader>gs :Git<cr>
+" nmap <leader>ge :Gedit<cr>
+" nmap <silent><leader>gr :Gread<cr>
+nmap <silent><leader>gb :Git blame<cr>
 
 nmap <leader>inc <C-a>
 
@@ -386,29 +354,12 @@ let delimitMate_balance_matchpairs = 1
 " let g:indentLine_char = "→"
 " let g:indentLine_concealcursor=0
 
-" vim-test
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
+" function! Formatonsave()
+"   let l:formatdiff = 1
+"   pyf ~/llvm/tools/clang/tools/clang-format/clang-format.py
+" endfunction
+" autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
 
-let g:test#javascript#jest#file_pattern = '\vtest\.(js|jsx|coffee|ts|tsx)$'
-
-function JestTransform(cmd) abort
-  return a:cmd.' --require ts-node/register'
-endfunction
-
-function! Formatonsave()
-  let l:formatdiff = 1
-  pyf ~/llvm/tools/clang/tools/clang-format/clang-format.py
-endfunction
-autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
-
-let g:test#custom_transformations = {'jest': function('JestTransform')}
-let g:test#transformation = 'jest'
-
-let test#strategy = "vimux"
 
 " CoC extensions
 let g:coc_global_extensions = ['coc-tsserver']
