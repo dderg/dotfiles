@@ -40,4 +40,6 @@ if ! command_exists zplug; then
     git clone https://github.com/zplug/zplug ~/.zplug
 fi
 
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+
 echo "Done. Reload your terminal."
