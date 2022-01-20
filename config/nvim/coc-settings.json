@@ -1,6 +1,0 @@
-{
-    "eslint": {
-        "autoFixOnSave": true,
-        "run": "onSave"
-    }
-}
