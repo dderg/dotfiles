@@ -40,6 +40,7 @@ Plug 'easymotion/vim-easymotion' " movement plugin
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " completion
 Plug 'embear/vim-localvimrc' " local vim config
 Plug 'numToStr/Navigator.nvim' " C-movement actions in tmux + vim
+Plug 'mattn/emmet-vim' " emmet
 
 " html / templates
 Plug 'gregsexton/MatchTag', { 'for': 'html' } " match tags in html, similar to paren support
