@@ -12,6 +12,8 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 
 Plug 'RRethy/nvim-base16'
 
+Plug 'tpope/vim-commentary' -- comment stuff out
+
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 

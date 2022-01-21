@@ -58,6 +58,9 @@ nvimtree.setup {
     enable = true,
     update_cwd = false
   },
+  git = {
+    ignore = false
+  },
   view = {
     width = 40,
     side = "left",
