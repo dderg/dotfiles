@@ -10,13 +10,11 @@ echo "=============================="
 
 formulas=(
     # flags should pass through the the `brew list check`
-    diff-so-fancy
     fzf
     git
     'grep --with-default-names'
     markdown
     neovim/neovim/neovim
-    nginx
     reattach-to-user-namespace
     the_silver_searcher
     tmux
@@ -26,7 +24,10 @@ formulas=(
     zsh
     zsh-completions
     ripgrep
-    git-standup
+)
+
+cask_formulas=(
+    kitty
 )
 
 for formula in "${formulas[@]}"; do
@@ -34,5 +35,13 @@ for formula in "${formulas[@]}"; do
         echo "$formula already installed... skipping."
     else
         brew install $formula
+    fi
+done
+
+for formula in "${cask_formulas[@]}"; do
+    if brew list "$formula" > /dev/null 2>&1; then
+        echo "$formula already installed... skipping."
+    else
+        brew install --cask $formula
     fi
 done

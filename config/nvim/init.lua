@@ -73,6 +73,8 @@ opt.foldnestmax = 10 -- deepest fold is 10 levels
 opt.foldenable = false -- don't fold by default
 opt.foldlevel = 1
 
+cmd [[ca Ag Ag!]]
+
 -- toggle invisible characters
 opt.list = true
 opt.listchars = {
@@ -83,6 +85,7 @@ opt.listchars = {
   precedes = "❮"
 }
 
+opt.hlsearch = false
 opt.ttyfast = true -- faster redrawing
 opt.laststatus = 2 -- show the satus line all the time
 opt.so = 7 -- set 7 lines to the cursors - when moving vertical
@@ -124,3 +127,8 @@ omap("/", "<Plug>(easymotion-tn)")
 
 nmap("n", "<Plug>(easymotion-next)")
 nmap("N", "<Plug>(easymotion-prev)")
+
+g.EasyMotion_smartcase = 1
+g.gitgutter_realtime = 1
+g.gitgutter_eager = 1
+
