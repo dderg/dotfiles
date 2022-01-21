@@ -17,8 +17,6 @@ Plug 'kyazdani42/nvim-tree.lua'
 
 Plug 'nvim-telescope/telescope.nvim'
 Plug('nvim-telescope/telescope-fzf-native.nvim', {['do'] = 'make'})
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
 
 Plug 'easymotion/vim-easymotion' -- movement plugin
 Plug 'tpope/vim-sleuth' -- detect indent style (tabs vs. spaces)
@@ -36,6 +34,8 @@ cmd [[Plug 'moll/vim-node', { 'for': 'javascript' } ]]
 cmd [[ Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] } ]]
 cmd [[ Plug 'maxmellon/vim-jsx-pretty'   ]]
 
+cmd [[ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } ]]
+Plug 'junegunn/fzf.vim'
 
 vim.call('plug#end')
 

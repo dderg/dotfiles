@@ -12,6 +12,7 @@ formulas=(
     # flags should pass through the the `brew list check`
     fzf
     git
+    diff-so-fancy
     'grep --with-default-names'
     markdown
     neovim/neovim/neovim
@@ -28,6 +29,8 @@ formulas=(
 
 cask_formulas=(
     kitty
+    telegram
+    docker
 )
 
 for formula in "${formulas[@]}"; do
