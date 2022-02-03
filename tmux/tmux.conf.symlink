@@ -55,6 +55,8 @@ bind-key r source-file ~/.tmux.conf
 
 # quickly open a new window
 bind N new-window
+bind '"' split-window -c "#{pane_current_path}"
+bind % split-window -h -c "#{pane_current_path}"
 
 # disable rename
 set-option -g allow-rename off
