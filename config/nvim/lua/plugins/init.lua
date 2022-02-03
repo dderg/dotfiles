@@ -25,6 +25,7 @@ Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'easymotion/vim-easymotion' -- movement plugin
 Plug 'tpope/vim-sleuth' -- detect indent style (tabs vs. spaces)
+Plug 'editorconfig/editorconfig-vim' -- .editorconfig support
 
 Plug 'alexghergh/nvim-tmux-navigation'
 
@@ -32,7 +33,7 @@ Plug 'alexghergh/nvim-tmux-navigation'
 cmd [[Plug 'windwp/nvim-autopairs']]
 
 -- Run prettier and other formatters on save
-cmd [[Plug 'mhartington/formatter.nvim']]
+-- cmd [[Plug 'mhartington/formatter.nvim']]
 
 Plug 'rking/ag.vim' -- search inside files using ag, same as ag utility, but use :Ag
 Plug 'tpope/vim-surround' -- mappings to easily delete, change and add such surroundings in pairs, such as quotes, parens, etc.
@@ -40,16 +41,22 @@ Plug 'tpope/vim-surround' -- mappings to easily delete, change and add such surr
 -- Show git information in the gutter
 cmd [[Plug 'lewis6991/gitsigns.nvim']]
 
+Plug 'tpope/vim-fugitive' -- amazing git wrapper for vim
+
 -- cmd [[Plug 'neoclide/coc.nvim', {'branch': 'release'} ]]
 cmd [[Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx', 'html'] }]]
 cmd [[Plug 'moll/vim-node', { 'for': 'javascript' } ]]
 cmd [[ Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] } ]]
 cmd [[ Plug 'maxmellon/vim-jsx-pretty'   ]]
+cmd [[ Plug 'jxnblk/vim-mdx-js', { 'for': 'markdown.mdx' } ]]
 
 cmd [[Plug 'ekalinin/Dockerfile.vim']]
 
 -- Helpers to configure the built-in Neovim LSP client
-cmd [[Plug 'neovim/nvim-lspconfig']]
+-- cmd [[Plug 'neovim/nvim-lspconfig']]
+
+cmd [[Plug 'neoclide/coc.nvim', {'branch': 'release'}]]
+
 
 -- Helpers to install LSPs and maintain them
 cmd [[Plug 'williamboman/nvim-lsp-installer']]
@@ -62,11 +69,11 @@ cmd [[Plug 'hrsh7th/cmp-path']]
 cmd [[Plug 'hrsh7th/nvim-cmp']]
 
 -- treesitter enables an AST-like understanding of files
-cmd [[Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}]]
+-- cmd [[Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}]]
 -- enable more advanced treesitter-aware text objects
-cmd [[Plug 'nvim-treesitter/nvim-treesitter-textobjects']]
+-- cmd [[Plug 'nvim-treesitter/nvim-treesitter-textobjects']]
 -- show treesitter nodes
-cmd [[Plug 'nvim-treesitter/playground']]
+-- cmd [[Plug 'nvim-treesitter/playground']]
 
 -- show nerd font icons for LSP types in completion menu
 cmd [[Plug 'onsails/lspkind-nvim']]
@@ -99,10 +106,10 @@ require("plugins.telescope")
 require("plugins.gitsigns")
 require("plugins.trouble")
 require("plugins.fzf")
-require("plugins.lspconfig")
+-- require("plugins.lspconfig")
 require("plugins.completion")
-require("plugins.treesitter")
+-- require("plugins.treesitter")
 require("plugins.nvimtree")
-require("plugins.formatter")
+-- require("plugins.formatter")
 require("plugins.tabline")
 require("plugins.feline")
