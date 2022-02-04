@@ -49,6 +49,7 @@ cmd [[Plug 'moll/vim-node', { 'for': 'javascript' } ]]
 cmd [[ Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] } ]]
 cmd [[ Plug 'maxmellon/vim-jsx-pretty'   ]]
 cmd [[ Plug 'jxnblk/vim-mdx-js', { 'for': 'markdown.mdx' } ]]
+Plug 'rust-lang/rust.vim'
 
 cmd [[Plug 'ekalinin/Dockerfile.vim']]
 
