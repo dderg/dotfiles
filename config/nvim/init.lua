@@ -75,6 +75,10 @@ opt.foldlevel = 1
 
 cmd [[ca Ag Ag!]]
 
+if not vim.g.vscode then
+    cmd [[command! -nargs=0 Format :call CocActionAsync('format')]]
+end
+
 -- toggle invisible characters
 opt.list = true
 opt.listchars = {
@@ -124,22 +128,25 @@ cmd [[nnoremap <silent> <C-l> :lua require'nvim-tmux-navigation'.NvimTmuxNavigat
 
 cmd [[ nnoremap <leader>s :mksession!<cr> ]]
 
+vim.g.EasyMotion_prompt = ""
 nmap("/", "<Plug>(easymotion-sn)")
 omap("/", "<Plug>(easymotion-tn)")
 
 nmap("n", "<Plug>(easymotion-next)")
 nmap("N", "<Plug>(easymotion-prev)")
 
-
--- Remap keys for applying codeAction to the current line.
-nmap("<leader>ac", "<Plug>(coc-codeaction)")
--- Apply AutoFix to problem on the current line.
-nmap("<leader>qf", "<Plug>(coc-fix-current)")
--- GoTo code navigation.
-nmap("gd", "<Plug>(coc-definition)")
-nmap("gy", "<Plug>(coc-type-definition)")
-nmap("gi", "<Plug>(coc-implementation)")
-nmap("gr", "<Plug>(coc-references)")
+if not vim.g.vscode then
+    -- ordinary Neovim
+    -- Remap keys for applying codeAction to the current line.
+    nmap("<leader>ac", "<Plug>(coc-codeaction)")
+    -- Apply AutoFix to problem on the current line.
+    nmap("<leader>qf", "<Plug>(coc-fix-current)")
+    -- GoTo code navigation.
+    nmap("gd", "<Plug>(coc-definition)")
+    nmap("gy", "<Plug>(coc-type-definition)")
+    nmap("gi", "<Plug>(coc-implementation)")
+    nmap("gr", "<Plug>(coc-references)")
+end
 
 cmd [[nnoremap <silent> <leader>gt :call functions#show_documentation()<CR>]]
 

@@ -2,5 +2,9 @@
     "eslint": {
         "autoFixOnSave": true,
         "run": "onSave"
-    }
+    },
+    "coc.preferences.formatOnSaveFiletypes": [
+        "prisma",
+        "javascriptreact"
+    ]
 }

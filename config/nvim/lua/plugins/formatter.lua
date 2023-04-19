@@ -46,13 +46,17 @@ require("formatter").setup(
   }
 )
 
-vim.api.nvim_exec(
-  [[
-augroup FormatAutogroup
-  autocmd!
-  autocmd BufWritePost *.js,*.ts,*.tsx FormatWrite
-  autocmd BufWritePost *.lua FormatWrite
-augroup END
-]],
-  true
-)
+if vim.g.vscode then
+    -- VSCode extension
+else
+    vim.api.nvim_exec(
+        [[
+            augroup FormatAutogroup
+            autocmd!
+            autocmd BufWritePost *.js,*.ts,*.tsx FormatWrite
+            autocmd BufWritePost *.lua FormatWrite
+            augroup END
+        ]],
+        true
+    )
+end

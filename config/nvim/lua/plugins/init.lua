@@ -23,7 +23,11 @@ Plug 'kyazdani42/nvim-tree.lua'
 
 Plug 'nvim-telescope/telescope.nvim'
 
-Plug 'easymotion/vim-easymotion' -- movement plugin
+if vim.g.vscode then
+    cmd [[Plug 'asvetliakov/vim-easymotion', { 'as': 'vsc-easymotion' }]]
+else
+    Plug 'easymotion/vim-easymotion'
+end
 Plug 'tpope/vim-sleuth' -- detect indent style (tabs vs. spaces)
 Plug 'editorconfig/editorconfig-vim' -- .editorconfig support
 
@@ -43,12 +47,13 @@ cmd [[Plug 'lewis6991/gitsigns.nvim']]
 
 Plug 'tpope/vim-fugitive' -- amazing git wrapper for vim
 
--- cmd [[Plug 'neoclide/coc.nvim', {'branch': 'release'} ]]
-cmd [[Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx', 'html'] }]]
+cmd [[Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx', 'javascriptreact', 'html'] }]]
 cmd [[Plug 'moll/vim-node', { 'for': 'javascript' } ]]
-cmd [[ Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] } ]]
+-- cmd [[ Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] } ]]
 cmd [[ Plug 'maxmellon/vim-jsx-pretty'   ]]
 cmd [[ Plug 'jxnblk/vim-mdx-js', { 'for': 'markdown.mdx' } ]]
+Plug 'github/copilot.vim'
+Plug 'pantharshit00/vim-prisma'
 Plug 'rust-lang/rust.vim'
 
 cmd [[Plug 'ekalinin/Dockerfile.vim']]
@@ -56,7 +61,9 @@ cmd [[Plug 'ekalinin/Dockerfile.vim']]
 -- Helpers to configure the built-in Neovim LSP client
 -- cmd [[Plug 'neovim/nvim-lspconfig']]
 
-cmd [[Plug 'neoclide/coc.nvim', {'branch': 'release'}]]
+if not vim.g.vscode then
+    cmd [[Plug 'neoclide/coc.nvim', {'branch': 'release'}]]
+end
 
 
 -- Helpers to install LSPs and maintain them
