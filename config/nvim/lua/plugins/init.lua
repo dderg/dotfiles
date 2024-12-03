@@ -17,6 +17,7 @@ cmd [[Plug 'norcalli/nvim-colorizer.lua']]
 cmd [[Plug 'nvim-lua/plenary.nvim']]
 
 Plug 'tpope/vim-commentary' -- comment stuff out
+Plug 'lbrayner/vim-rzip' -- needed for yarn4 pnp
 
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'

@@ -3,9 +3,13 @@
         "autoFixOnSave": true,
         "run": "onSave"
     },
+    "eslint.validate": ["typescript"],
     "coc.preferences.formatOnSaveFiletypes": [
         "prisma",
-        "javascriptreact"
+        "javascriptreact",
+        "typescriptreact",
+        "typescript",
+        "javascript"
     ],
     "languageserver":{
         "arduino":{ 

@@ -95,3 +95,16 @@ export LANG=en_GB.UTF-8
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_74.jdk/Contents/Home
 
 export PATH=$JAVA_HOME/include:$PATH
+
+# pnpm
+export PNPM_HOME="/Users/daniladergachev/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+export PATH=/opt/homebrew/bin:$PATH
+
+export PATH=$HOME/sessionmanager-bundle/bin:$PATH
+
+alias python=python3
