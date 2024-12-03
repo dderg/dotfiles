@@ -26,6 +26,7 @@ formulas=(
     zsh-completions
     ripgrep
     mas
+    nvm
 )
 
 cask_formulas=(
