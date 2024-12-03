@@ -25,12 +25,18 @@ formulas=(
     zsh
     zsh-completions
     ripgrep
+    mas
 )
 
 cask_formulas=(
+    iterm2
     telegram
     kawa
+    reflex
     docker
+    kap
+    aldente
+    arc
 )
 
 for formula in "${formulas[@]}"; do
