@@ -49,7 +49,7 @@ config.font_rules = {
 }
 config.harfbuzz_features = { "calt", "dlig", "clig=1", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
 config.font_size = 12
-config.line_height = 1.1
+config.line_height = 1.2
 config.adjust_window_size_when_changing_font_size = false
 
 -- keys config
@@ -75,7 +75,8 @@ if h.is_dark then
   if fancy then
     config.background = {
       b.get_background(),
-      b.get_animation(assets .. "/blob_blue.gif"),
+      -- b.get_wallpaper(assets .. "/cage.jpg"),
+      -- b.get_animation(assets .. "/pulsing.gif"),
     }
   end
 else
