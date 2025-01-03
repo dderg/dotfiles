@@ -6,6 +6,8 @@ return {
   "tpope/vim-repeat",
   "AndrewRadev/splitjoin.vim",
   "tpope/vim-sleuth",
+  "easymotion/vim-easymotion",
+  "alexghergh/nvim-tmux-navigation",
   "editorconfig/editorconfig-vim", -- TODO is this still required?
   {
     "andymass/vim-matchup",

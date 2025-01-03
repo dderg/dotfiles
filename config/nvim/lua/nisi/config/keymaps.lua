@@ -37,9 +37,10 @@ end
 
 nnoremap("Q", "<nop>") -- don't accidentally go into Ex mode
 imap("jk", "<Esc>", { desc = "Exit insert mode" })
+imap("eu", "<Esc>", { desc = "Exit insert mode" })
 
 -- save file keybindings
-nmap("<leader>,", ":silent w<cr>", { desc = "Save File" })
+nmap("<leader>w", ":silent w<cr>", { desc = "Save File" })
 -- ctrl-s bindings
 nmap("<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 nmap("<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
@@ -69,10 +70,21 @@ vmap(">", ">gv")
 vmap(".", ":normal .<cr>") -- run `.` command in visual mode
 
 -- Move between panes or create new panes
-nmap("<C-h>", "<Plug>WinMoveLeft")
-nmap("<C-j>", "<Plug>WinMoveDown")
-nmap("<C-k>", "<Plug>WinMoveUp")
-nmap("<C-l>", "<Plug>WinMoveRight")
+-- nmap("<C-h>", "<Plug>WinMoveLeft")
+-- nmap("<C-j>", "<Plug>WinMoveDown")
+-- nmap("<C-k>", "<Plug>WinMoveUp")
+-- nmap("<C-l>", "<Plug>WinMoveRight")
+vim.cmd([[nnoremap <silent> <C-h> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateLeft()<cr>]])
+vim.cmd([[nnoremap <silent> <C-j> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateDown()<cr>]])
+vim.cmd([[nnoremap <silent> <C-k> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateUp()<cr>]])
+vim.cmd([[nnoremap <silent> <C-l> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateRight()<cr>]])
+
+vim.g.EasyMotion_prompt = ""
+nmap("/", "<Plug>(easymotion-sn)")
+omap("/", "<Plug>(easymotion-tn)")
+
+nmap("n", "<Plug>(easymotion-next)")
+nmap("N", "<Plug>(easymotion-prev)")
 
 -- move line mappings
 local opt_h = "˙"

@@ -55,6 +55,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
     vim.keymap.set("n", "S", vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set("n", "ga", vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set("n", "<leader>ac", vim.lsp.buf.code_action, bufopts) -- legacy
 
     if vim.lsp.inlay_hint then
       vim.keymap.set("n", "<Leader>hh", function()

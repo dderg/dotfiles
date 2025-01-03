@@ -42,7 +42,7 @@ return {
       },
     },
     keys = {
-      { "<leader>k", "<cmd>Neotree toggle reveal<cr>", desc = "Toggle file drawer" },
+      { "<leader>y", "<cmd>Neotree toggle reveal<cr>", desc = "Toggle file drawer" },
     },
     opts = {
       -- don't reset the cursor position when opening a file
@@ -267,15 +267,17 @@ return {
       if utils.is_in_git_repo() then
         utils.table_append(keys, {
           { "<leader>fs", "<cmd>Telescope git_files<cr>", desc = "Find Git files" },
+          -- { "<C-p>", ":GitFiles --cached --others --exclude-standard<cr>", desc = "Find in Git files" },
+          { "<C-p>", "<cmd>Telescope git_files<cr>", desc = "Find in Git files" },
           { "<leader>t", "<cmd>Telescope git_files<cr>", desc = "Find in Git files" },
-          { "<D-p>", "<cmd>Telescope git_files<cr>", desc = "Find in Git files" },
           { "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Commits" },
           { "<leader>gs", "<cmd>Telescope git_status<cr>", desc = "Status" },
         })
       else
         utils.table_append(keys, {
           { "<leader>t", "<cmd>Telescope find_files<cr>", desc = "Find in files" },
-          { "<D-p>", "<cmd>Telescope find_files<cr>", desc = "Find in files" },
+          { "<C-p>", "<cmd>Telescope find_files<cr>", desc = "Find in files" },
+          -- { "<C-p>", ":FZF<cr>", desc = "Find in Git files" },
         })
       end
 
@@ -324,7 +326,7 @@ return {
             height = 0.80,
             preview_cutoff = 120,
           },
-          file_sorter = sorters.get_fuzzy_file,
+          -- file_sorter = sorters.get_fuzzy_file,
           file_ignore_patterns = { "node_modules" },
           generic_sorter = sorters.get_generic_fuzzy_sorter,
           path_display = { "truncate" },

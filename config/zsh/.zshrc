@@ -6,9 +6,13 @@ source "$ZDOTDIR/.zsh_functions"
 # Configuration
 ########################################################
 
+ZSH_THEME="clean"
+
+plugins=(git compleat docker npm tmux vi-mode)
 # initialize autocomplete
 autoload -U compinit add-zsh-hook
 compinit
+source $HOME/.oh-my-zsh/oh-my-zsh.sh
 
 prepend_path /usr/local/opt/grep/libexec/gnubin
 prepend_path /usr/local/sbin
@@ -64,37 +68,38 @@ bindkey -M viins "^F" vi-forward-word               # [Ctrl-f] - move to next wo
 bindkey -M viins "^E" vi-add-eol                    # [Ctrl-e] - move to end of line
 bindkey "^J" history-beginning-search-forward
 bindkey "^K" history-beginning-search-backward
+bindkey "^P" history-beginning-search-backward
 
 # matches case insensitive for lowercase
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # pasting with tabs doesn't perform completion
-zstyle ':completion:*' insert-tab pending
+# zstyle ':completion:*' insert-tab pending
 
 # default to file completion
-zstyle ':completion:*' completer _expand _complete _files _correct _approximate
+# zstyle ':completion:*' completer _expand _complete _files _correct _approximate
 
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*:descriptions' format '%B%d%b'
-zstyle ':completion:*:messages' format '%d'
-zstyle ':completion:*:warnings' format 'No matches for: %d'
-zstyle ':completion:*' group-name ''
+# zstyle ':completion:*' verbose yes
+# zstyle ':completion:*:descriptions' format '%B%d%b'
+# zstyle ':completion:*:messages' format '%d'
+# zstyle ':completion:*:warnings' format 'No matches for: %d'
+# zstyle ':completion:*' group-name ''
 
 
 ########################################################
 # Plugin setup
 ########################################################
 
-export ZPLUGDIR="$CACHEDIR/zsh/plugins"
-[[ -d "$ZPLUGDIR" ]] || mkdir -p "$ZPLUGDIR"
+# export ZPLUGDIR="$CACHEDIR/zsh/plugins"
+# [[ -d "$ZPLUGDIR" ]] || mkdir -p "$ZPLUGDIR"
 # array containing plugin information (managed by zfetch)
-typeset -A plugins
+# typeset -A plugins
 
-zfetch mafredri/zsh-async async.plugin.zsh
-zfetch zsh-users/zsh-syntax-highlighting
-zfetch zsh-users/zsh-autosuggestions
-zfetch grigorii-zander/zsh-npm-scripts-autocomplete
-zfetch Aloxaf/fzf-tab
+# zfetch mafredri/zsh-async async.plugin.zsh
+# zfetch zsh-users/zsh-syntax-highlighting
+# zfetch zsh-users/zsh-autosuggestions
+# zfetch grigorii-zander/zsh-npm-scripts-autocomplete
+# zfetch Aloxaf/fzf-tab
 
 if [[ -x "$(command -v fnm)" ]]; then
     eval "$(fnm env --use-on-cd)"
@@ -149,7 +154,7 @@ fi
 [[ -a ~/.localrc ]] && source ~/.localrc
 
 # look for all .zsh files and source them
-for file in "$ZDOTDIR/.zsh_prompt" "$ZDOTDIR/.zsh_aliases"; do
+for file in "$ZDOTDIR/.zsh_aliases"; do
     if [ -f $file ]; then
         source $file
     fi

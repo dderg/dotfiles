@@ -42,8 +42,9 @@ alias lld="ls -l | grep ^d"
 alias rmf="rm -rf"
 
 # git aliases
-alias gs='git s'
-alias glog="git l"
+# alias gst='git status'
+# alias gco="git checkout"
+# alias glog="git l"
 
 # tmux aliases
 alias ta='tmux attach'

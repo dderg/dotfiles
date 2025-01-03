@@ -9,7 +9,7 @@ local function make_keymap_fn(mode, o)
   -- copy the opts table as extends will mutate opts
   local parent_opts = vim.deepcopy(o)
   return function(combo, mapping, opts)
-    assert(combo ~= mode, string.format("The combo should not be the same as the mode for %s", combo))
+    -- assert(combo ~= mode, string.format("The combo should not be the same as the mode for %s", combo))
     local _opts = opts and vim.deepcopy(opts) or {}
 
     if type(mapping) == "function" then

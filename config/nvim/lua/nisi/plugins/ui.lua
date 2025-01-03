@@ -30,11 +30,11 @@ return {
         margin = 5,
         content = {
           -- TODO can these be made without the mappings?
-          { " Find File", find_command, "<leader>t" },
+          { " Find File", find_command, "C-p" },
           { " Find Word", "Telescope live_grep", "<leader>fg" },
           { "神 Open Buffers", "Telescope buffers", "<leader>r" },
           { " Recent Files", "Telescope oldfiles", "<leader>fo" },
-          { " Open File Drawer", "Neotree reveal toggle", "<leader>k" },
+          { " Open File Drawer", "Neotree reveal toggle", "<leader>y" },
           { " Open Git Index", ":Ge:", ":Ge:" },
           { " New File", ":enew", "e" },
         },
@@ -194,41 +194,41 @@ return {
     },
   },
   "RRethy/vim-illuminate", -- highlight the current word
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      -- add any options here
-      lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
-        },
-      },
-      -- you can enable a preset for easier configuration
-      presets = {
-        bottom_search = false, -- use a classic bottom cmdline for search
-        command_palette = true, -- position the cmdline and popupmenu together
-        long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false, -- add a border to hover docs and signature help
-      },
-      routes = {
-        {
-          filter = { find = "No information available" },
-          opts = { stop = true },
-        },
-      },
-    },
-    dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
-    },
-  },
+  -- {
+  --   "folke/noice.nvim",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     -- add any options here
+  --     lsp = {
+  --       -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+  --       override = {
+  --         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+  --         ["vim.lsp.util.stylize_markdown"] = true,
+  --         ["cmp.entry.get_documentation"] = true,
+  --       },
+  --     },
+  --     -- you can enable a preset for easier configuration
+  --     presets = {
+  --       bottom_search = true, -- use a classic bottom cmdline for search
+  --       command_palette = true, -- position the cmdline and popupmenu together
+  --       long_message_to_split = true, -- long messages will be sent to a split
+  --       inc_rename = false, -- enables an input dialog for inc-rename.nvim
+  --       lsp_doc_border = false, -- add a border to hover docs and signature help
+  --     },
+  --     routes = {
+  --       {
+  --         filter = { find = "No information available" },
+  --         opts = { stop = true },
+  --       },
+  --     },
+  --   },
+  --   dependencies = {
+  --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+  --     "MunifTanjim/nui.nvim",
+  --     -- OPTIONAL:
+  --     --   `nvim-notify` is only needed, if you want to use the notification view.
+  --     --   If not available, we use `mini` as the fallback
+  --     "rcarriga/nvim-notify",
+  --   },
+  -- },
 }

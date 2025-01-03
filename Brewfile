@@ -4,15 +4,20 @@ tap "homebrew/bundle"
 
 if OS.mac?
   # taps
-  brew "noti"                          # utility to display notifications from scripts
-  brew "trash"                         # rm, but put in the trash rather than completely delete
+  brew "noti"                         # utility to display notifications from scripts
+  brew "trash"                        # rm, but put in the trash rather than completely delete
 
   # Applications
-  cask "ghostty"                       # a better terminal emulator
-  cask "wezterm"                       # a better terminal emulator
-  cask "1password/tap/1password-cli"   # 1Password CLI
-  cask "karabiner-elements"            # keyboard customizer
-  cask "nikitabobko/tap/aerospace"     # a tiling window manager
+  cask "ghostty"                      # a better terminal emulator
+  cask "wezterm"                      # a better terminal emulator
+  cask "nikitabobko/tap/aerospace"    # a tiling window manager
+  cask "docker"
+  cask "kawa"                         # for layout switching on key combination 
+  cask "reflex"                       # so play pause only pauses the music and not youtube
+  cask "kap"                          # screen recorder
+  cask "aldente"                      # battery tool
+  cask "arc"                          # browser I want to go away from
+  cask "orion"                        # browser I want to use more
 
   # Fonts
   cask "font-symbols-only-nerd-font"   # nerd-only symbols font

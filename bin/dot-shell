@@ -16,12 +16,14 @@ usage() {
   - default shell: The default shell in this configuration is zsh.
   - terminfo: Terminfo files are installed for tmux and neovim. They help us to
     have italic text and other features.
+  - install: Install oh-my-zsh
 
 
 Options:
     -h, --help       Show this help message
     change           change the shell to zsh
     terminfo         Add terminfo files
+    install          Install oh-my-zsh
 EOF
 }
 
@@ -55,6 +57,19 @@ cmd_terminfo() {
   log_success "terminfo files added."
 }
 
+cmd_install() {
+  fmt_title_underline "Installing oh-my-zsh"
+
+  if [ -d "$HOME/.oh-my-zsh" ]; then
+    log_info "oh-my-zsh is already installed"
+    exit 0
+  fi
+
+  log_info "installing oh-my-zsh"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  log_success "oh-my-zsh installed"
+}
+
 main() {
   local subcmd=""
 
@@ -82,6 +97,9 @@ main() {
     ;;
   terminfo)
     cmd_terminfo
+    ;;
+  install)
+    cmd_install
     ;;
   *)
     log_error "Unknown $command_name command: $subcmd"
