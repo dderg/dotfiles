@@ -23,7 +23,7 @@ local servers = {
   "astro",
   "tailwindcss",
   "jsonls",
-  "ruby_lsp",
+  -- "ruby_lsp",
   "pylsp",
   "vimls",
 }

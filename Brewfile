@@ -8,7 +8,7 @@ if OS.mac?
   # taps
   brew "noti"                          # utility to display notifications from scripts
   brew "trash"                         # rm, but put in the trash rather than completely delete
-  brew "borders"                       # add borders to windows
+  # brew "borders"                       # add borders to windows
 
   # Applications
   cask "ghostty"                      # a better terminal emulator

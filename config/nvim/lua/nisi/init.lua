@@ -17,7 +17,7 @@ local utils = require("nisi.utils")
 ---@field colorscheme string|fun()|nil What to set the colorscheme to and/or how
 local config = {
   lazypath = vim.fn.stdpath("data") .. "lazy/lazy.nvim",
-  startup_art = "cat",
+  startup_art = "neovim",
   startup_color = "#653CAD",
   zen = false,
   copilot = true,
