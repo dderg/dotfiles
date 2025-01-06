@@ -39,6 +39,7 @@ brew "zsh"                             # zsh shell
 brew "grep"                            # grep
 
 # packages
+brew "sharship"                        # a better prompt
 brew "bat"                             # better cat
 brew "cloc"                            # lines of code counter
 brew "entr"                            # file watcher / command runner

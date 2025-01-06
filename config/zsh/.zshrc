@@ -8,11 +8,9 @@ source "$ZDOTDIR/.zsh_functions"
 
 ZSH_THEME="clean"
 
-plugins=(git compleat docker npm tmux vi-mode)
 # initialize autocomplete
 autoload -U compinit add-zsh-hook
 compinit
-source $HOME/.oh-my-zsh/oh-my-zsh.sh
 
 prepend_path /usr/local/opt/grep/libexec/gnubin
 prepend_path /usr/local/sbin
@@ -174,3 +172,6 @@ if [[ -x "$(command -v pyenv)" ]]; then
   [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init -)"
 fi
+
+
+eval "$(starship init zsh)"
