@@ -250,7 +250,7 @@ if.app-id = 'com.culturedcode.ThingsMac'
 run = 'move-node-to-workspace P'
 
 [[on-window-detected]]
-if.app-id = 'com.apple.notes'
+if.app-id = 'com.apple.Notes'
 run = 'move-node-to-workspace P'
 
 [[on-window-detected]]
