@@ -21,7 +21,6 @@ if OS.mac?
   cask "aldente"                      # battery tool
   cask "arc"                          # browser I want to go away from
   cask "orion"                        # browser I want to use more
-  cask "obsidian"
   cask "raycast"                      # a better spotlight
 
   # Fonts
