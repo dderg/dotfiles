@@ -79,12 +79,12 @@ vim.cmd([[nnoremap <silent> <C-j> :lua require'nvim-tmux-navigation'.NvimTmuxNav
 vim.cmd([[nnoremap <silent> <C-k> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateUp()<cr>]])
 vim.cmd([[nnoremap <silent> <C-l> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateRight()<cr>]])
 
-vim.g.EasyMotion_prompt = ""
-nmap("/", "<Plug>(easymotion-sn)")
-omap("/", "<Plug>(easymotion-tn)")
-
-nmap("n", "<Plug>(easymotion-next)")
-nmap("N", "<Plug>(easymotion-prev)")
+-- vim.g.EasyMotion_prompt = ""
+-- nmap("/", "<Plug>(easymotion-sn)")
+-- omap("/", "<Plug>(easymotion-tn)")
+--
+-- nmap("n", "<Plug>(easymotion-next)")
+-- nmap("N", "<Plug>(easymotion-prev)")
 
 -- move line mappings
 local opt_h = "˙"
