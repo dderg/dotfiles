@@ -53,8 +53,8 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
 # Allow for more space on smaller screens
-inner.horizontal = [ { monitor."Built-in Retina Display" = 10 }, 15  ]
-inner.vertical =   [ { monitor."Built-in Retina Display" = 10 }, 15  ]
+inner.horizontal = [ { monitor."Built-in Retina Display" = 0 }, 10  ]
+inner.vertical =   [ { monitor."Built-in Retina Display" = 0 }, 10  ]
 outer.left =       [ { monitor."Built-in Retina Display" = 0 }, 0  ]
 outer.bottom =     [ { monitor."Built-in Retina Display" = 0 }, 0  ]
 outer.top =        [ { monitor."Built-in Retina Display" = 0 }, 0  ]
@@ -107,8 +107,8 @@ alt-shift-k = 'move up'
 alt-shift-l = 'move right'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#resize
-alt-shift-minus = 'resize smart -100'
-alt-shift-equal = 'resize smart +100'
+alt-ctrl-h = 'resize smart -100'
+alt-ctrl-l = 'resize smart +100'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 alt-1 = 'workspace 1'
@@ -251,10 +251,6 @@ run = 'move-node-to-workspace P'
 
 [[on-window-detected]]
 if.app-id = 'com.culturedcode.ThingsMac'
-run = 'move-node-to-workspace P'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.Notes'
 run = 'move-node-to-workspace P'
 
 [[on-window-detected]]
