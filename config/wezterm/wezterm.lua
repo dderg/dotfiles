@@ -1,11 +1,11 @@
 local b = require("utils.background")
 local h = require("utils.helpers")
 local wezterm = require("wezterm")
-local assets = wezterm.config_dir .. "/assets"
+-- local assets = wezterm.config_dir .. "/assets"
 local config = wezterm.config_builder()
 
 -- set this to true to enable fancy background
-local fancy = true
+local fancy = false
 
 config.max_fps = 120
 config.prefer_egl = true
@@ -86,7 +86,7 @@ else
     THEME_FLAVOUR = "latte",
   }
   config.background = {
-    b.get_background(),
+    -- b.get_background(),
   }
 end
 

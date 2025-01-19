@@ -105,8 +105,6 @@ local function init_plugins()
   end
   require("lazy").setup(plugins)
 
-  require("leap").create_default_mappings()
-
   lazy_loaded = true
 end
 

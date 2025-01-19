@@ -6,8 +6,7 @@ return {
   "tpope/vim-repeat",
   "AndrewRadev/splitjoin.vim",
   "tpope/vim-sleuth",
-  -- "easymotion/vim-easymotion",
-  "ggandor/leap.nvim",
+  "easymotion/vim-easymotion",
   "alexghergh/nvim-tmux-navigation",
   "editorconfig/editorconfig-vim", -- TODO is this still required?
   {

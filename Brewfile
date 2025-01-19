@@ -14,6 +14,7 @@ if OS.mac?
   cask "ghostty"                      # a better terminal emulator
   cask "wezterm"                      # a better terminal emulator
   cask "nikitabobko/tap/aerospace"    # a tiling window manager
+  cask "dimentium/autoraise/autoraiseapp" # focus-follows-mouse
   cask "docker"
   cask "kawa"                         # for layout switching on key combination 
   cask "reflex"                       # so play pause only pauses the music and not youtube

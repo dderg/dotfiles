@@ -8,7 +8,7 @@ end
 
 M.get_background = function(dark, light)
   dark = dark or 0.9
-  light = light or 0.9
+  light = light or 1
 
   return {
     source = {
