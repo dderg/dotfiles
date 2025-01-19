@@ -1,4 +1,5 @@
 return {
+
   "tpope/vim-unimpaired",
   "tpope/vim-surround",
   "tpope/vim-ragtag",
@@ -8,7 +9,20 @@ return {
   "tpope/vim-sleuth",
   "easymotion/vim-easymotion",
   "alexghergh/nvim-tmux-navigation",
+  "epwalsh/obsidian.nvim",
   "editorconfig/editorconfig-vim", -- TODO is this still required?
+  {
+    "folke/zen-mode.nvim",
+    opts = {
+      plugins = {
+        tmux = { enabled = true },
+        wezterm = {
+          enabled = true,
+          font = "+2",
+        },
+      },
+    },
+  },
   {
     "andymass/vim-matchup",
     cond = not vim.g.vscode,

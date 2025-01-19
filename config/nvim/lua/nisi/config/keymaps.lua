@@ -86,6 +86,9 @@ omap("/", "<Plug>(easymotion-tn)")
 nmap("n", "<Plug>(easymotion-next)")
 nmap("N", "<Plug>(easymotion-prev)")
 
+-- zenmode
+nmap("<leader>z", ":ZenMode<CR>")
+
 -- move line mappings
 local opt_h = "˙"
 local opt_j = "∆"
