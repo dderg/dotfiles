@@ -8,8 +8,8 @@ return {
   "AndrewRadev/splitjoin.vim",
   "tpope/vim-sleuth",
   "easymotion/vim-easymotion",
-  "alexghergh/nvim-tmux-navigation",
   "editorconfig/editorconfig-vim", -- TODO is this still required?
+  { "mrjones2014/smart-splits.nvim" },
   {
     "epwalsh/obsidian.nvim",
     version = "*", -- recommended, use latest release instead of latest commit

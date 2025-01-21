@@ -12,7 +12,7 @@ if OS.mac?
 
   # Applications
   cask "ghostty"                      # a better terminal emulator
-  cask "wezterm"                      # a better terminal emulator
+  cask "wezterm@nightly"              # a better terminal emulator
   cask "nikitabobko/tap/aerospace"    # a tiling window manager
   cask "dimentium/autoraise/autoraiseapp" # focus-follows-mouse
   cask "docker"
