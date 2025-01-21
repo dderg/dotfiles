@@ -246,19 +246,17 @@ return {
       "nvim-lua/plenary.nvim", -- Power telescope with FZF
       "nvim-telescope/telescope-rg.nvim",
       "nvim-telescope/telescope-node-modules.nvim",
+      "davvid/telescope-git-grep.nvim",
     },
     keys = function()
       local keys = {
-        { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
         { "<leader>fo", "<cmd>Telescope oldfiles<cr>", desc = "Find MRU files" },
         { "<leader>fn", "<cmd>Telescope node_modules list<cr>", desc = "List node_modules" },
-        { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Find using live grep" },
         {
           "<leader>fr",
           "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>",
           desc = "Find sing live raw grep",
         },
-        { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Find in buffers" },
         { "<leader>r", "<cmd>Telescope buffers<cr>", desc = "Find in buffers" },
         { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Find in help" },
       }
@@ -266,6 +264,7 @@ return {
 
       if utils.is_in_git_repo() then
         utils.table_append(keys, {
+          { "<leader>fg", "<cmd>Telescope git_grep<cr>", desc = "Find using live grep" },
           { "<leader>fs", "<cmd>Telescope git_files<cr>", desc = "Find Git files" },
           -- { "<C-p>", ":GitFiles --cached --others --exclude-standard<cr>", desc = "Find in Git files" },
           { "<C-p>", "<cmd>Telescope git_files<cr>", desc = "Find in Git files" },
@@ -275,6 +274,7 @@ return {
         })
       else
         utils.table_append(keys, {
+          { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Find using live grep" },
           { "<leader>t", "<cmd>Telescope find_files<cr>", desc = "Find in files" },
           { "<C-p>", "<cmd>Telescope find_files<cr>", desc = "Find in files" },
           -- { "<C-p>", ":FZF<cr>", desc = "Find in Git files" },
@@ -327,7 +327,7 @@ return {
             preview_cutoff = 120,
           },
           -- file_sorter = sorters.get_fuzzy_file,
-          file_ignore_patterns = { "node_modules" },
+          file_ignore_patterns = { "node_modules", ".obsidian", ".git" },
           generic_sorter = sorters.get_generic_fuzzy_sorter,
           path_display = { "truncate" },
           winblend = 0,
