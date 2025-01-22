@@ -61,6 +61,37 @@ config.send_composed_key_when_right_alt_is_pressed = false
 
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
 
+local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
+workspace_switcher.zoxide_path = "/opt/homebrew/bin/zoxide"
+
+-- fix for smart-splits conflicting with workspace_switcher
+-- source: https://github.com/MLFlexer/smart_workspace_switcher.wezterm/issues/41#issuecomment-2472729140
+
+wezterm.on("smart_workspace_switcher.workspace_switcher.start", function(window, pane)
+  local overrides = window:get_config_overrides() or {}
+  local keys_override = {}
+  for _, l in ipairs(config.keys) do
+    if l.mods ~= "CTRL" or l.key ~= "j" and l.key ~= "k" then
+      table.insert(keys_override, l)
+    end
+  end
+
+  overrides.keys = keys_override
+  window:set_config_overrides(overrides)
+end)
+
+wezterm.on("smart_workspace_switcher.workspace_switcher.selected", function(window, path, label)
+  local overrides = window:get_config_overrides() or {}
+  overrides.keys = nil
+  window:set_config_overrides(overrides)
+end)
+
+wezterm.on("smart_workspace_switcher.workspace_switcher.canceled", function(window, path, label)
+  local overrides = window:get_config_overrides() or {}
+  overrides.keys = nil
+  window:set_config_overrides(overrides)
+end)
+
 local resizeStep = 5
 config.key_tables = {
   -- Defines the keys that are active in our resize-pane mode.
@@ -165,13 +196,6 @@ config.keys = {
     action = act.ActivateCopyMode,
   },
   {
-    key = "s",
-    mods = "LEADER",
-    action = act.ShowLauncherArgs({
-      flags = "FUZZY|WORKSPACES",
-    }),
-  },
-  {
     key = "g",
     mods = "LEADER",
     action = act.SwitchToWorkspace({
@@ -179,6 +203,40 @@ config.keys = {
       spawn = {
         args = { "/opt/homebrew/bin/lazygit" },
       },
+    }),
+  },
+  {
+    key = "s",
+    mods = "LEADER",
+    action = workspace_switcher.switch_workspace(),
+  },
+  {
+    key = "S",
+    mods = "LEADER",
+    action = workspace_switcher.switch_to_prev_workspace(),
+  },
+  {
+    key = "w",
+    mods = "LEADER",
+    action = act.PromptInputLine({
+      description = wezterm.format({
+        { Attribute = { Intensity = "Bold" } },
+        { Foreground = { AnsiColor = "Fuchsia" } },
+        { Text = "Enter name for new workspace" },
+      }),
+      action = wezterm.action_callback(function(window, pane, line)
+        -- line will be `nil` if they hit escape without entering anything
+        -- An empty string if they just hit enter
+        -- Or the actual line of text they wrote
+        if line then
+          window:perform_action(
+            act.SwitchToWorkspace({
+              name = line,
+            }),
+            pane
+          )
+        end
+      end),
     }),
   },
 }
