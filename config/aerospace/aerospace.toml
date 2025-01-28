@@ -243,15 +243,21 @@ run = 'move-node-to-workspace B'
 if.app-id = 'com.kagi.kagimacOS'
 run = 'move-node-to-workspace B'
 
+## Notes
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace N'
+
+[[on-window-detected]]
+if.app-id = 'com.culturedcode.ThingsMac'
+run = 'move-node-to-workspace N'
+
 ## Productivity
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
 run = 'move-node-to-workspace P'
-
-# [[on-window-detected]]
-# if.app-id = 'com.culturedcode.ThingsMac'
-# run = 'move-node-to-workspace P'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.iCal'
