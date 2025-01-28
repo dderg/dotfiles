@@ -4,6 +4,9 @@ tap "homebrew/bundle"
 
 if OS.mac?
   tap "FelixKratz/formulae"               # For janky borders
+  tap "dderg/tap"
+
+  brew "mini-badger"
 
   # taps
   brew "noti"                          # utility to display notifications from scripts

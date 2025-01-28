@@ -36,7 +36,7 @@ opt.backupdir = { "~/.vim-tmp", "~/.tmp", "~/tmp", "/var/tmp", "/tmp" }
 opt.directory = { "~/.vim-tmp", "~/.tmp", "~/tmp", "/var/tmp", "/tmp" }
 
 opt.history = 1000 -- store the last 1000 commands entered
-opt.textwidth = 120 -- after configured number of characters, wrap line
+-- opt.textwidth = 120 -- after configured number of characters, wrap line
 
 -- show the results of substition as they're happening but don't open a split
 opt.inccommand = "nosplit"
