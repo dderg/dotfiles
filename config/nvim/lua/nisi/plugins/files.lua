@@ -265,10 +265,25 @@ return {
       if utils.is_in_git_repo() then
         utils.table_append(keys, {
           { "<leader>fg", "<cmd>Telescope git_grep<cr>", desc = "Find using live grep" },
-          { "<leader>fs", "<cmd>Telescope git_files<cr>", desc = "Find Git files" },
+          -- { "<leader>fs", "<cmd>Telescope git_files<cr>", desc = "Find Git files" },
           -- { "<C-p>", ":GitFiles --cached --others --exclude-standard<cr>", desc = "Find in Git files" },
-          { "<C-p>", "<cmd>Telescope git_files<cr>", desc = "Find in Git files" },
-          { "<leader>t", "<cmd>Telescope git_files<cr>", desc = "Find in Git files" },
+          {
+            "<C-p>",
+            function()
+              require("telescope.builtin").git_files({
+                show_untracked = true,
+                hidden = true,
+                git_command = {
+                  "git",
+                  "ls-files",
+                  "--cached",
+                  "--others",
+                  "--exclude-standard",
+                },
+              })
+            end,
+            desc = "Find in Git files",
+          },
           { "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Commits" },
           { "<leader>gs", "<cmd>Telescope git_status<cr>", desc = "Status" },
         })
@@ -277,7 +292,6 @@ return {
           { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Find using live grep" },
           { "<leader>t", "<cmd>Telescope find_files<cr>", desc = "Find in files" },
           { "<C-p>", "<cmd>Telescope find_files<cr>", desc = "Find in files" },
-          -- { "<C-p>", ":FZF<cr>", desc = "Find in Git files" },
         })
       end
 
@@ -327,7 +341,7 @@ return {
             preview_cutoff = 120,
           },
           -- file_sorter = sorters.get_fuzzy_file,
-          file_ignore_patterns = { "node_modules", ".obsidian", ".git" },
+          file_ignore_patterns = { "node_modules", ".obsidian", "^.git/" },
           generic_sorter = sorters.get_generic_fuzzy_sorter,
           path_display = { "truncate" },
           winblend = 0,

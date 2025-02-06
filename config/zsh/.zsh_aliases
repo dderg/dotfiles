@@ -29,6 +29,12 @@ alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 alias clsym="find -L . -name . -o -type d -prune -o -type l -exec rm {} +"
 
 
+# use bat if available
+if [[ -x "$(command -v bat)" ]]; then
+  alias cat='bat'
+  # alias cat='bat --paging=never'
+fi
+
 # use eza if available
 if [[ -x "$(command -v eza)" ]]; then
   alias ll="eza --icons --git --long"
@@ -45,6 +51,7 @@ alias rmf="rm -rf"
 alias gst='git status'
 alias gco="git checkout"
 alias glog="git l"
+alias ga='git add'
 
 # tmux aliases
 alias ta='tmux attach'

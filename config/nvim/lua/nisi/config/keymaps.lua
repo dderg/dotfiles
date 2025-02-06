@@ -70,14 +70,10 @@ vmap(">", ">gv")
 vmap(".", ":normal .<cr>") -- run `.` command in visual mode
 
 -- Move between panes or create new panes
--- nmap("<C-h>", "<Plug>WinMoveLeft")
--- nmap("<C-j>", "<Plug>WinMoveDown")
--- nmap("<C-k>", "<Plug>WinMoveUp")
--- nmap("<C-l>", "<Plug>WinMoveRight")
--- vim.cmd([[nnoremap <silent> <C-h> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateLeft()<cr>]])
--- vim.cmd([[nnoremap <silent> <C-j> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateDown()<cr>]])
--- vim.cmd([[nnoremap <silent> <C-k> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateUp()<cr>]])
--- vim.cmd([[nnoremap <silent> <C-l> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateRight()<cr>]])
+vim.cmd([[nnoremap <silent> <C-h> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateLeft()<cr>]])
+vim.cmd([[nnoremap <silent> <C-j> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateDown()<cr>]])
+vim.cmd([[nnoremap <silent> <C-k> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateUp()<cr>]])
+vim.cmd([[nnoremap <silent> <C-l> :lua require'nvim-tmux-navigation'.NvimTmuxNavigateRight()<cr>]])
 
 vim.g.EasyMotion_prompt = ""
 nmap("/", "<Plug>(easymotion-sn)")

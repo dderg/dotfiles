@@ -19,7 +19,6 @@ if OS.mac?
   cask "nikitabobko/tap/aerospace"    # a tiling window manager
   cask "dimentium/autoraise/autoraiseapp" # focus-follows-mouse
   cask "docker"
-  cask "kawa"                         # for layout switching on key combination 
   cask "reflex"                       # so play pause only pauses the music and not youtube
   cask "kap"                          # screen recorder
   cask "aldente"                      # battery tool
@@ -42,7 +41,7 @@ brew "zsh"                             # zsh shell
 brew "grep"                            # grep
 
 # packages
-brew "sharship"                        # a better prompt
+brew "starship"                        # a better prompt
 brew "bat"                             # better cat
 brew "cloc"                            # lines of code counter
 brew "entr"                            # file watcher / command runner
