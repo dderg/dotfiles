@@ -1,0 +1,70 @@
+(defcfg
+  input  (iokit-name)
+  output (kext)
+
+  ;; Comment this if you want unhandled events not to be emitted
+  fallthrough true
+
+  ;; Set this to false to disable any command-execution in KMonad
+  allow-cmd true
+)
+
+;; lmet -> cmd
+;; lalt -> option
+;; fn   -> fn
+
+
+(defalias
+    ctl_a (tap-hold-next-release 200 a lctl)
+    met_s (tap-hold-next-release 160 s lmet)
+    alt_e (tap-hold-next-release 160 e lalt)
+    sft_f (tap-hold-next-release 140 f lsft)
+
+    sft_j (tap-hold-next-release 180 j rsft)
+    alt_i (tap-hold-next-release 200 i ralt)
+    met_o (tap-hold-next-release 220 o lmet)
+
+    num (layer-toggle num)
+    m_q (around lmet q)
+    m_w (around lmet w)
+    m_e (around lmet e)
+    m_r (around lmet r)
+    m_t (around lmet t)
+    m_a (around lmet a)
+    m_s (around lmet s)
+    m_d (around lmet d)
+    m_f (around lmet f)
+    m_g (around lmet g)
+    m_z (around lmet z)
+    m_x (around lmet x)
+    m_c (around lmet c)
+    m_v (around lmet v)
+    m_sp (around lmet space)
+
+    sm_sp (around lmet P)
+)
+
+(defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  tab  q    w    e    r    t    y    u    i    o    p
+  caps a    s    d    f    g    h    j    k    l    ;
+  lsft z    x    c    v    b    n    m    ,    .    /
+  fn lctl lalt lmet space
+)
+
+(deflayer qwerty
+  esc    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
+  tab      q       w  @alt_e  r     t    y    u  @alt_i @met_o  p
+  lctrl @ctl_a @met_s  d   @sft_f  g    h @sft_j   k     l       ;
+  lsft    z        x    c     v     b    n    m     ,     .       /
+  fn lctl lalt @num space
+)
+
+(deflayer num
+  esc    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
+  tab    q       w  @alt_e  r     t    y   7    8    9    0
+  lctrl @ctl_a @met_s d   @sft_f  g    h   4    5    6    ;
+  lsft  z        x    c     v     b    n   1    2    3    /
+  fn lctl lalt @num space
+)
+
