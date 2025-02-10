@@ -14,6 +14,7 @@ if OS.mac?
   brew "borders"                       # add borders to windows
 
   # Applications
+  cask "leader-key"                   # a quick application launcher
   cask "ghostty"                      # a better terminal emulator
   cask "wezterm@nightly"              # a better terminal emulator
   cask "nikitabobko/tap/aerospace"    # a tiling window manager
