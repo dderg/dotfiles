@@ -320,3 +320,11 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = 'org.m0k.transmission'
 run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'corp.sap.PowerMonitor'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.iphonesimulator'
+run = 'layout floating'
