@@ -1,5 +1,5 @@
 (defcfg
-  input  (iokit-name)
+  input  (iokit-name "Apple Internal Keyboard / Trackpad")
   output (kext)
 
   ;; Comment this if you want unhandled events not to be emitted
@@ -54,8 +54,8 @@
 
 (deflayer qwerty
   esc    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
-  tab      q       w  @alt_e  r     t    y    u  @alt_i @met_o  p
-  lctrl @ctl_a @met_s  d   @sft_f  g    h @sft_j   k     l       ;
+  tab      q       w  @alt_e  r     t    y    u  i o  p
+  lctrl @ctl_a @met_s  d   @sft_f  g    h j   k     l       ;
   lsft    z        x    c     v     b    n    m     ,     .       /
   fn lctl lalt @num space
 )
