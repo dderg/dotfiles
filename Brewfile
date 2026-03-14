@@ -1,11 +1,10 @@
 # vim:ft=ruby
 
 tap "homebrew/bundle"
+tap "FelixKratz/formulae"               # For janky borders
+tap "dderg/tap"
 
 if OS.mac?
-  tap "FelixKratz/formulae"               # For janky borders
-  tap "dderg/tap"
-
   brew "mini-badger"
 
   # taps
