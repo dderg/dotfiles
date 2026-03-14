@@ -71,6 +71,37 @@ cmd_install() {
   fi
 }
 
+install_dext() {
+  log_info "Downloading Karabiner DriverKit VirtualHIDDevice..."
+
+  # Get latest .pkg URL from GitHub API
+  local pkg_url
+  pkg_url=$(curl -fsSL "https://api.github.com/repos/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice/releases/latest" \
+    | grep -o '"browser_download_url": *"[^"]*\.pkg"' \
+    | head -1 \
+    | sed 's/"browser_download_url": *"//;s/"$//')
+
+  if [[ -z "$pkg_url" ]]; then
+    log_error "Could not find .pkg download URL from GitHub releases."
+    log_info "Install manually from: https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice/releases"
+    exit 1
+  fi
+
+  local tmpdir
+  tmpdir=$(mktemp -d)
+  local pkg_path="$tmpdir/Karabiner-DriverKit-VirtualHIDDevice.pkg"
+
+  log_info "Downloading $pkg_url"
+  curl -fSL -o "$pkg_path" "$pkg_url"
+
+  log_info "Installing package (requires sudo)..."
+  sudo installer -pkg "$pkg_path" -target /
+
+  rm -rf "$tmpdir"
+
+  log_success "Karabiner DriverKit VirtualHIDDevice installed"
+}
+
 cmd_setup() {
   fmt_title_underline "Setting up kmonad"
 
@@ -87,22 +118,24 @@ cmd_setup() {
   # Check for Karabiner DEXT
   local dext_path="/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice"
   if [[ ! -d "$dext_path" ]]; then
-    log_info "Karabiner DriverKit VirtualHIDDevice not found."
-    log_info "Download and install from:"
-    log_info "  https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice/releases"
-    log_info "Then activate the DEXT:"
-    log_info "  '/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/scripts/uninstall/deactivate_driver.sh'"
-    log_info "  '/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/scripts/install/activate_driver.sh'"
-    log_info "After installation, re-run this command."
-    exit 1
+    install_dext
   fi
 
-  # Check DEXT is activated
+  # Activate DEXT if not already active
   if ! systemextensionsctl list 2>/dev/null | grep -q "org.pqrs.*activated"; then
-    log_warning "Karabiner DEXT is installed but not activated."
-    log_info "Activate it in System Settings > Privacy & Security > Extensions"
-    log_info "Or run: sudo '/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-DriverKit-VirtualHIDDeviceClient.app/Contents/MacOS/Karabiner-DriverKit-VirtualHIDDeviceClient'"
-    exit 1
+    local activate_script="$dext_path/scripts/install/activate_driver.sh"
+    if [[ -f "$activate_script" ]]; then
+      log_info "Activating Karabiner DEXT..."
+      sudo "$activate_script"
+      log_warning "macOS requires manual approval for system extensions."
+      log_info "Go to: System Settings > General > Login Items & Extensions > Driver Extensions"
+      log_info "Enable 'Karabiner Virtual HID Device'."
+      log_info "Then re-run: $command_name setup"
+      exit 0
+    else
+      log_error "Activation script not found at $activate_script"
+      exit 1
+    fi
   fi
 
   log_success "Karabiner DEXT is installed and activated"
