@@ -1,0 +1,227 @@
+#!/usr/bin/env bash
+# Description: Install and manage kmonad keyboard remapper
+
+set -Eeuo pipefail
+
+source "$DOTFILES/bin/lib/common.sh"
+command_name=$(basename "${BASH_SOURCE[0]}")
+
+KMONAD_BIN="$HOME/.local/bin/kmonad"
+KMONAD_CONFIG="$HOME/.config/kmonad/kmonad.kbd"
+PLIST_NAME="com.kmonad.daemon"
+PLIST_PATH="/Library/LaunchDaemons/${PLIST_NAME}.plist"
+
+usage() {
+  cat <<EOF
+  $(fmt_key "Usage:") $(fmt_cmd "$command_name") $(fmt_value "<command>")
+
+  Install and manage kmonad keyboard remapper.
+
+$(fmt_key "Commands:")
+    install       Build and install kmonad from source (requires stack)
+    setup         Install Karabiner DEXT and create launchd daemon
+    start         Start the kmonad daemon
+    stop          Stop the kmonad daemon
+    restart       Restart the kmonad daemon
+    status        Show daemon status
+    uninstall     Remove launchd daemon
+EOF
+}
+
+cmd_install() {
+  fmt_title_underline "Installing kmonad"
+
+  if [[ -f "$KMONAD_BIN" ]]; then
+    local version
+    version=$("$KMONAD_BIN" --version 2>/dev/null | head -1 || echo "unknown")
+    log_warning "kmonad already installed at $KMONAD_BIN ($version)"
+    log_info "To reinstall, remove it first: rm $KMONAD_BIN"
+    return 0
+  fi
+
+  # Check for stack
+  if ! command -v stack &>/dev/null; then
+    log_info "Installing Haskell Stack..."
+    curl -sSL https://get.haskellstack.org/ | sh
+  fi
+
+  local tmpdir
+  tmpdir=$(mktemp -d)
+  trap 'rm -rf "$tmpdir"' EXIT
+
+  log_info "Cloning kmonad..."
+  git clone --depth 1 https://github.com/kmonad/kmonad.git "$tmpdir/kmonad"
+
+  log_info "Building kmonad (this will take a while)..."
+  cd "$tmpdir/kmonad"
+  stack build
+
+  log_info "Installing to $KMONAD_BIN..."
+  mkdir -p "$(dirname "$KMONAD_BIN")"
+  stack install --local-bin-path "$(dirname "$KMONAD_BIN")"
+
+  if [[ -f "$KMONAD_BIN" ]]; then
+    log_success "kmonad installed successfully"
+    "$KMONAD_BIN" --version
+  else
+    log_error "Installation failed"
+    exit 1
+  fi
+}
+
+cmd_setup() {
+  fmt_title_underline "Setting up kmonad"
+
+  if [[ ! -f "$KMONAD_BIN" ]]; then
+    log_error "kmonad not found at $KMONAD_BIN. Run '$command_name install' first."
+    exit 1
+  fi
+
+  if [[ ! -f "$KMONAD_CONFIG" ]]; then
+    log_error "Config not found at $KMONAD_CONFIG. Run 'dot link kmonad' first."
+    exit 1
+  fi
+
+  # Check for Karabiner DEXT
+  local dext_path="/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice"
+  if [[ ! -d "$dext_path" ]]; then
+    log_info "Karabiner DriverKit VirtualHIDDevice not found."
+    log_info "Download and install from:"
+    log_info "  https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice/releases"
+    log_info "Then activate the DEXT:"
+    log_info "  '/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/scripts/uninstall/deactivate_driver.sh'"
+    log_info "  '/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/scripts/install/activate_driver.sh'"
+    log_info "After installation, re-run this command."
+    exit 1
+  fi
+
+  # Check DEXT is activated
+  if ! systemextensionsctl list 2>/dev/null | grep -q "org.pqrs.*activated"; then
+    log_warning "Karabiner DEXT is installed but not activated."
+    log_info "Activate it in System Settings > Privacy & Security > Extensions"
+    log_info "Or run: sudo '/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-DriverKit-VirtualHIDDeviceClient.app/Contents/MacOS/Karabiner-DriverKit-VirtualHIDDeviceClient'"
+    exit 1
+  fi
+
+  log_success "Karabiner DEXT is installed and activated"
+
+  # Create launchd plist
+  if [[ -f "$PLIST_PATH" ]]; then
+    log_warning "Launchd plist already exists at $PLIST_PATH"
+    log_info "To recreate, run '$command_name uninstall' first."
+    return 0
+  fi
+
+  log_info "Creating launchd daemon plist..."
+
+  sudo tee "$PLIST_PATH" > /dev/null <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>${PLIST_NAME}</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>${KMONAD_BIN}</string>
+        <string>${KMONAD_CONFIG}</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/kmonad.stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/kmonad.stderr.log</string>
+</dict>
+</plist>
+PLIST
+
+  sudo chmod 644 "$PLIST_PATH"
+  sudo chown root:wheel "$PLIST_PATH"
+
+  log_success "Launchd daemon created at $PLIST_PATH"
+  log_info "Run '$command_name start' to start kmonad"
+}
+
+cmd_start() {
+  if [[ ! -f "$PLIST_PATH" ]]; then
+    log_error "Daemon not set up. Run '$command_name setup' first."
+    exit 1
+  fi
+
+  log_info "Starting kmonad daemon..."
+  sudo launchctl load "$PLIST_PATH"
+  log_success "kmonad daemon started"
+}
+
+cmd_stop() {
+  if [[ ! -f "$PLIST_PATH" ]]; then
+    log_error "Daemon not set up."
+    exit 1
+  fi
+
+  log_info "Stopping kmonad daemon..."
+  sudo launchctl unload "$PLIST_PATH" 2>/dev/null || true
+  log_success "kmonad daemon stopped"
+}
+
+cmd_status() {
+  if [[ ! -f "$PLIST_PATH" ]]; then
+    log_warning "Daemon not set up"
+    return 1
+  fi
+
+  if sudo launchctl list "$PLIST_NAME" &>/dev/null; then
+    log_success "kmonad daemon is running"
+    sudo launchctl list "$PLIST_NAME"
+  else
+    log_info "kmonad daemon is not running"
+  fi
+
+  if [[ -f "$KMONAD_BIN" ]]; then
+    log_info "Binary: $KMONAD_BIN ($("$KMONAD_BIN" --version 2>/dev/null | head -1))"
+  else
+    log_warning "Binary not found at $KMONAD_BIN"
+  fi
+}
+
+cmd_uninstall() {
+  if [[ -f "$PLIST_PATH" ]]; then
+    cmd_stop
+    log_info "Removing launchd plist..."
+    sudo rm "$PLIST_PATH"
+    log_success "Daemon removed"
+  else
+    log_info "No daemon plist found"
+  fi
+}
+
+main() {
+  if [[ $# -lt 1 ]]; then
+    usage
+    exit 0
+  fi
+
+  local subcmd="$1"
+  shift
+
+  case "$subcmd" in
+    install)    cmd_install "$@" ;;
+    setup)      cmd_setup "$@" ;;
+    start)      cmd_start ;;
+    stop)       cmd_stop ;;
+    restart)    cmd_stop; cmd_start ;;
+    status)     cmd_status ;;
+    uninstall)  cmd_uninstall ;;
+    -h|--help)  usage ;;
+    *)
+      log_error "Unknown command: $subcmd"
+      usage
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"
