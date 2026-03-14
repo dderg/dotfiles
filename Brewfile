@@ -1,16 +1,17 @@
 # vim:ft=ruby
 
 tap "homebrew/bundle"
-tap "FelixKratz/formulae"               # For janky borders
-tap "dderg/tap"
 
 if OS.mac?
-  brew "mini-badger"
+  tap "FelixKratz/formulae"               # For janky borders
+  tap "dderg/tap"
+
+  brew "dderg/tap/mini-badger"
 
   # taps
   brew "noti"                          # utility to display notifications from scripts
   brew "trash"                         # rm, but put in the trash rather than completely delete
-  brew "borders"                       # add borders to windows
+  brew "FelixKratz/formulae/borders"   # add borders to windows
 
   # Applications
   # cask "leader-key"                   # a quick application launcher
