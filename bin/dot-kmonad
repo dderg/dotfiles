@@ -56,8 +56,8 @@ cmd_install() {
   mkdir -p "$(dirname "$KMONAD_BIN")"
   (
     cd "$tmpdir/kmonad"
-    stack build
-    stack install --local-bin-path "$(dirname "$KMONAD_BIN")"
+    stack build --flag kmonad:dext
+    stack install --flag kmonad:dext --local-bin-path "$(dirname "$KMONAD_BIN")"
   )
 
   rm -rf "$tmpdir"
