@@ -11,7 +11,7 @@ usage() {
   cat <<EOF
   $(fmt_key "Usage:") $(fmt_cmd "$command_name") $(fmt_value "<command>")
 
-  Manage the rift window manager launchd service via rift-cli.
+  Manage the rift window manager launchd service.
 
 $(fmt_key "Commands:")
     install       Install the per-user launchd service
@@ -23,52 +23,52 @@ $(fmt_key "Commands:")
 EOF
 }
 
-require_rift_cli() {
-  if ! command -v rift-cli &>/dev/null; then
-    log_error "rift-cli not found. Install rift first (brew install rift)."
+require_rift() {
+  if ! command -v rift &>/dev/null; then
+    log_error "rift not found. Install rift first (brew install acsandmann/tap/rift)."
     exit 1
   fi
 }
 
 cmd_install() {
   fmt_title_underline "Installing rift service"
-  require_rift_cli
-  rift-cli service install
+  require_rift
+  rift service install
   log_success "rift service installed"
   log_info "Run '$command_name start' to start rift"
 }
 
 cmd_start() {
-  require_rift_cli
+  require_rift
   log_info "Starting rift service..."
-  rift-cli service start
+  rift service start
   log_success "rift service started"
 }
 
 cmd_stop() {
-  require_rift_cli
+  require_rift
   log_info "Stopping rift service..."
-  rift-cli service stop
+  rift service stop
   log_success "rift service stopped"
 }
 
 cmd_restart() {
-  require_rift_cli
+  require_rift
   log_info "Restarting rift service..."
-  rift-cli service restart
+  rift service restart
   log_success "rift service restarted"
 }
 
 cmd_uninstall() {
-  require_rift_cli
+  require_rift
   log_info "Uninstalling rift service..."
-  rift-cli service stop 2>/dev/null || true
-  rift-cli service uninstall
+  rift service stop 2>/dev/null || true
+  rift service uninstall
   log_success "rift service uninstalled"
 }
 
 cmd_status() {
-  require_rift_cli
+  require_rift
   if pgrep -x rift &>/dev/null; then
     log_success "rift is running (pid $(pgrep -x rift))"
   else
