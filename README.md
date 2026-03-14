@@ -8,9 +8,19 @@ Welcome to my world! Here you'll find a collection of configuration files for va
 
 <img width="1600" alt="capture-20231114134612" src="https://github.com/nicknisi/dotfiles/assets/293805/43dff50a-8fad-44e5-b979-d72ebd0366f8">
 
-## Initial Setup
+## Quick Setup
 
-The first thing you need to do is to clone this repo into a location of your choosing. For example, if you have a `~/Developer` directory where you clone all of your git repos, that's a good choice for this one, too. This repo is setup to not rely on the location of the dotfiles, so you can place it anywhere.
+On a fresh Mac, log into GitHub in Safari, then open Terminal and run:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/dderg/dotfiles/main/bootstrap.sh | bash
+```
+
+This will generate an SSH key, copy it to your clipboard, open GitHub so you can paste it, clone the repo, and install Homebrew. After that, follow the steps it prints to finish the setup.
+
+## Manual Setup
+
+If you prefer to set things up manually, clone this repo into a location of your choosing. For example, if you have a `~/Developer` directory where you clone all of your git repos, that's a good choice for this one, too. This repo is setup to not rely on the location of the dotfiles, so you can place it anywhere.
 
 > [!Note]
 >
@@ -21,7 +31,7 @@ xcode-select --install
 ```
 
 ```bash
-git clone git@github.com:nicknisi/dotfiles.git
+git clone git@github.com:dderg/dotfiles.git
 ```
 
 > [!Note]
