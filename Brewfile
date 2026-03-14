@@ -26,6 +26,12 @@ if OS.mac?
   cask "arc"                          # browser I want to go away from
   cask "orion"                        # browser I want to use more
   cask "raycast"                      # a better spotlight
+  cask "discord"                      # chat
+  cask "obsidian"                     # notes
+  cask "orcaslicer"                   # 3D printer slicer
+  cask "telegram"                     # messenger
+  cask "betterdisplay"                # display management
+  cask "stats"                        # system monitor in menu bar
 
   # Fonts
   cask "font-symbols-only-nerd-font"   # nerd-only symbols font
