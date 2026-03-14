@@ -123,18 +123,17 @@ cmd_setup() {
 
   # Activate DEXT if not already active
   if ! systemextensionsctl list 2>/dev/null | grep -q "org.pqrs.*activated"; then
-    local client_app
-    client_app=$(find "$dext_path/Applications" -type f -perm +111 -path "*/MacOS/*" 2>/dev/null | head -1)
-    if [[ -n "$client_app" && -x "$client_app" ]]; then
+    local manager_app="/Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager"
+    if [[ -x "$manager_app" ]]; then
       log_info "Activating Karabiner DEXT..."
-      sudo "$client_app"
-      log_warning "macOS requires manual approval for system extensions."
-      log_info "Go to: System Settings > General > Login Items & Extensions > Driver Extensions"
-      log_info "Enable 'Karabiner Virtual HID Device'."
-      log_info "Then re-run: $command_name setup"
+      "$manager_app" activate
+      log_warning "macOS may require manual approval for system extensions."
+      log_info "If prompted, go to: System Settings > General > Login Items & Extensions > Driver Extensions"
+      log_info "Enable 'Karabiner Virtual HID Device', then re-run: $command_name setup"
       exit 0
     else
-      log_error "No executable found in $dext_path/Applications"
+      log_error "Manager app not found at $manager_app"
+      log_info "Try reinstalling: $command_name uninstall && $command_name setup"
       exit 1
     fi
   fi
