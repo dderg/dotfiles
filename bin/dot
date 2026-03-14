@@ -204,6 +204,8 @@ cmd_link() {
 
   fmt_title_underline "$title_text"
 
+  mkdir -p "$CONFIG_HOME"
+
   if [ "$pkg" = "all" ]; then
     # Handle all packages in config directory
     for config in "$DOTFILES/config"/*; do
