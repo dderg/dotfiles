@@ -142,6 +142,10 @@ main() {
   echo "  # Set up shell"
   echo "  bin/dot shell change"
   echo ""
+  echo "  # Install and set up kmonad (keyboard remapper)"
+  echo "  bin/dot kmonad install"
+  echo "  bin/dot kmonad setup"
+  echo ""
 }
 
 main "$@"
