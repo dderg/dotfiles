@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+# Description: Manage rift window manager service
+
+set -Eeuo pipefail
+
+# source helpers
+source "$DOTFILES/bin/lib/common.sh"
+command_name=$(basename "${BASH_SOURCE[0]}")
+
+usage() {
+  cat <<EOF
+  $(fmt_key "Usage:") $(fmt_cmd "$command_name") $(fmt_value "<command>")
+
+  Manage the rift window manager launchd service via rift-cli.
+
+$(fmt_key "Commands:")
+    install       Install the per-user launchd service
+    start         Start the rift service
+    stop          Stop the rift service
+    restart       Restart the rift service
+    uninstall     Remove the launchd service
+    status        Show whether rift is running
+EOF
+}
+
+require_rift_cli() {
+  if ! command -v rift-cli &>/dev/null; then
+    log_error "rift-cli not found. Install rift first (brew install rift)."
+    exit 1
+  fi
+}
+
+cmd_install() {
+  fmt_title_underline "Installing rift service"
+  require_rift_cli
+  rift-cli service install
+  log_success "rift service installed"
+  log_info "Run '$command_name start' to start rift"
+}
+
+cmd_start() {
+  require_rift_cli
+  log_info "Starting rift service..."
+  rift-cli service start
+  log_success "rift service started"
+}
+
+cmd_stop() {
+  require_rift_cli
+  log_info "Stopping rift service..."
+  rift-cli service stop
+  log_success "rift service stopped"
+}
+
+cmd_restart() {
+  require_rift_cli
+  log_info "Restarting rift service..."
+  rift-cli service restart
+  log_success "rift service restarted"
+}
+
+cmd_uninstall() {
+  require_rift_cli
+  log_info "Uninstalling rift service..."
+  rift-cli service stop 2>/dev/null || true
+  rift-cli service uninstall
+  log_success "rift service uninstalled"
+}
+
+cmd_status() {
+  require_rift_cli
+  if pgrep -x rift &>/dev/null; then
+    log_success "rift is running (pid $(pgrep -x rift))"
+  else
+    log_info "rift is not running"
+  fi
+}
+
+main() {
+  if [[ $# -lt 1 ]]; then
+    usage
+    exit 0
+  fi
+
+  local subcmd="$1"
+  shift
+
+  case "$subcmd" in
+    install)    cmd_install ;;
+    start)      cmd_start ;;
+    stop)       cmd_stop ;;
+    restart)    cmd_restart ;;
+    uninstall)  cmd_uninstall ;;
+    status)     cmd_status ;;
+    -h|--help)  usage ;;
+    *)
+      log_error "Unknown command: $subcmd"
+      usage
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"
