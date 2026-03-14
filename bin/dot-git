@@ -21,6 +21,23 @@ Options:
 EOF
 }
 
+setup_gitconfig() {
+  local gitconfig="$HOME/.gitconfig"
+
+  if [[ -f "$gitconfig" ]]; then
+    log_info "$gitconfig already exists, skipping"
+    return
+  fi
+
+  log_info "Creating $gitconfig with include for shared config"
+  cat > "$gitconfig" <<'EOF'
+[include]
+    path = ~/.config/git/config
+    path = ~/.gitconfig-local
+EOF
+  log_success "Created $gitconfig"
+}
+
 setup_git() {
   fmt_title_underline "Setting up Git configuration"
 
@@ -29,11 +46,13 @@ setup_git() {
     exit 1
   fi
 
+  setup_gitconfig
+
   local_config="$HOME/.gitconfig-local"
 
-  defaultName=$(git config user.name)
-  defaultEmail=$(git config user.email)
-  defaultGithub=$(git config github.user)
+  defaultName=$(git config user.name 2>/dev/null || echo "")
+  defaultEmail=$(git config user.email 2>/dev/null || echo "")
+  defaultGithub=$(git config github.user 2>/dev/null || echo "")
 
   read -rp "Name [$defaultName] " name
   read -rp "Email [$defaultEmail] " email
