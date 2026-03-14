@@ -1,0 +1,252 @@
+# Rift config — ported from aerospace.toml
+#
+# NOTE: AeroSpace config uses key-mapping.preset = 'dvorak', meaning keys
+# are specified by their Dvorak character. Rift has no Dvorak preset — these
+# bindings assume rift reads characters from the active macOS input source.
+# If your macOS keyboard layout is Dvorak, the letter keys below should
+# match your aerospace experience. If rift uses physical key codes instead,
+# you may need to remap to QWERTY equivalents.
+
+[settings]
+animate = false
+animation_duration = 0.2
+animation_fps = 100.0
+
+mouse_follows_focus = false
+focus_follows_mouse = false
+mouse_hides_on_focus = false
+
+# Manage all macOS spaces by default (no need to Alt+Z each one)
+default_disable = false
+
+hot_reload = true
+
+auto_focus_blacklist = []
+run_on_start = []
+
+[settings.layout]
+mode = "traditional"
+
+[settings.layout.stack]
+# Matches aerospace accordion-padding = 30
+stack_offset = 30.0
+default_orientation = "perpendicular"
+
+[settings.layout.gaps.outer]
+top = 4
+left = 4
+bottom = 4
+right = 4
+
+[settings.layout.gaps.inner]
+horizontal = 10
+vertical = 10
+
+[settings.ui.menu_bar]
+enabled = false
+
+[settings.gestures]
+enabled = false
+
+# ---------------------------------------------------------------------------
+# Virtual Workspaces
+# ---------------------------------------------------------------------------
+# Aerospace workspaces: 1-9, B, C, D, E, I, M, N, P, S, T, Z (20 total)
+# Rift uses 0-based indices.
+
+[virtual_workspaces]
+enabled = true
+default_workspace_count = 20
+auto_assign_windows = true
+preserve_focus_per_workspace = true
+workspace_auto_back_and_forth = true
+reapply_app_rules_on_title_change = false
+
+workspace_names = [
+  "1", "2", "3", "4", "5", "6", "7", "8", "9",
+  "B",  # Browsers
+  "C",  # Chat apps
+  "D",  # Development
+  "E",  # Entertainment
+  "I",  # Discord
+  "M",  # Mail
+  "N",  # Notes
+  "P",  # Productivity/Photography
+  "S",  # Slicer
+  "T",  # Terminal
+  "Z",  # Zoom
+]
+
+workspace_rules = []
+
+# ---------------------------------------------------------------------------
+# App Rules — auto-assign windows to workspaces / floating
+# ---------------------------------------------------------------------------
+app_rules = [
+  # Chat apps → C (index 10)
+  { app_id = "com.apple.MobileSMS",              workspace = "C" },
+  { app_id = "ru.keepcoder.Telegram",             workspace = "C" },
+  { app_id = "one.ayugram.AyuGramDesktop",        workspace = "C" },
+
+  # Discord → I (index 13)
+  { app_id = "com.hnc.Discord",                   workspace = "I" },
+  { app_id = "app.legcord.Legcord",               workspace = "I" },
+
+  # Development → D (index 11)
+  { app_id = "com.microsoft.VSCode",              workspace = "D" },
+  { app_id = "com.apple.dt.Xcode",                workspace = "D", floating = true },
+  { app_id = "com.autodesk.dls.streamer.scriptapp.Autodesk-Fusion", workspace = "D" },
+
+  # Terminal → T (index 18)
+  { app_id = "com.github.wez.wezterm",            workspace = "T" },
+  { app_id = "com.mitchellh.ghostty",             workspace = "T" },
+  { app_id = "net.kovidgoyal.kitty",              workspace = "T" },
+
+  # Mail → M (index 14)
+  { app_id = "com.apple.mail",                    workspace = "M" },
+  { app_id = "ch.protonmail.desktop",             workspace = "M" },
+
+  # Browsers → B (index 9)
+  { app_id = "com.apple.Safari",                  workspace = "B" },
+  { app_id = "company.thebrowser.Browser",        workspace = "B" },
+  { app_id = "com.kagi.kagimacOS",                workspace = "B" },
+  { title_regex = "Orion Preview",                workspace = "B" },
+
+  # Notes → N (index 15)
+  { app_id = "md.obsidian",                       workspace = "N" },
+  { app_id = "com.culturedcode.ThingsMac",         workspace = "N" },
+
+  # Productivity/Photography → P (index 16)
+  { app_id = "com.tinyspeck.slackmacgap",         workspace = "P" },
+  { app_id = "com.apple.iCal",                    workspace = "P" },
+  { app_id = "com.apple.Photos",                  workspace = "P" },
+
+  # Zoom → Z (index 19)
+  { app_id = "us.zoom.xos",                       workspace = "Z" },
+
+  # Entertainment → E (index 12)
+  { app_id = "com.apple.Music",                   workspace = "E" },
+  { app_id = "com.spotify.client",                workspace = "E" },
+
+  # Slicer → S (index 17)
+  { app_id = "com.softfever3d.orca-slicer",       workspace = "S" },
+
+  # Floaters — always floating, no workspace assignment
+  { app_id = "ch.protonvpn.mac",                  floating = true },
+  { app_id = "com.cisco.secureclient.gui",        floating = true },
+  { app_id = "com.1password.1password",            floating = true },
+  { app_id = "com.apple.FaceTime",                floating = true },
+  { app_id = "com.macpaw.CleanMyMac-setapp",      floating = true },
+  { app_id = "com.apple.ScreenContinuity",        floating = true },
+  { app_id = "com.rogueamoeba.audiohijack",       floating = true },
+  { app_id = "com.wulkano.kap",                   floating = true },
+  { app_id = "com.apple.Passwords",               floating = true },
+  { app_id = "org.m0k.transmission",              floating = true },
+  { app_id = "corp.sap.PowerMonitor",             floating = true },
+  { app_id = "com.apple.iphonesimulator",         floating = true },
+]
+
+# ---------------------------------------------------------------------------
+# Modifier combinations
+# ---------------------------------------------------------------------------
+[modifier_combinations]
+comb1 = "Alt + Shift"
+comb2 = "Alt + Ctrl"
+
+# ---------------------------------------------------------------------------
+# Keybindings
+# ---------------------------------------------------------------------------
+[keys]
+
+# Activate/deactivate rift on current space
+"Alt + Z" = "toggle_space_activated"
+
+# --- Layout ---
+# alt-slash toggled tile orientation in aerospace
+"Alt + Slash" = "toggle_orientation"
+# alt-comma toggled accordion in aerospace
+"Alt + Comma" = "toggle_stack"
+
+# --- Focus (Alt + hjkl) ---
+"Alt + H" = { move_focus = "left" }
+"Alt + J" = { move_focus = "down" }
+"Alt + K" = { move_focus = "up" }
+"Alt + L" = { move_focus = "right" }
+
+# --- Move window (Alt+Shift + hjkl) ---
+"comb1 + H" = { move_node = "left" }
+"comb1 + J" = { move_node = "down" }
+"comb1 + K" = { move_node = "up" }
+"comb1 + L" = { move_node = "right" }
+
+# --- Resize (Alt+Ctrl + hjkl) ---
+# Rift doesn't have directional resize — using smart grow/shrink
+"comb2 + H" = "resize_window_shrink"
+"comb2 + L" = "resize_window_grow"
+"comb2 + K" = "resize_window_shrink"
+"comb2 + J" = "resize_window_grow"
+
+# --- Switch workspace (Alt + 1-9, letters) ---
+"Alt + 1" = { switch_to_workspace = 0 }
+"Alt + 2" = { switch_to_workspace = 1 }
+"Alt + 3" = { switch_to_workspace = 2 }
+"Alt + 4" = { switch_to_workspace = 3 }
+"Alt + 5" = { switch_to_workspace = 4 }
+"Alt + 6" = { switch_to_workspace = 5 }
+"Alt + 7" = { switch_to_workspace = 6 }
+"Alt + 8" = { switch_to_workspace = 7 }
+"Alt + 9" = { switch_to_workspace = 8 }
+"Alt + B" = { switch_to_workspace = 9 }
+"Alt + C" = { switch_to_workspace = 10 }
+"Alt + D" = { switch_to_workspace = 11 }
+"Alt + E" = { switch_to_workspace = 12 }
+"Alt + I" = { switch_to_workspace = 13 }
+"Alt + M" = { switch_to_workspace = 14 }
+"Alt + N" = { switch_to_workspace = 15 }
+"Alt + P" = { switch_to_workspace = 16 }
+"Alt + S" = { switch_to_workspace = 17 }
+"Alt + T" = { switch_to_workspace = 18 }
+
+# --- Move window to workspace (Alt+Shift + 1-9, letters) ---
+"comb1 + 1" = { move_window_to_workspace = 0 }
+"comb1 + 2" = { move_window_to_workspace = 1 }
+"comb1 + 3" = { move_window_to_workspace = 2 }
+"comb1 + 4" = { move_window_to_workspace = 3 }
+"comb1 + 5" = { move_window_to_workspace = 4 }
+"comb1 + 6" = { move_window_to_workspace = 5 }
+"comb1 + 7" = { move_window_to_workspace = 6 }
+"comb1 + 8" = { move_window_to_workspace = 7 }
+"comb1 + 9" = { move_window_to_workspace = 8 }
+"comb1 + B" = { move_window_to_workspace = 9 }
+"comb1 + C" = { move_window_to_workspace = 10 }
+"comb1 + D" = { move_window_to_workspace = 11 }
+"comb1 + E" = { move_window_to_workspace = 12 }
+"comb1 + I" = { move_window_to_workspace = 13 }
+"comb1 + M" = { move_window_to_workspace = 14 }
+"comb1 + N" = { move_window_to_workspace = 15 }
+"comb1 + P" = { move_window_to_workspace = 16 }
+"comb1 + S" = { move_window_to_workspace = 17 }
+"comb1 + T" = { move_window_to_workspace = 18 }
+
+# --- Fullscreen (Alt+Ctrl+Z in aerospace) ---
+"comb2 + Z" = "toggle_fullscreen"
+
+# --- Workspace back-and-forth ---
+"Alt + Tab" = "switch_to_last_workspace"
+
+# --- Move window to next display (wraps around) ---
+"comb1 + Tab" = { move_window_to_display = { selector = "right" } }
+
+# --- Floating toggle ---
+# Aerospace service mode: alt-f toggled floating
+"Alt + Shift + Space" = "toggle_window_floating"
+
+# --- Join window (aerospace service mode: alt-shift-hjkl for join-with) ---
+# Using arrow keys since hjkl is taken by move_node
+"Alt + Shift + Left"  = { join_window = "left" }
+"Alt + Shift + Right" = { join_window = "right" }
+"Alt + Shift + Up"    = { join_window = "up" }
+"Alt + Shift + Down"  = { join_window = "down" }
+
+# --- Debug ---
+"comb1 + Ctrl + D" = "debug"

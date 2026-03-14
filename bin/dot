@@ -69,6 +69,7 @@ cmd_clean() {
     ".config/git" ".config/karabiner" ".config/kitty"
     ".config/lazygit" ".config/nvim" ".config/ripgrep"
     ".config/tmux" ".config/wezterm" ".config/zsh"
+    ".config/rift"
   )
 
   fmt_title_underline "Cleaning up broken legacy symlinks..."
@@ -139,6 +140,7 @@ cmd_backup() {
     ".config/tmux"
     ".config/wezterm"
     ".config/zsh"
+    ".config/rift"
   )
 
   tmpfile=$(mktemp)
