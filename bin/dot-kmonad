@@ -164,7 +164,7 @@ cmd_setup() {
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
-    <true/>
+    <false/>
     <key>StandardOutPath</key>
     <string>/tmp/kmonad.stdout.log</string>
     <key>StandardErrorPath</key>
