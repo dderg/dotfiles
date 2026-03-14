@@ -4,6 +4,7 @@
 if OS.mac?
   tap "FelixKratz/formulae"               # For janky borders
   tap "dderg/tap"
+  tap "acsandmann/tap"                   # For rift window manager
 
   brew "dderg/tap/mini-badger"
 
@@ -16,7 +17,8 @@ if OS.mac?
   # cask "leader-key"                   # a quick application launcher
   cask "ghostty"                      # a better terminal emulator
   # cask "wezterm@nightly"              # a better terminal emulator
-  cask "nikitabobko/tap/aerospace"    # a tiling window manager
+  brew "acsandmann/tap/rift"           # a tiling window manager
+  # cask "nikitabobko/tap/aerospace"    # a tiling window manager
   # cask "dimentium/autoraise/autoraiseapp" # focus-follows-mouse
   cask "docker"
   # cask "reflex"                       # so play pause only pauses the music and not youtube
