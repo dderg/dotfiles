@@ -177,7 +177,10 @@ PLIST
   sudo chown root:wheel "$PLIST_PATH"
 
   log_success "Launchd daemon created at $PLIST_PATH"
-  log_info "Run '$command_name start' to start kmonad"
+  log_info "Grant Input Monitoring permission to kmonad:"
+  log_info "  System Settings > Privacy & Security > Input Monitoring"
+  log_info "  Add: $KMONAD_BIN"
+  log_info "Then run '$command_name start'"
 }
 
 cmd_start() {
