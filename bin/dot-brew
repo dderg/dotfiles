@@ -57,12 +57,9 @@ homebrew_bundle() {
 
   fmt_title_underline "Installing Homebrew packages"
 
-  if ! brew bundle --file="$DOTFILES/Brewfile"; then
-    log_error "Failed to install Homebrew packages."
-    exit 1
-  fi
+  brew bundle --file="$DOTFILES/Brewfile" || log_warning "Some packages failed to install. Check the output above."
 
-  log_success "Homebrew packages installed successfully."
+  log_success "Homebrew packages installed."
 
   # install fzf
   echo -e
