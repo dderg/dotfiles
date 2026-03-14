@@ -3,6 +3,7 @@
 
 set -Eeuo pipefail
 
+# source helpers
 source "$DOTFILES/bin/lib/common.sh"
 command_name=$(basename "${BASH_SOURCE[0]}")
 
@@ -47,18 +48,19 @@ cmd_install() {
 
   local tmpdir
   tmpdir=$(mktemp -d)
-  trap 'rm -rf "$tmpdir"' EXIT
 
   log_info "Cloning kmonad..."
   git clone --depth 1 https://github.com/kmonad/kmonad.git "$tmpdir/kmonad"
 
   log_info "Building kmonad (this will take a while)..."
-  cd "$tmpdir/kmonad"
-  stack build
-
-  log_info "Installing to $KMONAD_BIN..."
   mkdir -p "$(dirname "$KMONAD_BIN")"
-  stack install --local-bin-path "$(dirname "$KMONAD_BIN")"
+  (
+    cd "$tmpdir/kmonad"
+    stack build
+    stack install --local-bin-path "$(dirname "$KMONAD_BIN")"
+  )
+
+  rm -rf "$tmpdir"
 
   if [[ -f "$KMONAD_BIN" ]]; then
     log_success "kmonad installed successfully"
@@ -152,7 +154,7 @@ cmd_start() {
   fi
 
   log_info "Starting kmonad daemon..."
-  sudo launchctl load "$PLIST_PATH"
+  sudo launchctl bootstrap system "$PLIST_PATH"
   log_success "kmonad daemon started"
 }
 
@@ -163,7 +165,7 @@ cmd_stop() {
   fi
 
   log_info "Stopping kmonad daemon..."
-  sudo launchctl unload "$PLIST_PATH" 2>/dev/null || true
+  sudo launchctl bootout "system/$PLIST_NAME" 2>/dev/null || true
   log_success "kmonad daemon stopped"
 }
 
@@ -173,9 +175,9 @@ cmd_status() {
     return 1
   fi
 
-  if sudo launchctl list "$PLIST_NAME" &>/dev/null; then
+  if sudo launchctl print "system/$PLIST_NAME" &>/dev/null; then
     log_success "kmonad daemon is running"
-    sudo launchctl list "$PLIST_NAME"
+    sudo launchctl print "system/$PLIST_NAME"
   else
     log_info "kmonad daemon is not running"
   fi
