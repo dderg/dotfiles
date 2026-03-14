@@ -301,6 +301,8 @@ main() {
   *)
     if command -v "dot-$cmd" >/dev/null 2>&1; then
       "dot-$cmd" "$@"
+    elif [[ -x "$script_dir/dot-$cmd" ]]; then
+      "$script_dir/dot-$cmd" "$@"
     else
       log_error "Unknown command: $cmd"
       usage
