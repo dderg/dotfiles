@@ -44,9 +44,9 @@ setup_ssh() {
     success "SSH key already exists at $key"
   else
     info "Generating a new SSH key..."
-    read -rp "Email for SSH key: " email
+    read -rp "Email for SSH key: " email < /dev/tty
     mkdir -p "$HOME/.ssh"
-    ssh-keygen -t ed25519 -C "$email" -f "$key"
+    ssh-keygen -t ed25519 -C "$email" -f "$key" < /dev/tty
     success "SSH key generated"
   fi
 
@@ -69,7 +69,7 @@ setup_ssh() {
   echo ""
   open "https://github.com/settings/ssh/new" 2>/dev/null || true
 
-  read -rp "Press Enter once you've added the key to GitHub..."
+  read -rp "Press Enter once you've added the key to GitHub..." < /dev/tty
 
   # Verify the key works
   info "Verifying SSH connection to GitHub..."
@@ -101,7 +101,7 @@ install_homebrew() {
   fi
 
   info "Installing Homebrew..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/tty
 
   # Add brew to PATH for the rest of this script
   if [[ -f "/opt/homebrew/bin/brew" ]]; then
