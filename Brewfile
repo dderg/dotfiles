@@ -32,6 +32,7 @@ if OS.mac?
   cask "telegram"                     # messenger
   cask "betterdisplay"                # display management
   cask "stats"                        # system monitor in menu bar
+  cask "claude-code"                  # AI coding agent (terminal)
 
   # Fonts
   cask "font-symbols-only-nerd-font"   # nerd-only symbols font
@@ -75,6 +76,7 @@ brew "tree"                            # pretty-print directory contents
 brew "wdiff"                           # word differences in text files
 brew "wget"                            # internet file retriever
 brew "zoxide"                          # switch between most used directories
+brew "opencode"                        # open source AI coding agent (terminal)
 
 
 # Yazi dependencies
