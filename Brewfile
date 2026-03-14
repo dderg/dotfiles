@@ -14,13 +14,13 @@ if OS.mac?
   brew "borders"                       # add borders to windows
 
   # Applications
-  cask "leader-key"                   # a quick application launcher
+  # cask "leader-key"                   # a quick application launcher
   cask "ghostty"                      # a better terminal emulator
-  cask "wezterm@nightly"              # a better terminal emulator
+  # cask "wezterm@nightly"              # a better terminal emulator
   cask "nikitabobko/tap/aerospace"    # a tiling window manager
-  cask "dimentium/autoraise/autoraiseapp" # focus-follows-mouse
+  # cask "dimentium/autoraise/autoraiseapp" # focus-follows-mouse
   cask "docker"
-  cask "reflex"                       # so play pause only pauses the music and not youtube
+  # cask "reflex"                       # so play pause only pauses the music and not youtube
   cask "kap"                          # screen recorder
   cask "aldente"                      # battery tool
   cask "arc"                          # browser I want to go away from
@@ -69,3 +69,12 @@ brew "tree"                            # pretty-print directory contents
 brew "wdiff"                           # word differences in text files
 brew "wget"                            # internet file retriever
 brew "zoxide"                          # switch between most used directories
+
+
+# Yazi dependencies
+brew "yazi"
+brew "ffmpeg"
+brew "sevenzip"
+brew "poppler"
+brew "resvg"
+brew "imagemagick"
