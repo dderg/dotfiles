@@ -1,6 +1,6 @@
 (defcfg
   input  (iokit-name "Apple Internal Keyboard / Trackpad")
-  output (dext)
+  output (kext)
 
   ;; Comment this if you want unhandled events not to be emitted
   fallthrough true
