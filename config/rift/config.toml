@@ -22,7 +22,7 @@ default_disable = false
 hot_reload = true
 
 auto_focus_blacklist = []
-run_on_start = []
+run_on_start = ["borders"]
 
 [settings.layout]
 mode = "traditional"
