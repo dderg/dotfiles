@@ -98,6 +98,7 @@ Sets up personalized Git configuration including name, email, and Github usernam
 
 ```bash
 dot macos defaults    # Configure recommended macOS system defaults
+dot macos keyboard    # Install custom keyboard layout
 ```
 
 Configures various macOS system settings including:

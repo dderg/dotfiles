@@ -14,6 +14,7 @@ usage() {
 Options:
     -h, --help       Show this help message
     defaults         Setup macOS defaults
+    keyboard         Install custom keyboard layout
 EOF
 }
 
@@ -74,6 +75,22 @@ setup_macos() {
   for app in Safari Finder Dock Mail SystemUIServer; do killall "$app" >/dev/null 2>&1; done
 }
 
+setup_keyboard() {
+  fmt_title_underline "Installing keyboard layout"
+
+  local src="$DOTFILES/resources/rus-dvorak-cmd.bundle"
+  local dest="$HOME/Library/Keyboard Layouts/rus-dvorak-cmd.bundle"
+
+  if [[ -d "$dest" ]]; then
+    log_info "Keyboard layout already installed, skipping"
+    return
+  fi
+
+  cp -R "$src" "$dest"
+  log_info "Installed rus-dvorak-cmd.bundle to ~/Library/Keyboard Layouts/"
+  log_info "Enable it in System Settings → Keyboard → Input Sources"
+}
+
 main() {
   local subcmd=""
 
@@ -98,6 +115,9 @@ main() {
   case "$subcmd" in
   defaults)
     setup_macos
+    ;;
+  keyboard)
+    setup_keyboard
     ;;
   *)
     log_error "Unknown legacy command: $subcmd"
