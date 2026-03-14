@@ -1,0 +1,2 @@
+# Local configuration - copy to ~/.localrc and fill in values
+export MATOMO_URL="https://your-matomo-url.example.com"

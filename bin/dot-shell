@@ -22,6 +22,7 @@ Options:
     -h, --help       Show this help message
     change           change the shell to zsh
     terminfo         Add terminfo files
+    localrc          Copy localrc.example to ~/.localrc (if not exists)
 EOF
 }
 
@@ -55,6 +56,17 @@ cmd_terminfo() {
   log_success "terminfo files added."
 }
 
+cmd_localrc() {
+  fmt_title_underline "Setting up localrc"
+
+  if [[ -f "$HOME/.localrc" ]]; then
+    log_info "$HOME/.localrc already exists, skipping"
+  else
+    cp "$DOTFILES/config/zsh/localrc.example" "$HOME/.localrc"
+    log_success "copied localrc.example to $HOME/.localrc — edit it with your values"
+  fi
+}
+
 main() {
   local subcmd=""
 
@@ -82,6 +94,9 @@ main() {
     ;;
   terminfo)
     cmd_terminfo
+    ;;
+  localrc)
+    cmd_localrc
     ;;
   *)
     log_error "Unknown $command_name command: $subcmd"
