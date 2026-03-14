@@ -1,6 +1,5 @@
 # vim:ft=ruby
 
-tap "homebrew/bundle"
 
 if OS.mac?
   tap "FelixKratz/formulae"               # For janky borders
