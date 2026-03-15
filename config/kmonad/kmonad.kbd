@@ -16,9 +16,9 @@
 
 (defalias
     ctl_a (tap-hold-next-release 200 a lctl)
-    met_s (tap-hold-next-release 160 s lmet)
-    alt_e (tap-hold-next-release 160 e lalt)
-    sft_f (tap-hold-next-release 140 f lsft)
+    met_s (tap-hold-next-release 180 s lmet)
+    alt_e (tap-hold-next-release 180 e lalt)
+    sft_f (tap-hold-next-release 160 f lsft)
 
     sft_j (tap-hold-next-release 180 j rsft)
     alt_i (tap-hold-next-release 200 i ralt)

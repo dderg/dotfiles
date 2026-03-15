@@ -195,9 +195,18 @@ PLIST
     <string>${PLIST_NAME}</string>
     <key>ProgramArguments</key>
     <array>
+        <string>/usr/sbin/taskpolicy</string>
+        <string>-l</string>
+        <string>0</string>
+        <string>-t</string>
+        <string>0</string>
         <string>${KMONAD_BIN}</string>
         <string>${KMONAD_CONFIG}</string>
     </array>
+    <key>ProcessType</key>
+    <string>Interactive</string>
+    <key>Nice</key>
+    <integer>-20</integer>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
