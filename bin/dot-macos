@@ -79,19 +79,27 @@ setup_macos() {
 }
 
 setup_keyboard() {
-  fmt_title_underline "Installing keyboard layout"
+  fmt_title_underline "Installing keyboard layouts"
 
-  local src="$DOTFILES/resources/rus-dvorak-cmd.bundle"
-  local dest="$HOME/Library/Keyboard Layouts/rus-dvorak-cmd.bundle"
+  local bundles=(
+    "rus-dvorak-cmd.bundle"
+    "rus-dvorak-cmd-ctrl.bundle"
+  )
 
-  if [[ -d "$dest" ]]; then
-    log_info "Keyboard layout already installed, skipping"
-    return
-  fi
+  for bundle in "${bundles[@]}"; do
+    local src="$DOTFILES/resources/$bundle"
+    local dest="$HOME/Library/Keyboard Layouts/$bundle"
 
-  cp -R "$src" "$dest"
-  log_info "Installed rus-dvorak-cmd.bundle to ~/Library/Keyboard Layouts/"
-  log_info "Enable it in System Settings → Keyboard → Input Sources"
+    if [[ -d "$dest" ]]; then
+      log_info "$bundle already installed, skipping"
+      continue
+    fi
+
+    cp -R "$src" "$dest"
+    log_info "Installed $bundle to ~/Library/Keyboard Layouts/"
+  done
+
+  log_info "Enable layouts in System Settings → Keyboard → Input Sources"
 }
 
 main() {
