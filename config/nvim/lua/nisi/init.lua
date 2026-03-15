@@ -16,7 +16,7 @@ local utils = require("nisi.utils")
 ---@field proxy string|nil A proxy URL to use for certain network functions
 ---@field colorscheme string|fun()|nil What to set the colorscheme to and/or how
 local config = {
-  lazypath = vim.fn.stdpath("data") .. "lazy/lazy.nvim",
+  lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim",
   startup_art = "neovim",
   startup_color = "#653CAD",
   zen = false,
@@ -103,7 +103,9 @@ local function init_plugins()
   if config.fzf then
     M.add_plugin({ import = "nisi.plugins.extras.fzf" })
   end
-  require("lazy").setup(plugins)
+  require("lazy").setup(plugins, {
+    concurrency = 4,
+  })
 
   lazy_loaded = true
 end

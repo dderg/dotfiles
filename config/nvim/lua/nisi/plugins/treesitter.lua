@@ -5,19 +5,17 @@ return {
     build = ":TSUpdate",
     version = false,
     dependencies = {
-      "nvim-treesitter/playground",
       "nvim-treesitter/nvim-treesitter-textobjects",
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
-    init = function(plugin)
+    keys = {
+      { "<leader>tp", "<cmd>InspectTree<cr>", desc = "Treesitter Inspect Tree" },
+    },
+    config = function(_, opts)
       if config.prefer_git then
         require("nvim-treesitter.install").prefer_git = true
       end
-      require("lazy.core.loader").add_to_rtp(plugin)
-      require("nvim-treesitter.query_predicates")
-    end,
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
+      require("nvim-treesitter").setup(opts)
       vim.treesitter.language.register("markdown", { "md", "mdx" })
     end,
     opts = {
@@ -79,24 +77,6 @@ return {
           enable = false,
           swap_next = { ["<leader>a"] = "@parameter.inner" },
           swap_previous = { ["<leader>A"] = "@parameter.inner" },
-        },
-      },
-      playground = {
-        enable = true,
-        disable = {},
-        updatetime = 25,
-        persist_queries = false,
-        keybindings = {
-          toggle_query_editor = "o",
-          toggle_hl_groups = "i",
-          toggle_injected_languages = "t",
-          toggle_anonymous_nodes = "a",
-          toggle_language_display = "I",
-          focus_language = "f",
-          unfocus_language = "F",
-          update = "R",
-          goto_node = "<cr>",
-          show_help = "?",
         },
       },
     },
