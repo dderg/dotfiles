@@ -59,7 +59,7 @@ enabled = true
 default_workspace_count = 20
 auto_assign_windows = true
 preserve_focus_per_workspace = true
-workspace_auto_back_and_forth = true
+workspace_auto_back_and_forth = false
 reapply_app_rules_on_title_change = false
 
 workspace_names = [
@@ -247,6 +247,10 @@ comb2 = "Alt + Ctrl"
 "Alt + Shift + Right" = { join_window = "right" }
 "Alt + Shift + Up"    = { join_window = "up" }
 "Alt + Shift + Down"  = { join_window = "down" }
+
+# --- Workarounds ---
+# Xcode windows sometimes open off-screen and become unmovable
+"comb2 + D" = { exec = ["osascript", "-e", "tell application \"Xcode\" to set bounds of front window to {0, 0, 1200, 800}"] }
 
 # --- Debug ---
 "comb1 + Ctrl + D" = "debug"
