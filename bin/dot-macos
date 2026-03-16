@@ -71,6 +71,9 @@ setup_macos() {
   log_info "Group windows by application in Mission Control, fixes visualization bug in aerospace"
   defaults write com.apple.dock expose-group-apps -bool true && killall Dock
 
+  log_info "Disable Gatekeeper"
+  sudo spctl --master-disable
+
   log_info "Disable 'Disk not ejected properly' notification"
   defaults write /Library/Preferences/SystemConfiguration/com.apple.DiskArbitration.diskarbitrationd.plist DADisableEjectNotification -bool YES && pkill diskarbitrationd
 
