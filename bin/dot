@@ -212,7 +212,13 @@ cmd_link() {
     # Handle all packages in config directory
     for config in "$DOTFILES/config"/*; do
       if [ -d "$config" ]; then
-        local target="$CONFIG_HOME/$(basename "$config")"
+        local pkg_name
+        pkg_name="$(basename "$config")"
+
+        # Skip packages that need special handling
+        [[ "$pkg_name" = "claude" ]] && continue
+
+        local target="$CONFIG_HOME/$pkg_name"
         if [ "$operation" = "link" ]; then
           if [ -e "$target" ]; then
             log_warning "~${target#"$HOME"} already exists... Skipping."
@@ -243,6 +249,28 @@ cmd_link() {
       if [ -L "$HOME/.zshenv" ]; then
         [ "$verbose" = true ] && log_info "Unlinking $HOME/.zshenv"
         rm "$HOME/.zshenv"
+      fi
+    fi
+
+    # Handle Claude Code settings (lives in ~/.claude/, not ~/.config/)
+    local claude_target="$HOME/.claude/settings.json"
+    local claude_source="$DOTFILES/config/claude/settings.json"
+    if [ "$operation" = "link" ]; then
+      if [ -e "$claude_source" ]; then
+        mkdir -p "$HOME/.claude"
+        if [ -e "$claude_target" ] && [ ! -L "$claude_target" ]; then
+          [ "$verbose" = true ] && log_warning "~/.claude/settings.json already exists (not a symlink)... Skipping."
+        elif [ -L "$claude_target" ]; then
+          [ "$verbose" = true ] && log_info "~/.claude/settings.json already linked... Skipping."
+        else
+          [ "$verbose" = true ] && log_info "Linking Claude Code settings"
+          ln -s "$claude_source" "$claude_target"
+        fi
+      fi
+    else # unlink
+      if [ -L "$claude_target" ]; then
+        [ "$verbose" = true ] && log_info "Unlinking $claude_target"
+        rm "$claude_target"
       fi
     fi
   else
