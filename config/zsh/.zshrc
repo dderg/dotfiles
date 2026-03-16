@@ -27,6 +27,7 @@ fi
 
 # display how long all tasks over 10 seconds take
 export REPORTTIME=10
+export TMUX_MINIMAL=1
 export KEYTIMEOUT=1              # 10ms delay for key sequences
 
 setopt NO_BG_NICE
