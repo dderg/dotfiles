@@ -30,6 +30,7 @@ if OS.mac?
   cask "discord"                      # chat
   cask "obsidian"                     # notes
   cask "orcaslicer"                   # 3D printer slicer
+  brew "syncthing"                    # continuous file sync between devices
   cask "telegram"                     # messenger
   cask "betterdisplay"                # display management
   cask "stats"                        # system monitor in menu bar

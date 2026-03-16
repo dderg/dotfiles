@@ -1,0 +1,171 @@
+#!/usr/bin/env bash
+# Description: Manage autostart services (syncthing, rift)
+
+set -Eeuo pipefail
+
+source "$DOTFILES/bin/lib/common.sh"
+command_name=$(basename "${BASH_SOURCE[0]}")
+
+# Each entry: "name:start_cmd:stop_cmd:status_cmd"
+SERVICES=(
+  "syncthing:brew services start syncthing:brew services stop syncthing:brew services info syncthing --json"
+  "rift:rift service start:rift service stop:pgrep -x rift"
+)
+
+usage() {
+  cat <<EOF
+  $(fmt_key "Usage:") $(fmt_cmd "$command_name") $(fmt_value "<command> [service]")
+
+  Manage autostart services.
+
+$(fmt_key "Commands:")
+    start [service]     Start all services (or a specific one)
+    stop [service]      Stop all services (or a specific one)
+    restart [service]   Restart all services (or a specific one)
+    status              Show status of all services
+
+$(fmt_key "Services:")
+    syncthing           Continuous file sync (brew services)
+    rift                Tiling window manager (rift service)
+EOF
+}
+
+get_service() {
+  local name="$1"
+  for entry in "${SERVICES[@]}"; do
+    if [[ "${entry%%:*}" == "$name" ]]; then
+      echo "$entry"
+      return 0
+    fi
+  done
+  log_error "Unknown service: $name"
+  return 1
+}
+
+service_names() {
+  for entry in "${SERVICES[@]}"; do
+    echo "${entry%%:*}"
+  done
+}
+
+is_running() {
+  local name="$1"
+  case "$name" in
+    syncthing)
+      brew services info syncthing --json 2>/dev/null | grep -q '"running": true'
+      ;;
+    rift)
+      pgrep -x rift &>/dev/null
+      ;;
+  esac
+}
+
+start_service() {
+  local name="$1"
+  local entry
+  entry=$(get_service "$name") || return 1
+  local start_cmd
+  start_cmd=$(echo "$entry" | cut -d: -f2)
+
+  if ! command -v "$name" &>/dev/null; then
+    log_error "$name not found. Install it first."
+    return 1
+  fi
+
+  if is_running "$name"; then
+    log_info "$name is already running"
+    return 0
+  fi
+
+  log_info "Starting $name..."
+  eval "$start_cmd" &>/dev/null
+  log_success "$name started"
+}
+
+stop_service() {
+  local name="$1"
+  local entry
+  entry=$(get_service "$name") || return 1
+  local stop_cmd
+  stop_cmd=$(echo "$entry" | cut -d: -f3)
+
+  if ! is_running "$name"; then
+    log_info "$name is not running"
+    return 0
+  fi
+
+  log_info "Stopping $name..."
+  eval "$stop_cmd" &>/dev/null
+  log_success "$name stopped"
+}
+
+cmd_start() {
+  local target="${1:-all}"
+  if [[ "$target" == "all" ]]; then
+    for name in $(service_names); do
+      start_service "$name"
+    done
+  else
+    start_service "$target"
+  fi
+}
+
+cmd_stop() {
+  local target="${1:-all}"
+  if [[ "$target" == "all" ]]; then
+    for name in $(service_names); do
+      stop_service "$name"
+    done
+  else
+    stop_service "$target"
+  fi
+}
+
+cmd_restart() {
+  local target="${1:-all}"
+  if [[ "$target" == "all" ]]; then
+    for name in $(service_names); do
+      stop_service "$name"
+      start_service "$name"
+    done
+  else
+    stop_service "$target"
+    start_service "$target"
+  fi
+}
+
+cmd_status() {
+  fmt_title_underline "Service Status"
+  for name in $(service_names); do
+    if is_running "$name"; then
+      log_success "$name is running"
+    else
+      log_warning "$name is not running"
+    fi
+  done
+}
+
+main() {
+  if [[ $# -lt 1 ]]; then
+    usage
+    exit 0
+  fi
+
+  local subcmd="$1"
+  shift
+
+  case "$subcmd" in
+    start)      cmd_start "${1:-all}" ;;
+    stop)       cmd_stop "${1:-all}" ;;
+    restart)    cmd_restart "${1:-all}" ;;
+    status)     cmd_status ;;
+    -h|--help)  usage ;;
+    *)
+      log_error "Unknown command: $subcmd"
+      usage
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"
