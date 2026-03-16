@@ -30,7 +30,7 @@ mode = "traditional"
 [settings.layout.stack]
 # Matches aerospace accordion-padding = 30
 stack_offset = 30.0
-default_orientation = "perpendicular"
+default_orientation = "horizontal"
 
 [settings.layout.gaps.outer]
 top = 4
