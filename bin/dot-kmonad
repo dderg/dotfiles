@@ -223,9 +223,19 @@ PLIST
   sudo chown root:wheel "$PLIST_PATH"
 
   log_success "Launchd daemon created at $PLIST_PATH"
-  log_info "Grant Input Monitoring permission to kmonad:"
-  log_info "  System Settings > Privacy & Security > Input Monitoring"
-  log_info "  Add: $KMONAD_BIN"
+
+  echo ""
+  fmt_title_border "MANUAL STEPS REQUIRED"
+  echo ""
+  log_warning "1. Enable the Karabiner driver extension:"
+  log_warning "   System Settings > General > Login Items & Extensions > Driver Extensions"
+  log_warning "   → Enable 'Karabiner Virtual HID Device'"
+  echo ""
+  log_warning "2. Grant Input Monitoring permission to kmonad:"
+  log_warning "   System Settings > Privacy & Security > Input Monitoring"
+  log_warning "   → Add: $KMONAD_BIN"
+  echo ""
+  log_warning "Both steps are required before kmonad can work."
   log_info "Then run '$command_name start'"
 }
 
