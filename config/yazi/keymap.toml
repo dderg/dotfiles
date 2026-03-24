@@ -1,0 +1,5 @@
+[pick]
+prepend_keymap = [
+  { on = ["<C-j>"], run = "arrow next", desc = "Next option" },
+  { on = ["<C-k>"], run = "arrow prev", desc = "Previous option" },
+]
