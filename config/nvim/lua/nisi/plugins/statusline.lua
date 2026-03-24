@@ -52,7 +52,7 @@ return {
 
       return {
         options = {
-          theme = "auto",
+          theme = "dark",
           icons_enabled = true,
           -- section_separators = { right = "", left = "" },
           -- -- component_separators = "", --{ right = "", left = "" },

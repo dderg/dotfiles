@@ -78,6 +78,7 @@ end
 ---Determine whether dark mode is enabled by the system
 ---@return boolean is_dark Whether the system is in dark mode
 function M.is_dark_mode()
+  if true then return true end
   if M.is_macos() then
     local handle = io.popen("defaults read -g AppleInterfaceStyle 2>/dev/null")
     if handle == nil then
