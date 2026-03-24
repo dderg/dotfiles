@@ -9,6 +9,7 @@ local config = wezterm.config_builder()
 local fancy = false
 
 config.max_fps = 120
+config.default_cursor_style = "SteadyBlock"
 config.prefer_egl = true
 
 config.colors = {
@@ -122,6 +123,11 @@ local activateChangeTab = act.ActivateKeyTable({
   timeout_milliseconds = 1000,
 })
 config.keys = {
+  {
+    key = "w",
+    mods = "SUPER",
+    action = act.DisableDefaultAssignment,
+  },
   {
     key = "H",
     mods = "LEADER|SHIFT",
