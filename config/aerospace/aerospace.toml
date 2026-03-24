@@ -10,7 +10,7 @@ after-login-command = []
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
-  'exec-and-forget borders',
+  # 'exec-and-forget borders',
 ]
 
 # Start AeroSpace at login
@@ -53,12 +53,12 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
 # Allow for more space on smaller screens
-inner.horizontal = 10
-inner.vertical =   10
-outer.left =       4
-outer.bottom =     4
-outer.top =        4
-outer.right =      4
+inner.horizontal = 0
+inner.vertical =   0
+outer.left =       0
+outer.bottom =     0
+outer.top =        0
+outer.right =      0
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -130,6 +130,7 @@ alt-m = 'workspace M' # Mail
 alt-n = 'workspace N' # Notes
 alt-p = 'workspace P' # Productivity/Photography
 alt-t = 'workspace T' # Terminal
+alt-f = 'workspace F' # Finder
 alt-s = 'workspace S' # Slicer
 alt-i = 'workspace I' # dIscord
 
@@ -151,6 +152,7 @@ alt-shift-m = 'move-node-to-workspace M'
 alt-shift-n = 'move-node-to-workspace N'
 alt-shift-p = 'move-node-to-workspace P'
 alt-shift-t = 'move-node-to-workspace T'
+alt-shift-f = 'move-node-to-workspace F'
 alt-shift-s = 'move-node-to-workspace S'
 alt-shift-i = 'move-node-to-workspace I'
 
@@ -310,6 +312,16 @@ run = 'move-node-to-workspace E'
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
 run = 'move-node-to-workspace E'
+
+[[on-window-detected]]
+if.app-id = 'fr.read-write.Submariner'
+run = 'move-node-to-workspace E'
+
+## Finder
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'move-node-to-workspace F'
 
 ## Slicer
 
