@@ -2,30 +2,30 @@
 
 
 if OS.mac?
-  tap "FelixKratz/formulae"               # For janky borders
+  # tap "FelixKratz/formulae"               # For janky borders
   tap "dderg/tap"
-  tap "acsandmann/tap"                   # For rift window manager
+  # tap "acsandmann/tap"                   # For rift window manager
 
   brew "dderg/tap/mini-badger"
 
   # taps
   brew "noti"                          # utility to display notifications from scripts
   brew "trash"                         # rm, but put in the trash rather than completely delete
-  brew "FelixKratz/formulae/borders"   # add borders to windows
+  # brew "FelixKratz/formulae/borders"   # add borders to windows
 
   # Applications
   # cask "leader-key"                   # a quick application launcher
   cask "ghostty"                      # a better terminal emulator
   # cask "wezterm@nightly"              # a better terminal emulator
-  brew "acsandmann/tap/rift"           # a tiling window manager
-  # cask "nikitabobko/tap/aerospace"    # a tiling window manager
+  # brew "acsandmann/tap/rift"           # a tiling window manager
+  cask "nikitabobko/tap/aerospace"     # a tiling window manager
   # cask "dimentium/autoraise/autoraiseapp" # focus-follows-mouse
   cask "docker"
-  # cask "reflex"                       # so play pause only pauses the music and not youtube
   cask "kap"                          # screen recorder
-  cask "aldente"                      # battery tool
+  # cask "aldente"                      # battery tool
   cask "arc"                          # browser I want to go away from
-  cask "orion"                        # browser I want to use more
+  # cask "orion"                        # browser I want to use more
+  cask "submariner"                   # music player for navidrome
   cask "raycast"                      # a better spotlight
   cask "discord"                      # chat
   cask "obsidian"                     # notes
@@ -55,9 +55,11 @@ brew "starship"                        # a better prompt
 brew "bat"                             # better cat
 brew "cloc"                            # lines of code counter
 brew "entr"                            # file watcher / command runner
+brew "exiftool"                        # read/write file metadata
 brew "eza"                             # ls alternative
 brew "fd"                              # find alternative
 brew "fnm"                             # Fast Node version manager
+brew "fastlane"                        # iOS/Android automation
 brew "rbenv"                           # Ruby version manager
 brew "fzf"                             # Fuzzy file searcher, used in scripts and in vim
 brew "gh"                              # GitHub CLI
