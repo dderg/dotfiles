@@ -82,12 +82,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 function M.setup()
   mason.setup({ ui = { border = border } })
 
-  mason_lspconfig.setup({
-    ensure_installed = servers,
-    automatic_installation = true,
-    ui = { check_outdated_servers_on_open = true },
-  })
-
   local handlers = {
     function(server_name)
       lspconfig[server_name].setup(make_conf({}))
@@ -277,7 +271,13 @@ function M.setup()
     end
   end
 
-  mason_lspconfig.setup_handlers(handlers)
+  mason.setup({ ui = { border = border } })
+
+  mason_lspconfig.setup({
+    ensure_installed = servers,
+    automatic_installation = true,
+    handlers = handlers,
+  })
 end
 
 return M
