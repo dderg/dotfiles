@@ -100,6 +100,8 @@ keybinds clear-defaults=true {
             Run "lazygit" {
                 floating true
                 hold_on_close false
+                width "80%"
+                height "80%"
             }
             SwitchToMode "normal"
         }
