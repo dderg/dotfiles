@@ -76,6 +76,7 @@ brew "ripgrep"                         # very fast file searcher
 brew "shellcheck"                      # diagnostics for shell sripts
 brew "stylua"                          # lua code formatter
 brew "tmux"                            # terminal multiplexer
+brew "zellij"                          # terminal multiplexer (rust)
 brew "tree"                            # pretty-print directory contents
 brew "wdiff"                           # word differences in text files
 brew "wget"                            # internet file retriever

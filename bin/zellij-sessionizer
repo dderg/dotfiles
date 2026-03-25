@@ -1,0 +1,30 @@
+#!/bin/sh
+# Zellij session picker with fzf + zoxide
+#
+# enter:   switch to session
+# ctrl-x:  kill session (picker stays open)
+# ctrl-n:  new session from zoxide directory
+
+while true; do
+    result=$(zellij list-sessions -s 2>/dev/null | fzf --reverse \
+        --header "enter:switch | ctrl-x:kill | ctrl-n:new (zoxide)" \
+        --expect=ctrl-n \
+        --bind "ctrl-x:execute-silent(zellij kill-session {})+reload(zellij list-sessions -s)")
+
+    key=$(echo "$result" | sed -n 1p)
+    session=$(echo "$result" | sed -n 2p)
+
+    if [ "$key" = "ctrl-n" ]; then
+        dir=$(zoxide query -l | fzf --reverse --header "Pick directory for new session")
+        if [ -n "$dir" ]; then
+            name=$(basename "$dir")
+            zellij action switch-session "$name" --cwd "$dir"
+        fi
+        break
+    elif [ -n "$session" ]; then
+        zellij action switch-session "$session"
+        break
+    else
+        break
+    fi
+done
