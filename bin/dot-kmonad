@@ -52,7 +52,9 @@ cmd_install() {
   tmpdir=$(mktemp -d)
 
   log_info "Cloning kmonad..."
-  git clone --recursive --depth 1 https://github.com/kmonad/kmonad.git "$tmpdir/kmonad"
+  # Using fork with tap-hold release buffering fix (upstream PR pending)
+  # Revert to kmonad/kmonad once upstream merges the fix
+  git clone --recursive -b fix/tap-hold-release-buffering https://github.com/dderg/kmonad.git "$tmpdir/kmonad"
 
   log_info "Building kmonad (this will take a while)..."
   mkdir -p "$(dirname "$KMONAD_BIN")"

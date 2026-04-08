@@ -55,7 +55,7 @@
 (deflayer qwerty
   esc    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
   tab      q       w  @alt_e  r     t    y    u  i o  p
-  lctrl @ctl_a @met_s  d   @sft_f  g    h j   k     l       ;
+  lctrl   a @met_s  d   @sft_f  g    h j   k     l       ;
   lsft    z        x    c     v     b    n    m     ,     .       /
   fn lctl lalt @num space
 )
@@ -63,7 +63,7 @@
 (deflayer num
   esc    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
   tab    q       w  @alt_e  r     t    y   7    8    9    0
-  lctrl @ctl_a @met_s d   @sft_f  g    h   4    5    6    ;
+  lctrl a @met_s d   @sft_f  g    h   4    5    6    ;
   lsft  z        x    c     v     b    n   1    2    3    /
   fn lctl lalt @num space
 )

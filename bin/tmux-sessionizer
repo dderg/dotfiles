@@ -1,0 +1,35 @@
+#!/bin/sh
+# Tmux session picker with fzf + zoxide
+#
+# enter:   switch to session
+# ctrl-x:  kill session (picker stays open)
+# ctrl-n:  new named session
+# ctrl-o:  new session from zoxide directory
+
+list_sessions() {
+    tmux list-sessions -F '#{session_name}' 2>/dev/null
+}
+
+result=$(list_sessions | fzf --reverse \
+    --header "enter:switch | ctrl-x:kill | ctrl-n:new | ctrl-o:zoxide" \
+    --expect=ctrl-n,ctrl-o \
+    --print-query \
+    --bind "ctrl-x:execute-silent(tmux kill-session -t {})+reload(tmux list-sessions -F '#{session_name}')")
+
+query=$(echo "$result" | sed -n 1p)
+key=$(echo "$result" | sed -n 2p)
+session=$(echo "$result" | sed -n 3p)
+
+if [ "$key" = "ctrl-n" ] && [ -n "$query" ]; then
+    tmux new-session -d -s "$query"
+    tmux switch-client -t "$query"
+elif [ "$key" = "ctrl-o" ]; then
+    dir=$(zoxide query -l | fzf --reverse --header "Pick directory for new session")
+    if [ -n "$dir" ]; then
+        name=$(basename "$dir")
+        tmux new-session -d -s "$name" -c "$dir"
+        tmux switch-client -t "$name"
+    fi
+elif [ -n "$session" ]; then
+    tmux switch-client -t "$session"
+fi
