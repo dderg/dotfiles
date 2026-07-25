@@ -20,6 +20,7 @@ if OS.mac?
   # brew "acsandmann/tap/rift"           # a tiling window manager
   cask "nikitabobko/tap/aerospace"     # a tiling window manager
   # cask "dimentium/autoraise/autoraiseapp" # focus-follows-mouse
+  cask "linearmouse"
   cask "docker"
   cask "kap"                          # screen recorder
   # cask "aldente"                      # battery tool
@@ -35,6 +36,7 @@ if OS.mac?
   cask "betterdisplay"                # display management
   cask "stats"                        # system monitor in menu bar
   cask "claude-code"                  # AI coding agent (terminal)
+  brew "omp"
 
   # Fonts
   cask "font-symbols-only-nerd-font"   # nerd-only symbols font
