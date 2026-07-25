@@ -1,0 +1,73 @@
+symbolPreset: nerd
+theme: 
+  dark: titanium-subtle
+setupVersion: 1
+modelRoles: 
+  smol: anthropic/claude-sonnet-5:low
+  advisor: anthropic/claude-opus-5:medium
+  task: anthropic/claude-opus-5
+  sol: openai-codex/gpt-5.6-sol:medium
+  slow: anthropic/claude-fable-5:medium
+  plan: anthropic/claude-fable-5:low
+  designer: anthropic/claude-fable-5:medium
+  tiny: openai-codex/gpt-5.6-luna:medium
+  default: anthropic/claude-fable-5:low
+  commit: openai-codex/gpt-5.6-luna:low
+  luna: openai-codex/gpt-5.6-luna:low
+disabledProviders: 
+  - claude-plugins
+defaultThinkingLevel: auto
+hideThinkingBlock: true
+omitThinking: true
+steeringMode: one-at-a-time
+github: 
+  enabled: true
+cycleOrder: 
+  - smol
+  - default
+  - slow
+  - sol
+  - luna
+display: 
+  showTokenUsage: false
+tui: 
+  tight: true
+  scrollbackRebuild: false
+task: 
+  isolation: 
+    mode: auto
+tools: 
+  outputMaxColumns: 200
+  artifactSpillThreshold: 8
+  artifactHeadBytes: 2
+  artifactTailBytes: 4
+  artifactTailLines: 60
+dev: 
+  autoqa: false
+browser: 
+  enabled: false
+  cmux: false
+astEdit: 
+  enabled: true
+stt: 
+  enabled: true
+  submitTrigger: never
+  modelName: turbo
+speechgen: 
+  enabled: true
+providers: 
+  tts: local
+  memoryModel: online
+speech: 
+  enhanced: true
+  voice: af_heart
+  mode: assistant
+memory: 
+  backend: hindsight
+autolearn: 
+  enabled: false
+retry: 
+  fallbackChains: 
+    {}
+power: 
+  sleepPrevention: "off"

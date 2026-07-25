@@ -1,0 +1,7 @@
+# User keybinding overrides. See `omp://keybindings.md`.
+#
+# Frees Ctrl+S from the built-in "open agent hub" binding (app.session.observe)
+# so the prompt-stash extension (config/omp/extensions/prompt-stash.ts) can use
+# it. The agent hub is still reachable via Alt+A (app.agents.hub) and
+# double-tap-left on an empty editor.
+app.session.observe: []

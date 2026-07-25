@@ -15,6 +15,7 @@ alias df='df -h' # disk free, in Gigabytes, not bytes
 alias du='du -h -c' # calculate disk usage for a folder
 
 alias lpath='echo $PATH | tr ":" "\n"' # list the PATH separated by new lines
+alias claude='claude --dangerously-skip-permissions'
 
 # Applications
 alias ios='open -a /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app'
@@ -52,6 +53,11 @@ alias gst='git status'
 alias gco="git checkout"
 alias glog="git l"
 alias ga='git add'
+
+# create a git worktree in .worktrees/<name> and cd into it
+gwa() {
+    git worktree add ".worktrees/$1" && cd ".worktrees/$1"
+}
 
 # tmux aliases
 alias ta='tmux attach'
