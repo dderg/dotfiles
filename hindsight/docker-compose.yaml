@@ -1,0 +1,29 @@
+services:
+  hindsight:
+    image: ghcr.io/vectorize-io/hindsight:latest
+    container_name: hindsight
+    hostname: hindsight
+    pull_policy: always
+    network_mode: host
+    dns:
+      - 192.168.1.1
+    extra_hosts:
+      - "freellmapi.home:192.168.1.59"
+    env_file:
+      - hindsight.env
+      - ${HOME}/.config/hindsight/secrets.env
+    volumes:
+      - hindsight-data:/home/hindsight/.pg0
+      - ${HOME}/.codex:/var/lib/hindsight/codex
+      # Overlay: adds per-member circuit breaker (cooldown) to LLM failover routing.
+      # Based on image v0.8.5 file; re-diff against upstream after image updates.
+      - ./patches/multi_llm.py:/app/api/hindsight_api/engine/multi_llm.py:ro
+      # Overlay: compacts gaps in HINDSIGHT_API_*LLM_<n>_* indices so disabling
+      # a member doesn't silently drop the ones after it.
+      - ./patches/sitecustomize.py:/app/api/.venv/lib/python3.11/site-packages/sitecustomize.py:ro
+    restart: unless-stopped
+    environment:
+      CODEX_HOME: /var/lib/hindsight/codex
+volumes:
+  hindsight-data:
+    external: true
