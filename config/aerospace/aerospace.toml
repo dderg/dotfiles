@@ -42,7 +42,7 @@ key-mapping.preset = 'dvorak'
 # See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
-# on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
@@ -319,14 +319,14 @@ run = 'move-node-to-workspace E'
 
 ## Finder
 
-[[on-window-detected]]
-if.app-id = 'com.apple.finder'
-run = 'move-node-to-workspace F'
+# [[on-window-detected]]
+# if.app-id = 'com.apple.finder'
+# run = 'move-node-to-workspace F'
 
 ## Slicer
 
 [[on-window-detected]]
-if.app-id = 'com.softfever3d.orca-slicer'
+if.app-id = 'com.orcaslicer.OrcaSlicer'
 run = 'move-node-to-workspace S'
 
 ## Floaters

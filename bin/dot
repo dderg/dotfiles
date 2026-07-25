@@ -216,7 +216,7 @@ cmd_link() {
         pkg_name="$(basename "$config")"
 
         # Skip packages that need special handling
-        [[ "$pkg_name" = "claude" ]] && continue
+        [[ "$pkg_name" = "claude" || "$pkg_name" = "omp" ]] && continue
 
         local target="$CONFIG_HOME/$pkg_name"
         if [ "$operation" = "link" ]; then
@@ -273,6 +273,59 @@ cmd_link() {
         rm "$claude_target"
       fi
     fi
+
+    # Handle omp top-level settings files (live in ~/.omp/agent/, not ~/.config/)
+    for omp_file in config.yml keybindings.yml; do
+      local omp_target="$HOME/.omp/agent/$omp_file"
+      local omp_source="$DOTFILES/config/omp/$omp_file"
+      if [ "$operation" = "link" ]; then
+        if [ -e "$omp_source" ]; then
+          mkdir -p "$HOME/.omp/agent"
+          if [ -e "$omp_target" ] && [ ! -L "$omp_target" ]; then
+            [ "$verbose" = true ] && log_warning "~/.omp/agent/$omp_file already exists (not a symlink)... Skipping."
+          elif [ -L "$omp_target" ]; then
+            [ "$verbose" = true ] && log_info "~/.omp/agent/$omp_file already linked... Skipping."
+          else
+            [ "$verbose" = true ] && log_info "Linking omp $omp_file"
+            ln -s "$omp_source" "$omp_target"
+          fi
+        fi
+      else # unlink
+        if [ -L "$omp_target" ]; then
+          [ "$verbose" = true ] && log_info "Unlinking $omp_target"
+          rm "$omp_target"
+        fi
+      fi
+    done
+
+    # Handle omp per-file subdirs (extensions alongside herdr-managed ones; themes)
+    for omp_subdir in extensions themes; do
+      local omp_src_dir="$DOTFILES/config/omp/$omp_subdir"
+      if [ -d "$omp_src_dir" ]; then
+        mkdir -p "$HOME/.omp/agent/$omp_subdir"
+        for sub_file in "$omp_src_dir"/*; do
+          [ -f "$sub_file" ] || continue
+          local sub_name
+          sub_name="$(basename "$sub_file")"
+          local sub_target="$HOME/.omp/agent/$omp_subdir/$sub_name"
+          if [ "$operation" = "link" ]; then
+            if [ -e "$sub_target" ] && [ ! -L "$sub_target" ]; then
+              [ "$verbose" = true ] && log_warning "~/.omp/agent/$omp_subdir/$sub_name already exists (not a symlink)... Skipping."
+            elif [ -L "$sub_target" ]; then
+              [ "$verbose" = true ] && log_info "~/.omp/agent/$omp_subdir/$sub_name already linked... Skipping."
+            else
+              [ "$verbose" = true ] && log_info "Linking omp $omp_subdir/$sub_name"
+              ln -s "$sub_file" "$sub_target"
+            fi
+          else # unlink
+            if [ -L "$sub_target" ]; then
+              [ "$verbose" = true ] && log_info "Unlinking $sub_target"
+              rm "$sub_target"
+            fi
+          fi
+        done
+      fi
+    done
   else
     # Handle specific package
     local target="$CONFIG_HOME/$pkg"
