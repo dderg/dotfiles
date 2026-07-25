@@ -172,6 +172,14 @@ function M.setup(user_config)
   apply_colorscheme(config.colorscheme)
   vim.cmd.syntax("on")
   vim.cmd("filetype plugin indent on")
+  vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
+    pattern = "*",
+    callback = function()
+      vim.opt_local.textwidth = 0
+      vim.opt_local.wrapmargin = 0
+      vim.opt_local.formatoptions:remove({ "t", "c" })
+    end,
+  })
   patch_syntax()
 end
 

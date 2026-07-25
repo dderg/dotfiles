@@ -36,7 +36,9 @@ opt.backupdir = { "~/.vim-tmp", "~/.tmp", "~/tmp", "/var/tmp", "/tmp" }
 opt.directory = { "~/.vim-tmp", "~/.tmp", "~/tmp", "/var/tmp", "/tmp" }
 
 opt.history = 1000 -- store the last 1000 commands entered
--- opt.textwidth = 120 -- after configured number of characters, wrap line
+opt.textwidth = 0 -- never insert hard line breaks automatically
+opt.wrapmargin = 0 -- never hard-wrap based on window width
+opt.formatoptions:remove({ "t", "c" }) -- don't auto-wrap text or comments
 
 -- show the results of substition as they're happening but don't open a split
 opt.inccommand = "nosplit"
@@ -88,7 +90,6 @@ end
 opt.hidden = true -- allow background buffers
 opt.joinspaces = false -- join lines without two spaces
 opt.wrap = true -- turn on line wrapping
-opt.wrapmargin = 8 -- wrap lines when coming within n characters from side
 opt.linebreak = true -- set soft wrapping
 opt.showbreak = "↪"
 opt.autoindent = true -- automatically set indent of new line
