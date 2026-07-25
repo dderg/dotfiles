@@ -71,3 +71,50 @@ keybind = cmd+s>l=goto_split:right
 
 keybind = cmd+s>z=toggle_split_zoom
 keybind = cmd+s>e=equalize_splits
+
+# ──────────────────────────────────────────────────────────────────────
+# Layout-independent Ctrl shortcuts (Dvorak positions)
+#
+# Ghostty doesn't honor the rus-dvorak-cmd-ctrl layout's own Control map,
+# so Ctrl+<key> lands on the wrong shortcut in the Russian layout. These
+# bind W3C physical key codes directly to the control bytes the layout's
+# keyMap index=7 produces, so Ctrl behaves the same in every layout
+# (Latin Dvorak, Russian Dvorak). Physical codes win over Unicode codepoints.
+#
+# Trigger = physical (QWERTY) position; control byte = its Dvorak letter.
+# NOTE: assumes Dvorak typing; on a plain QWERTY layout these misfire.
+# Ghostty has NO inline comments — labels live on their own lines below.
+#
+# A=KeyA B=KeyN C=KeyI D=KeyH E=KeyD F=KeyY G=KeyU H=KeyJ I=KeyG J=KeyC
+# K=KeyV L=KeyP M=KeyM N=KeyL O=KeyS P=KeyR Q=KeyX R=KeyO S=Semicolon
+# T=KeyK U=KeyF V=Period W=Comma X=KeyB Y=KeyT Z=Slash
+# \=Backslash ]=BracketRight _=Minus
+keybind = ctrl+KeyA=text:\x01
+keybind = ctrl+KeyN=text:\x02
+keybind = ctrl+KeyI=text:\x03
+keybind = ctrl+KeyH=text:\x04
+keybind = ctrl+KeyD=text:\x05
+keybind = ctrl+KeyY=text:\x06
+keybind = ctrl+KeyU=text:\x07
+keybind = ctrl+KeyJ=text:\x08
+keybind = ctrl+KeyG=text:\x09
+keybind = ctrl+KeyC=text:\x0a
+keybind = ctrl+KeyV=text:\x0b
+keybind = ctrl+KeyP=text:\x0c
+keybind = ctrl+KeyM=text:\x0d
+keybind = ctrl+KeyL=text:\x0e
+keybind = ctrl+KeyS=text:\x0f
+keybind = ctrl+KeyR=text:\x10
+keybind = ctrl+KeyX=text:\x11
+keybind = ctrl+KeyO=text:\x12
+keybind = ctrl+Semicolon=text:\x13
+keybind = ctrl+KeyK=text:\x14
+keybind = ctrl+KeyF=text:\x15
+keybind = ctrl+Period=text:\x16
+keybind = ctrl+Comma=text:\x17
+keybind = ctrl+KeyB=text:\x18
+keybind = ctrl+KeyT=text:\x19
+keybind = ctrl+Slash=text:\x1a
+keybind = ctrl+Backslash=text:\x1c
+keybind = ctrl+BracketRight=text:\x1d
+keybind = ctrl+Minus=text:\x1f
