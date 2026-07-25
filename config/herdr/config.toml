@@ -1,0 +1,125 @@
+onboarding = false
+# herdr config — tuned to feel like my tmux setup (config/tmux/tmux.conf)
+#
+# Mental model mapping between the two tools:
+#   tmux "window"  -> herdr "tab"
+#   tmux "session" -> herdr "workspace"
+#   tmux "pane"    -> herdr "pane"
+#
+# Split orientation (herdr naming is the opposite of tmux's flags):
+#   tmux `%` (split-window -h, side by side)  -> herdr split_vertical
+#   tmux `"` (split-window -v, stacked)       -> herdr split_horizontal
+#
+# Reload a running session after editing this file: prefix + r
+# See all active bindings in-app with: prefix + ?
+
+[theme]
+# matches the catppuccin theme used in tmux
+name = "catppuccin"
+
+[ui]
+mouse_capture = true       # tmux: `setw -g mouse on`
+mouse_scroll_lines = 3
+pane_gaps = false          # share one divider line between adjacent panes instead of
+                           # each pane drawing its own border (was doubling thickness)
+confirm_close = true
+prompt_new_tab_name = true
+
+agent_panel_sort = "spaces"
+[keys]
+# --- prefix -------------------------------------------------------------
+# tmux: `set -g prefix C-a`
+prefix = "ctrl+a"
+
+# --- config / sessions --------------------------------------------------
+reload_config = "prefix+r"          # tmux: bind r source-file ...
+goto          = "prefix+s"          # native session navigator ~ tmux `s` (tmux-sessionizer popup)
+settings      = "prefix+shift+s"    # moved off prefix+s to free `s`
+
+# --- tabs (= tmux windows) ----------------------------------------------
+new_tab       = ["prefix+shift+n", "prefix+c"]  # tmux: bind N new-window (also keep default c)
+rename_tab    = "prefix+comma"      # tmux default: `,` rename-window
+previous_tab  = "prefix+ctrl+h"     # tmux: bind -r C-h select-window -t :-
+next_tab      = "prefix+ctrl+l"     # tmux: bind -r C-l select-window -t :+
+switch_tab    = "prefix+1..9"       # tmux: prefix + number selects window
+close_tab     = "prefix+shift+x"
+
+# --- panes: focus (= tmux pane movement) --------------------------------
+# NOTE: tmux uses prefix-less, vim-aware C-h/j/k/l (vim-tmux-navigator).
+# herdr can't do the conditional "pass to vim" trick, so the vim-side smart
+# navigation won't carry over. All four use prefix-less ctrl+h/j/k/l.
+focus_pane_left  = "prefix+h"
+focus_pane_down  = "prefix+j"
+focus_pane_up    = "prefix+k"
+focus_pane_right = "prefix+l"
+
+# --- panes: swap (bonus — herdr defaults, no tmux equivalent) -----------
+swap_pane_left  = "prefix+shift+h"
+swap_pane_down  = "prefix+shift+j"
+swap_pane_up    = "prefix+shift+k"
+swap_pane_right = "prefix+shift+l"
+
+# --- panes: splits ------------------------------------------------------
+split_vertical   = "prefix+percent"       # tmux: bind % split-window -h (side by side)
+split_horizontal = "prefix+double_quote"  # tmux: bind '"' split-window -v (stacked)
+close_pane       = "prefix+x"
+zoom             = "prefix+z"              # tmux default prefix+z
+
+# --- panes: resize ------------------------------------------------------
+# tmux resizes directly with a repeatable prefix+H/J/K/L. herdr uses a
+# modal resize instead: press this, then h/j/k/l to resize, Esc to exit.
+resize_mode = "prefix+shift+r"
+
+# --- last / cycle -------------------------------------------------------
+last_pane          = ["prefix+tab", "prefix+semicolon"]  # tmux: Tab (last) + `;` (last pane)
+cycle_pane_previous = "prefix+shift+tab"
+cycle_pane_next     = ""                  # unset so prefix+tab is free for last_pane
+
+# --- copy mode ----------------------------------------------------------
+# tmux: bind Escape copy-mode (and `[` left as an alias here).
+# vi-style v/y selection inside copy mode is herdr's built-in behavior.
+copy_mode = ["prefix+esc", "prefix+["]
+
+# --- misc ---------------------------------------------------------------
+detach        = "prefix+d"          # tmux default prefix+d detach
+toggle_sidebar = "prefix+shift+t"   # closest to tmux `T` (toggle status bar)
+help          = "prefix+?"
+
+# --- workspaces (= tmux sessions; relocated, rarely used from tmux) -----
+new_workspace   = "prefix+ctrl+n"
+workspace_picker = "prefix+w"
+
+# cycle up/down the agents list. these are prefix-style action bindings
+# (unset by default), distinct from the navigate-mode pane/workspace keys.
+previous_agent = "prefix+ctrl+k"
+next_agent     = "prefix+ctrl+j"
+
+# --- custom command bindings --------------------------------------------
+# tmux: bind g display-popup ... lazygit
+[[keys.command]]
+key = "prefix+g"
+type = "pane"
+command = "lazygit"
+description = "open lazygit"
+
+# tmux: bind y new-window yazi
+[[keys.command]]
+key = "prefix+y"
+type = "pane"
+command = "yazi"
+description = "open yazi"
+
+# tmux: bind Y split-window -h yazi
+# (herdr command panes don't expose split orientation, so this opens a pane.)
+[[keys.command]]
+key = "prefix+shift+y"
+type = "pane"
+command = "yazi"
+description = "open yazi (split)"
+
+[experimental]
+pane_history = false
+switch_ascii_input_source_in_prefix = false
+
+[ui.sound]
+enabled = true
