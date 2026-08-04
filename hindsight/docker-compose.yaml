@@ -24,6 +24,15 @@ services:
     restart: unless-stopped
     environment:
       CODEX_HOME: /var/lib/hindsight/codex
+      # Idle OpenMP workers spin-wait by default, burning full-power cycles while
+      # doing no work. PASSIVE parks them on a futex instead.
+      #
+      # Deliberately NOT capping OMP_NUM_THREADS. Measured on this M5 Pro (6 "Super"
+      # cores = cpu12-17, 12 "Performance" = cpu0-11): capping to 6 threads kept 94%
+      # of rerank work on the high-power Super cores (68.9 Super core-s per 8
+      # recalls). Leaving torch at one thread per vCPU lets the scheduler spill onto
+      # the efficient cores -- 34.7 Super core-s, 40% share, at identical wall time.
+      OMP_WAIT_POLICY: "passive"
 volumes:
   hindsight-data:
     external: true

@@ -1,0 +1,305 @@
+#!/usr/bin/env bash
+# Description: Install Hindsight natively as a launchd agent
+set -Eeuo pipefail
+
+readonly HINDSIGHT_VERSION="0.8.6"
+readonly PYTHON_VERSION="3.11"
+readonly RUST_TOOLCHAIN="1.97.1"
+
+readonly PREFIX="${HOME}/.local/share/hindsight"
+readonly VENV="${PREFIX}/venv"
+readonly LAUNCHER="${PREFIX}/run.sh"
+readonly CP_PREFIX="${PREFIX}/cp"
+readonly SECRETS="${HOME}/.config/hindsight/secrets.env"
+readonly AGENT_LABEL="com.danila.hindsight"
+readonly PLIST="${HOME}/Library/LaunchAgents/${AGENT_LABEL}.plist"
+readonly LOG="${HOME}/Library/Logs/hindsight.log"
+readonly API_URL="http://127.0.0.1:8888"
+readonly CP_PORT="9999"
+
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly REPO_DIR
+readonly ENV_FILE="${REPO_DIR}/hindsight.env"
+readonly PATCH_DIR="${REPO_DIR}/patches"
+
+command_name=$(basename "${BASH_SOURCE[0]}")
+
+if [[ -n "${DOTFILES:-}" && -r "${DOTFILES}/bin/lib/common.sh" && -t 1 ]]; then
+  # shellcheck source=/dev/null
+  source "${DOTFILES}/bin/lib/common.sh"
+else
+  log_info() { printf 'hindsight: %s\n' "$1"; }
+  log_success() { printf 'hindsight: %s\n' "$1"; }
+  log_warning() { printf 'hindsight: %s\n' "$1"; }
+  log_error() { printf 'hindsight: %s\n' "$1" >&2; }
+  fmt_key() { printf '%s' "$1"; }
+  fmt_value() { printf '%s' "$1"; }
+  fmt_cmd() { printf '%s' "$1"; }
+  fmt_path() { printf '%s' "$1"; }
+fi
+
+# patch:target-in-site-packages:sha256-of-upstream-file
+readonly PATCHES=(
+  "multi_llm.py:hindsight_api/engine/multi_llm.py:0f229270fcb7fca684674c00a43ba7f3e0cc403f1aa5a4583b4ba49ab8568127"
+)
+
+usage() {
+  cat <<EOF
+  $(fmt_key "Usage:") $(fmt_cmd "$command_name") $(fmt_value "<command>")
+
+$(fmt_key "Commands:")
+    install     Create venv, apply patches, load the agent
+    uninstall   Unload the agent and remove the venv (data kept)
+    reinstall   uninstall + install
+    start       Start the agent
+    stop        Stop the agent
+    status      Agent state, core placement, API health
+    logs        Tail the service log
+    dashboard   Run the web UI on :${CP_PORT} until Ctrl-C
+    doctor      Check prerequisites
+
+$(fmt_key "Config:")
+    $(fmt_path "${ENV_FILE}")   tracked, public
+    $(fmt_path "${SECRETS}")   keys and private endpoints
+EOF
+}
+
+need() {
+  command -v "$1" >/dev/null 2>&1 || {
+    log_error "missing prerequisite: $1${2:+ — $2}"
+    return 1
+  }
+}
+
+node_bin() {
+  local fnm="${HOME}/.local/share/fnm/aliases/default/bin/node"
+  # A bare `node` on PATH may be an fnm per-shell shim that launchd cannot see.
+  [[ -x "$fnm" ]] && {
+    echo "$fnm"
+    return
+  }
+  command -v node 2>/dev/null
+}
+
+cmd_doctor() {
+  local ok=0
+  need uv "brew install uv" || ok=1
+  need rustup "https://rustup.rs" || ok=1
+  [[ -r "$ENV_FILE" ]] || {
+    log_error "missing $(fmt_path "$ENV_FILE")"
+    ok=1
+  }
+  [[ -r "$SECRETS" ]] || log_warning "no $(fmt_path "$SECRETS") — LLM calls needing keys will fail"
+  return $ok
+}
+
+apply_patches() {
+  local site
+  site="$("$VENV/bin/python" -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
+
+  for entry in "${PATCHES[@]}"; do
+    local src="${entry%%:*}" rest="${entry#*:}"
+    local rel="${rest%%:*}" want="${rest##*:}" got
+    local target="${site}/${rel}"
+
+    [[ -f "$target" ]] || {
+      log_error "patch target missing: ${rel}"
+      return 1
+    }
+    got="$(shasum -a 256 "$target" | cut -d' ' -f1)"
+    if [[ "$got" != "$want" ]]; then
+      log_error "upstream ${rel} changed (${got:0:12}…, expected ${want:0:12}…) — re-diff ${src} first"
+      return 1
+    fi
+    cp "${PATCH_DIR}/${src}" "$target"
+    log_success "patched ${rel}"
+  done
+
+  cp "${PATCH_DIR}/sitecustomize.py" "${site}/sitecustomize.py"
+  log_success "installed sitecustomize.py"
+}
+
+write_launcher() {
+  mkdir -p "$PREFIX"
+  # Parsed as dotenv, not sourced: bash would strip the quotes from JSON values.
+  cat >"$LAUNCHER" <<EOF
+#!/usr/bin/env bash
+set -Eeuo pipefail
+exec "${VENV}/bin/python" - "${ENV_FILE}" "${SECRETS}" "${VENV}/bin/hindsight-api" <<'PY'
+import os
+import sys
+
+*env_files, target = sys.argv[1:]
+for path in env_files:
+    if not os.path.isfile(path):
+        continue
+    with open(path) as fh:
+        for line in fh:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            key, value = key.strip(), value.strip()
+            if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+                value = value[1:-1]
+            os.environ[key] = value
+
+os.execv(target, [target])
+PY
+EOF
+  chmod +x "$LAUNCHER"
+}
+
+write_plist() {
+  mkdir -p "$(dirname "$PLIST")" "$(dirname "$LOG")"
+  # ProcessType Background confines this process to the efficient cores:
+  # ~10 J per recall instead of ~56 J, at ~4x the latency.
+  cat >"$PLIST" <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>${AGENT_LABEL}</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>${LAUNCHER}</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>ProcessType</key>
+  <string>Background</string>
+  <key>StandardOutPath</key>
+  <string>${LOG}</string>
+  <key>StandardErrorPath</key>
+  <string>${LOG}</string>
+</dict>
+</plist>
+EOF
+}
+
+cmd_install() {
+  cmd_doctor || {
+    log_error "prerequisites not met"
+    exit 1
+  }
+
+  rustup toolchain list 2>/dev/null | grep -q "^${RUST_TOOLCHAIN}" || {
+    # litellm publishes no macOS wheels, so it builds from sdist and needs
+    # rustc >= 1.94.1. Pinned here so the default toolchain stays untouched.
+    log_info "installing rust ${RUST_TOOLCHAIN}"
+    rustup toolchain install "$RUST_TOOLCHAIN" --profile minimal >/dev/null
+  }
+
+  launchctl unload "$PLIST" 2>/dev/null || true
+
+  mkdir -p "$PREFIX"
+  # --clear so patches always apply to pristine upstream and the hashes mean something.
+  log_info "creating venv"
+  uv venv --python "$PYTHON_VERSION" --clear "$VENV" >/dev/null 2>&1
+
+  log_info "installing hindsight-api==${HINDSIGHT_VERSION}"
+  RUSTUP_TOOLCHAIN="$RUST_TOOLCHAIN" \
+    uv pip install --python "$VENV/bin/python" "hindsight-api==${HINDSIGHT_VERSION}" >/dev/null 2>&1
+
+  apply_patches
+  write_launcher
+  write_plist
+
+  launchctl load "$PLIST"
+  log_success "installed and loaded ${AGENT_LABEL}"
+}
+
+cmd_uninstall() {
+  launchctl unload "$PLIST" 2>/dev/null || true
+  rm -f "$PLIST" "$LAUNCHER"
+  rm -rf "$VENV"
+  log_success "uninstalled (pg0 data kept)"
+}
+
+cmd_dashboard() {
+  local node pkg="@vectorize-io/hindsight-control-plane@${HINDSIGHT_VERSION}"
+  node="$(node_bin)"
+  [[ -n "$node" ]] || {
+    log_error "node not found"
+    exit 1
+  }
+
+  local cli="${CP_PREFIX}/node_modules/@vectorize-io/hindsight-control-plane/bin/cli.js"
+  [[ -f "$cli" ]] || {
+    log_info "installing ${pkg}"
+    mkdir -p "$CP_PREFIX"
+    (cd "$CP_PREFIX" && npm install --silent --prefix "$CP_PREFIX" "$pkg" >/dev/null)
+  }
+
+  log_info "dashboard on http://localhost:${CP_PORT} — Ctrl-C to stop"
+  exec "$node" "$cli" --port "$CP_PORT" --api-url "$API_URL"
+}
+
+cmd_status() {
+  if launchctl list 2>/dev/null | grep -q "$AGENT_LABEL"; then
+    printf "  %s %s\n" "$(fmt_key "agent:  ")" "$(fmt_value "loaded")"
+  else
+    printf "  %s %s\n" "$(fmt_key "agent:  ")" "$(fmt_value "not loaded")"
+  fi
+
+  local pid
+  pid="$(pgrep -f "${VENV}/bin/hindsight-api" | head -1 || true)"
+  if [[ -n "$pid" ]]; then
+    printf "  %s %s\n" "$(fmt_key "process:")" "$(fmt_value "pid ${pid}")"
+    /usr/bin/python3 - <<'PY' || true
+import ctypes, ctypes.util, subprocess, time
+libc = ctypes.CDLL(ctypes.util.find_library("c"))
+libc.mach_host_self.restype = ctypes.c_uint
+libc.host_processor_info.argtypes = [ctypes.c_uint, ctypes.c_int,
+    ctypes.POINTER(ctypes.c_uint), ctypes.POINTER(ctypes.POINTER(ctypes.c_int)),
+    ctypes.POINTER(ctypes.c_uint)]
+def ticks():
+    n, info, cnt = ctypes.c_uint(0), ctypes.POINTER(ctypes.c_int)(), ctypes.c_uint(0)
+    libc.host_processor_info(libc.mach_host_self(), 2, ctypes.byref(n),
+                             ctypes.byref(info), ctypes.byref(cnt))
+    return [info[i*4] + info[i*4+1] + info[i*4+3] for i in range(n.value)]
+fast = int(subprocess.run(["sysctl","-n","hw.perflevel0.logicalcpu"],
+                          capture_output=True, text=True).stdout)
+a = ticks(); time.sleep(1.0); b = ticks()
+busy = [y-x for x, y in zip(a, b)]
+s, e = sum(busy[-fast:]), sum(busy[:-fast])
+if s + e:
+    print(f"  cores:   {s/(s+e)*100:.0f}% Super / {e/(s+e)*100:.0f}% efficient (system-wide)")
+PY
+  else
+    printf "  %s %s\n" "$(fmt_key "process:")" "$(fmt_value "not running")"
+  fi
+
+  local code
+  code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 "${API_URL}/health" 2>/dev/null || echo 000)"
+  printf "  %s %s\n" "$(fmt_key "api:    ")" "$(fmt_value "${API_URL} -> ${code}")"
+}
+
+main() {
+  case "${1:-status}" in
+    install) cmd_install ;;
+    uninstall) cmd_uninstall ;;
+    reinstall)
+      cmd_uninstall
+      cmd_install
+      ;;
+    start) launchctl load "$PLIST" && log_success "started" ;;
+    stop) launchctl unload "$PLIST" && log_success "stopped" ;;
+    status) cmd_status ;;
+    logs) tail -f "$LOG" ;;
+    dashboard) cmd_dashboard ;;
+    doctor) cmd_doctor && log_success "prerequisites OK" ;;
+    -h | --help) usage ;;
+    *)
+      log_error "Unknown command: $1"
+      usage
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"
