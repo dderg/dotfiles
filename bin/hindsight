@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Description: Install Hindsight natively as a launchd agent
+# Description: Manage the native Hindsight service
 set -Eeuo pipefail
 
 readonly HINDSIGHT_VERSION="0.8.6"
@@ -17,10 +17,12 @@ readonly LOG="${HOME}/Library/Logs/hindsight.log"
 readonly API_URL="http://127.0.0.1:8888"
 readonly CP_PORT="9999"
 
-REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly REPO_DIR
-readonly ENV_FILE="${REPO_DIR}/hindsight.env"
-readonly PATCH_DIR="${REPO_DIR}/patches"
+SELF="${BASH_SOURCE[0]}"
+while [[ -L "$SELF" ]]; do SELF="$(readlink "$SELF")"; done
+CONF_DIR="$(cd "$(dirname "$SELF")/../hindsight" && pwd)"
+readonly CONF_DIR
+readonly ENV_FILE="${CONF_DIR}/hindsight.env"
+readonly PATCH_DIR="${CONF_DIR}/patches"
 
 command_name=$(basename "${BASH_SOURCE[0]}")
 
